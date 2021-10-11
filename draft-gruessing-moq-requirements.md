@@ -3,11 +3,7 @@ title: Media over QUIC Requirements and Use Cases
 abbrev: MoQ Requirements and Use Cases
 docname: draft-gruessing-moq-requirements-latest
 category: info
-
-author:
-  - ins: J. Gruessing
-    name: James Gruessing
-    email: james.ietf@gmail.com
+date:
 
 ipr: trust200902
 area: applications
@@ -15,6 +11,11 @@ workgroup: AVTCORE/MMUSIC Working Groups
 keyword: Internet-Draft QUIC RTP
 stand_alone: yes
 pi: [toc, tocindent, sortrefs, symrefs, strict, compact, subcompact, comments, inline]
+
+author:
+  - ins: J. Gruessing
+    name: James Gruessing
+    email: james.ietf@gmail.com
 
 normative:
   RFC9000:
