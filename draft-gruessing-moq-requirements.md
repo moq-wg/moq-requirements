@@ -2,7 +2,7 @@
 title: Media over QUIC Requirements and Use Cases
 abbrev: MoQ Requirements and Use Cases
 docname: draft-gruessing-moq-requirements-latest
-date: {DATE}
+category: info
 
 author:
   - ins: J. Gruessing
