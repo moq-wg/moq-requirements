@@ -27,6 +27,7 @@ informative:
   I-D.draft-kpugin-rush:
   I-D.draft-sharabayko-srt-over-quic:
   I-D.draft-sharabayko-srt:
+  RFC3550:
 
 --- abstract
 
@@ -125,6 +126,18 @@ Facebook, or non-UGC services like OTT offerings made by broadcasters.
 # Requirements {#requirements}
 
 TODO: Fill this in with detail
+
+# Non-requirements
+
+This section covers topics that are explicitly out of scope for the time being.
+
+## Media Transport Protocols
+
+The creation of new media transport protocols should be avoided, and instead we
+should make use of RTP {{RFC3550}} and the existing ecosystem of payload formats
+and methods of signalling where possible. It may transpire a need to extend
+these specificiations; in which case we should work with the relevant working
+groups and present our use-cases.
 
 # IANA Considerations
 
