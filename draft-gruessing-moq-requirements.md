@@ -19,6 +19,7 @@ author:
 
 normative:
   RFC9000:
+  I-D.draft-ietf-webtrans-overview:
 
 informative:
   I-D.draft-rtpfolks-quic-rtp-over-quic:
@@ -119,7 +120,32 @@ Facebook, or non-UGC services like OTT offerings made by broadcasters.
 
 # Requirements {#requirements}
 
-TODO: Fill this in with detail
+This section lists requirements for providing real time media streaming over a
+QUIC connection.
+
+## Codec Agility
+
+When initiating a media session, both the sender and receiver should be able to
+negotiate the codecs, bitrates and other media details based on capabilities and
+preferences.
+
+## Flow Directionality
+
+Media should be able to flow in either direction from client to server or
+vice-versa, either individually or concurrently.
+
+## WebTransport
+
+TODO: Unsure if this should be a requirement. If it is, we have to consider two
+things: WebTransport supports HTTP/2, are we going to explicitly exclude it?
+Also, WebTransport {{I-D.draft-ietf-webtrans-overview}} has normative language
+around congestion control which may be at odds with our potential requirements.
+
+## Authentication
+
+The protocol SHOULD have capabilities asides from TLS mutual authentication to
+allow hosts to authenticate one another, this should be kept simple but robust
+in nature to prevent attacks like credential brute-forcing.
 
 # Non-requirements
 
@@ -132,6 +158,13 @@ should make use of RTP {{RFC3550}} and the existing ecosystem of payload formats
 and methods of signalling where possible. It may transpire a need to extend
 these specificiations; in which case we should work with the relevant working
 groups and present our use-cases.
+
+## Multicast
+
+Even if multicast and other network broadcasting capabilities are used in
+delivering media in our use cases, as QUIC doesn't yet support it and it's
+inclusion would require a lot more complexity in both the specification and
+client implimentation this should be left out for now.
 
 # IANA Considerations
 
