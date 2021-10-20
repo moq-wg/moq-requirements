@@ -40,7 +40,7 @@ should be part of the design of a real-time media protocol over QUIC
 *RFC Editor: please remove this section before publication*
 
 Source code and issues for this draft can be found at
-<https://github.com/fiestajetsam/I-D/tree/main/draft-gruessing-moq-requirements>.
+<https://github.com/fiestajetsam/draft-gruessing-moq-requirements>.
 
 --- middle
 
