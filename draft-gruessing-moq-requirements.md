@@ -98,25 +98,19 @@ between the two protocols.
 
 # Use Cases {#usecases}
 
-For the sake of completeness this is a description of the known use-cases that
-have been described which would have applicability to the real-time serving of
-media over QUIC, and MoQ participants should consider which use case(s) should
-be part of any work, and which can be excluded. Previously
-{{I-D.draft-rtpfolks-quic-rtp-over-quic}} defined several key use cases, in
-addition to several others which may be summarised under the following:
+Previously {{I-D.draft-rtpfolks-quic-rtp-over-quic}} defined several key use
+cases, in addition to several others defined elsewhere. The two use cases that
+are most applicable today given the existing and known future capabilities of
+QUIC include:
 
-1. Peer-to-peer interactive applications, such as telephony or video
-conferencing. This may be in a 1-to-1 scenario, or in a multi-party arrangement.
-TODO: add more description here.
-
-2. Unidirectional live stream contribution. Two immediate scenarios that
+1. Unidirectional live stream contribution. Two immediate scenarios that
 best describe this is firstly users on a streaming platform in a remote scenario
 from their phone live streaming an event or going on to an audience in real time
 in relatively low bitrates (~1-5Mbit). The second scenario is larger bitrate
 contribution feeds in broadcast. This can be an OB feed "back to base" into
 playout gallery, or from playout facilities to online distribution platforms.
 
-3. Distribution from platform to audience. Whilst use of WebRTC or RTSP today
+2. Distribution from platform to audience. Whilst use of WebRTC or RTSP today
 for On-Demand media streaming is not typical with adaptive streaming like HLS
 and DASH being predominantly used as WebRTC is more applicable in latency
 sensitive contexts such as live sporting events. Instead use cases where there
