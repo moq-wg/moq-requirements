@@ -16,10 +16,17 @@ author:
   - ins: J. Gruessing
     name: James Gruessing
     email: james.ietf@gmail.com
+  -
+    ins: S. Dawkins
+    name: Spencer Dawkins
+    organization: Tencent America LLC
+    country: United States of America
+    email: spencerdawkins.ietf@gmail.com
 
 normative:
   RFC9000:
   I-D.draft-ietf-webtrans-overview:
+  I-D.draft-ietf-mops-streaming-opcons:
 
 informative:
   I-D.draft-rtpfolks-quic-rtp-over-quic:
@@ -54,20 +61,26 @@ their implementation around using existing protocols on top of QUIC, or define
 their own. With the exception of RUSH, it is unknown if the other specifications
 have had any deployments or interop with multiple implementations.
 
-## draft-hurst-quic-rtp-tunnelling
+## QRT: QUIC RTP Tunnelling
+
+{{I-D.draft-hurst-quic-rtp-tunnelling}}
 
 QRT encapsulates RTP and RTCP and define the means of using QUIC datagrams
 with them, defining a new payload within a datagram frame which distinguishes
 packets for a RTP packet flow vs RTCP.
 
-## draft-engelbart-rtp-over-quic
+## RTP over QUIC
+
+{{I-D.draft-engelbart-rtp-over-quic}}
 
 This specification also encapsulates RTP and RTCP but unlike QRT which simply
 relies on the default QUIC congestion control mechanisms, it defines a set of
 requirements around QUIC implementation's congestion controller to permit the
 use of separate control algorithms.
 
-## draft-kpugin-rush
+## RUSH - Reliable (unreliable) streaming protocol
+
+{{I-D.draft-kpugin-rush}}
 
 RUSH uses its own frame types on top of QUIC as it pre-dates the datagram
 specification; in addition individual media frames are given their own stream
@@ -78,9 +91,11 @@ future expansion but presently is limited to a subset of popular video and audio
 codecs and doesn't include other types (such as subtitles, transcriptions, or
 other signalling information) out of bitstream.
 
-## draft-sharabayko-srt-over-quic
+## Tunnelling SRT over QUIC
 
-SRT {{I-D.draft-sharabayko-srt}} itself is a general purpose transport protocol
+{{I-D.draft-sharabayko-srt-over-quic}}
+
+Secure Reliable Transport (SRT) ({{I-D.draft-sharabayko-srt}}) itself is a general purpose transport protocol
 primarily for contribution transport use cases and this specification covers the
 encapsulation and delivery of SRT on top of QUIC using datagram frame types.
 This specification sets some requirements regarding how the two interact and
@@ -96,6 +111,16 @@ between the two protocols.
 * All drafts take differing approaches to flow/stream identification and
   management; some address congestion control and others just omit the subject
   and leave it to QUIC to handle
+
+TODO: Present this comparison in table format. This is only a start.
+
+| Characteristic | QRT | RTP over QUIC | RUSH | SRT over QUIC |
+|---------|
+|Framing | RTP | RTP | RUSH | SRT |
+|Stream/Dgram | Stream | Dgram| Stream | Dgram |
+|CC  | RTP | RTP | QUIC | QUIC |
+|ALPN  | Yes  | No | Yes | No |
+
 
 # Use Cases {#usecases}
 
@@ -128,6 +153,21 @@ QUIC connection.
 When initiating a media session, both the sender and receiver should be able to
 negotiate the codecs, bitrates and other media details based on capabilities and
 preferences.
+
+## Support a range of Latencies
+
+TODO: confirm requirements for latency
+
+{{I-D.draft-ietf-mops-streaming-opcons}} describes these latency requirements for streaming media.
+
+- ultra low-latency (less than 1 second)
+- low-latency live (less than 10 seconds)
+- non-low-latency live (10 seconds to a few minutes)
+- on-demand (hours or more)
+
+## Support Lossless and Lossy Media Transport
+
+TODO: confirm scope of this draft to describe lossless media transport, lossy media transport, or both lossless and lossy transport.
 
 ## Flow Directionality
 
