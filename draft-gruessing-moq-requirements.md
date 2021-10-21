@@ -19,6 +19,7 @@ author:
 
 normative:
   RFC9000:
+  I-D.draft-ietf-webtrans-overview:
 
 informative:
   I-D.draft-rtpfolks-quic-rtp-over-quic:
@@ -40,7 +41,7 @@ should be part of the design of a real-time media protocol over QUIC
 *RFC Editor: please remove this section before publication*
 
 Source code and issues for this draft can be found at
-<https://github.com/fiestajetsam/I-D/tree/main/draft-gruessing-moq-requirements>.
+<https://github.com/fiestajetsam/draft-gruessing-moq-requirements>.
 
 --- middle
 
@@ -98,25 +99,19 @@ between the two protocols.
 
 # Use Cases {#usecases}
 
-For the sake of completeness this is a description of the known use-cases that
-have been described which would have applicability to the real-time serving of
-media over QUIC, and MoQ participants should consider which use case(s) should
-be part of any work, and which can be excluded. Previously
-{{I-D.draft-rtpfolks-quic-rtp-over-quic}} defined several key use cases, in
-addition to several others which may be summarised under the following:
+Previously {{I-D.draft-rtpfolks-quic-rtp-over-quic}} defined several key use
+cases, in addition to several others defined elsewhere. The two use cases that
+are most applicable today given the existing and known future capabilities of
+QUIC include:
 
-1. Peer-to-peer interactive applications, such as telephony or video
-conferencing. This may be in a 1-to-1 scenario, or in a multi-party arrangement.
-TODO: add more description here.
-
-2. Unidirectional live stream contribution. Two immediate scenarios that
+1. Unidirectional live stream contribution. Two immediate scenarios that
 best describe this is firstly users on a streaming platform in a remote scenario
 from their phone live streaming an event or going on to an audience in real time
 in relatively low bitrates (~1-5Mbit). The second scenario is larger bitrate
 contribution feeds in broadcast. This can be an OB feed "back to base" into
 playout gallery, or from playout facilities to online distribution platforms.
 
-3. Distribution from platform to audience. Whilst use of WebRTC or RTSP today
+2. Distribution from platform to audience. Whilst use of WebRTC or RTSP today
 for On-Demand media streaming is not typical with adaptive streaming like HLS
 and DASH being predominantly used as WebRTC is more applicable in latency
 sensitive contexts such as live sporting events. Instead use cases where there
@@ -125,7 +120,32 @@ Facebook, or non-UGC services like OTT offerings made by broadcasters.
 
 # Requirements {#requirements}
 
-TODO: Fill this in with detail
+This section lists requirements for providing real time media streaming over a
+QUIC connection.
+
+## Codec Agility
+
+When initiating a media session, both the sender and receiver should be able to
+negotiate the codecs, bitrates and other media details based on capabilities and
+preferences.
+
+## Flow Directionality
+
+Media should be able to flow in either direction from client to server or
+vice-versa, either individually or concurrently.
+
+## WebTransport
+
+TODO: Unsure if this should be a requirement. If it is, we have to consider two
+things: WebTransport supports HTTP/2, are we going to explicitly exclude it?
+Also, WebTransport {{I-D.draft-ietf-webtrans-overview}} has normative language
+around congestion control which may be at odds with our potential requirements.
+
+## Authentication
+
+The protocol SHOULD have capabilities asides from TLS mutual authentication to
+allow hosts to authenticate one another, this should be kept simple but robust
+in nature to prevent attacks like credential brute-forcing.
 
 # Non-requirements
 
@@ -138,6 +158,13 @@ should make use of RTP {{RFC3550}} and the existing ecosystem of payload formats
 and methods of signalling where possible. It may transpire a need to extend
 these specificiations; in which case we should work with the relevant working
 groups and present our use-cases.
+
+## Multicast
+
+Even if multicast and other network broadcasting capabilities are used in
+delivering media in our use cases, as QUIC doesn't yet support it and it's
+inclusion would require a lot more complexity in both the specification and
+client implimentation this should be left out for now.
 
 # IANA Considerations
 
