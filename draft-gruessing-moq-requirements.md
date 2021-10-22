@@ -27,6 +27,7 @@ normative:
   RFC9000:
   I-D.draft-ietf-webtrans-overview:
   I-D.draft-ietf-mops-streaming-opcons:
+  I-D.draft-ietf-quic-datagram:
 
 informative:
   I-D.draft-rtpfolks-quic-rtp-over-quic:
@@ -35,6 +36,7 @@ informative:
   I-D.draft-kpugin-rush:
   I-D.draft-sharabayko-srt-over-quic:
   I-D.draft-sharabayko-srt:
+  I-D.draft-ietf-quic-http:
   RFC3550:
 
 --- abstract
@@ -53,6 +55,8 @@ Source code and issues for this draft can be found at
 --- middle
 
 # Introduction {#intro}
+
+Protocol developers have been considering the implications of the QUIC protocol ({{RFC9000}}) on media transport for several years, but the initial focus on QUIC in the IETF was to support web applications that used the HTTP/3 protocol {{I-D.draft-ietf-quic-http}}. The completion of the initial versions of the QUIC specifications, and the adoption of {{I-D.draft-ietf-quic-datagram}}, have cleared the way for proposals to use QUIC as a media transport. This document examines proposals that were presented in side meetings at IETF 111, and analyzes them to understand requirements for media over QUIC.
 
 # Prior and Existing Specifications {#priorart}
 
@@ -112,7 +116,7 @@ between the two protocols.
   management; some address congestion control and others just omit the subject
   and leave it to QUIC to handle
 
-TODO: Present this comparison in table format. This is only a start.
+**Editor Note:** TODO: Present our comparison in table format. This is only a start.
 
 | Characteristic | QRT | RTP over QUIC | RUSH | SRT over QUIC |
 |---------|
@@ -124,19 +128,44 @@ TODO: Present this comparison in table format. This is only a start.
 
 # Use Cases {#usecases}
 
-Previously {{I-D.draft-rtpfolks-quic-rtp-over-quic}} defined several key use
-cases, in addition to several others defined elsewhere. The two use cases that
-are most applicable today given the existing and known future capabilities of
-QUIC include:
+## Use Cases From {{I-D.draft-rtpfolks-quic-rtp-over-quic}}
 
-1. Unidirectional live stream contribution. Two immediate scenarios that
+An early draft in the "media over QUIC" space, {{I-D.draft-rtpfolks-quic-rtp-over-quic}}, defined several key use cases. The following sections are taken from that draft, with minimal editing.
+
+### Interactive peer-to-peer applications
+
+Interactive peer-to-peer applications, such as telephony or video conferencing.  Such applications operate in a trapezoid topology using a client-server signalling channel running SIP or WebRTC,  and an associated peer-to-peer media path and/or data channel. Mappings of SIP and WebRTC onto QUIC are possible, but outside the scope of this memo.  It might be desirable to transport the peer-to-peer RTP media path and data channel using QUIC, to leverage QUIC's security, stream demultiplexing, and congestion control features running over a single UDP port. This would simplify media demultiplexing, and potentially obviate the need for the congestion control work being done in the RMCAT working group.  The design of QUIC makes it difficult however, since QUIC does not support peer-to-peer NAT traversal using STUN and ICE (and indeed uses a packet format that conflicts with STUN). These applications require low latency congestion control, and would benefit from unreliable delivery modes.
+
+### Interactive client-server applications
+
+Interactive client-server applications. For example, a "click here to speak to a representative" button on a website that starts an interactive WebRTC call.  Such applications avoid the NAT traversal issues that complicate peer-to-peer use of QUIC, and can benefit from stream demultiplexing and (if appropriate algorithms are provided) congestion control.  They would benefit from unreliable delivery modes to reduce latency.
+
+### Client-server video on demand applications using WebRTC or RTSP
+
+Client-server video on demand applications using WebRTC or RTSP. These benefit from QUIC stream demultiplexing in the same way as interactive client-server applications, but with relaxed latency bounds that make them fit better with existing congestion control algorithms and reliable delivery.
+
+### Live video streaming from a server
+
+Live video streaming from a server can also benefit from stream demultiplexing.  If designed carefully, it should be easier to gateway RTP over QUIC into multicast RTP for scalable delivery than to gateway HTTP adaptive video over QUIC into multicast.
+
+## Suggested Use Cases for "Media Over QUIC" Going Forward
+
+The use cases that are most applicable today given the existing and known future capabilities of QUIC are included in this section.
+
+**Editor Note:** this section is a work in progress, and is based on the opinions of the draft authors. We are happy to be guided by discussion about other use cases.
+
+### Unidirectional live stream contribution
+
+Unidirectional live stream contribution. Two immediate scenarios that
 best describe this is firstly users on a streaming platform in a remote scenario
 from their phone live streaming an event or going on to an audience in real time
 in relatively low bitrates (~1-5Mbit). The second scenario is larger bitrate
 contribution feeds in broadcast. This can be an OB feed "back to base" into
 playout gallery, or from playout facilities to online distribution platforms.
 
-2. Distribution from platform to audience. Whilst use of WebRTC or RTSP today
+### 2. Distribution from platform to audience
+
+Distribution from platform to audience. Whilst use of WebRTC or RTSP today
 for On-Demand media streaming is not typical with adaptive streaming like HLS
 and DASH being predominantly used as WebRTC is more applicable in latency
 sensitive contexts such as live sporting events. Instead use cases where there
@@ -190,6 +219,14 @@ in nature to prevent attacks like credential brute-forcing.
 # Non-requirements
 
 This section covers topics that are explicitly out of scope for the time being.
+
+## NAT Traversal
+
+From Section 8.2 of {{RFC9000}}:
+
+> Path validation is not designed as a NAT traversal mechanism. Though the mechanism described here might be effective for the creation of NAT bindings that support NAT traversal, the expectation is that one endpoint is able to receive packets without first having sent a packet on that path. Effective NAT traversal needs additional synchronization mechanisms that are not provided here.
+
+Although there are use cases that would benefit from a mechanism for NAT traversal, a QUIC protocol extention would be required to support those use cases today.
 
 ## Media Transport Protocols
 
