@@ -42,8 +42,8 @@ informative:
 --- abstract
 
 This document describes the uses cases, requirements, and considerations that
-should be part of the design of a real-time media protocol over QUIC
-{{RFC9000}}.
+should be form the design of the encapsulation of a real-time media transport
+protocol operating over QUIC {{RFC9000}}.
 
 --- note_Note_to_Readers
 
