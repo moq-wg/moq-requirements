@@ -1,5 +1,5 @@
 ---
-title: Media over QUIC Requirements and Use Cases
+title: Media over RTP over QUIC Requirements and Use Cases
 abbrev: MoQ Requirements and Use Cases
 docname: draft-gruessing-moq-requirements-latest
 category: info
