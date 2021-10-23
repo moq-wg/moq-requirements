@@ -194,6 +194,11 @@ TODO: confirm requirements for latency
 - non-low-latency live (10 seconds to a few minutes)
 - on-demand (hours or more)
 
+## Congestion Control
+
+TODO: Confirm these requirements, consider looking at how RFC 8836 applies to
+this requirement.
+
 ## Support Lossless and Lossy Media Transport
 
 TODO: confirm scope of this draft to describe lossless media transport, lossy media transport, or both lossless and lossy transport.
