@@ -212,9 +212,11 @@ around congestion control which may be at odds with our potential requirements.
 
 ## Authentication
 
-The protocol SHOULD have capabilities asides from TLS mutual authentication to
-allow hosts to authenticate one another, this should be kept simple but robust
-in nature to prevent attacks like credential brute-forcing.
+The protocol SHOULD have capabilities beyond what QUIC provides to allow hosts
+to authenticate one another, this should be kept simple but robust in nature to
+prevent attacks like credential brute-forcing.
+
+TODO: More details are required here
 
 # Non-requirements
 
