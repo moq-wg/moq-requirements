@@ -1,5 +1,5 @@
 ---
-title: Media over QUIC Requirements and Use Cases
+title: Media over RTP over QUIC Requirements and Use Cases
 abbrev: MoQ Requirements and Use Cases
 docname: draft-gruessing-moq-requirements-latest
 category: info
@@ -42,8 +42,8 @@ informative:
 --- abstract
 
 This document describes the uses cases, requirements, and considerations that
-should be part of the design of a real-time media protocol over QUIC
-{{RFC9000}}.
+should be form the design of the encapsulation of a real-time media transport
+protocol operating over QUIC {{RFC9000}}.
 
 --- note_Note_to_Readers
 
@@ -194,6 +194,11 @@ TODO: confirm requirements for latency
 - non-low-latency live (10 seconds to a few minutes)
 - on-demand (hours or more)
 
+## Congestion Control
+
+TODO: Confirm these requirements, consider looking at how RFC 8836 applies to
+this requirement.
+
 ## Support Lossless and Lossy Media Transport
 
 TODO: confirm scope of this draft to describe lossless media transport, lossy media transport, or both lossless and lossy transport.
@@ -212,9 +217,11 @@ around congestion control which may be at odds with our potential requirements.
 
 ## Authentication
 
-The protocol SHOULD have capabilities asides from TLS mutual authentication to
-allow hosts to authenticate one another, this should be kept simple but robust
-in nature to prevent attacks like credential brute-forcing.
+The protocol SHOULD have capabilities beyond what QUIC provides to allow hosts
+to authenticate one another, this should be kept simple but robust in nature to
+prevent attacks like credential brute-forcing.
+
+TODO: More details are required here
 
 # Non-requirements
 
