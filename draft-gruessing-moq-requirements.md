@@ -180,7 +180,7 @@ in relatively low bitrates (~1-5Mbit). The second scenario is larger bitrate
 contribution feeds in broadcast. This can be an OB feed "back to base" into
 playout gallery, or from playout facilities to online distribution platforms.
 
-### Distribution withing a platform
+### Distribution within a platform
 
 While a media is being contributed in real time via an ingest point to a streaming platform,
 there may be a need to distribute the media between several servers and/or perform
