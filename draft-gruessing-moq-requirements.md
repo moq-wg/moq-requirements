@@ -24,6 +24,7 @@ author:
     email: spencerdawkins.ietf@gmail.com
 
 normative:
+  RFC4566:
   RFC9000:
   I-D.draft-ietf-webtrans-overview:
   I-D.draft-ietf-mops-streaming-opcons:
@@ -58,7 +59,7 @@ Source code and issues for this draft can be found at
 
 This document describes the uses cases, requirements, and considerations that
 should guide the design of the encapsulation of a real-time media transport
-protocol as a payload in the the QUIC protocol {{RFC9000}}.
+protocol as a payload in the QUIC protocol {{RFC9000}}.
 
 Protocol developers have been considering the implications of the QUIC protocol ({{RFC9000}}) on media transport for several years, but the initial focus on QUIC in the IETF was to support web applications that used the HTTP/3 protocol {{I-D.draft-ietf-quic-http}}. The completion of the initial versions of the QUIC specifications, and the adoption of {{I-D.draft-ietf-quic-datagram}}, have cleared the way for proposals to use QUIC as a media transport. This document considers a number of proposals for "Media Over QUIC", and analyzes them to understand requirements and considerations.
 
@@ -67,13 +68,19 @@ Protocol developers have been considering the implications of the QUIC protocol 
 For the purposes of this document, it is assumed that we are starting with a protocol stack that looks like this:
 
 ~~~~~~
-    Media Transport Protocol | Media
+            Media
+    ------------------------
+    Media Transport Protocol
 ~~~~~~
 
 and the goal is to provide a protocol stack that looks like this:
 
 ~~~~~~
-    QUIC | Media Transport Protocol | Media
+            Media
+    ------------------------
+    Media Transport Protocol
+    ------------------------
+             QUIC
 ~~~~~~
 
 # Prior and Existing Specifications {#priorart}
@@ -122,7 +129,8 @@ primarily for contribution transport use cases and this specification covers the
 encapsulation and delivery of SRT on top of QUIC using datagram frame types.
 This specification sets some requirements regarding how the two interact and
 leaves considerations for congestion control and pacing to prevent conflict
-between the two protocols.
+between the two protocols. Apart from that, SRT provides a native suport for stream multiplexing,
+thus contributing this missing functionality to QUIC datagrams.
 
 ## Comparison of Existing Specifications
 
@@ -146,7 +154,8 @@ Interactive peer-to-peer applications, such as telephony or video conferencing. 
 
 ### Interactive client-server applications
 
-Interactive client-server applications. For example, a "click here to speak to a representative" button on a website that starts an interactive WebRTC call.  Such applications avoid the NAT traversal issues that complicate peer-to-peer use of QUIC, and can benefit from stream demultiplexing and (if appropriate algorithms are provided) congestion control.  They would benefit from unreliable delivery modes to reduce latency.
+Interactive client-server applications. For example, a "click here to speak to a representative" button on a website that starts an interactive WebRTC call.
+Because a connection is being established to a known server, such applications avoid the NAT traversal issues that complicate peer-to-peer use of QUIC, and can benefit from stream demultiplexing and (if appropriate algorithms are provided) congestion control. They would benefit from unreliable delivery modes to reduce latency.
 
 ### Client-server video on demand applications using WebRTC or RTSP
 
@@ -171,7 +180,16 @@ in relatively low bitrates (~1-5Mbit). The second scenario is larger bitrate
 contribution feeds in broadcast. This can be an OB feed "back to base" into
 playout gallery, or from playout facilities to online distribution platforms.
 
-### Distribution from platform to audience
+### Distribution withing a platform
+
+While a media is being contributed in real time via an ingest point to a streaming platform,
+there may be a need to distribute the media between several servers and/or perform
+a load balancing of the incoming traffic.
+The platform may peform transcoding at one or several points, or distribute (route) the media as is
+to one or many egress points. Such a distribution and load balancing may happen with or without
+the access to the encrypted payload.
+
+### Distribution (delivery) from platform to audience
 
 Distribution from platform to audience. Whilst use of WebRTC or RTSP today
 for On-Demand media streaming is not typical with adaptive streaming like HLS
@@ -179,6 +197,7 @@ and DASH being predominantly used as WebRTC is more applicable in latency
 sensitive contexts such as live sporting events. Instead use cases where there
 is live streaming of TV linear output, or live streaming such as Twitch or
 Facebook, or non-UGC services like OTT offerings made by broadcasters.
+
 
 # Requirements {#requirements}
 
@@ -195,6 +214,7 @@ In this section, we attempt to focus on high-level requirements for real time me
 When initiating a media session, both the sender and receiver should be able to
 negotiate the codecs, bitrates and other media details based on capabilities and
 preferences.
+It may be prefered to use existing ecosystem for such purposes, e.g. SDP {{RFC4566}}.
 
 ## Support a range of Latencies
 
@@ -260,6 +280,8 @@ groups and present our use-cases.
 
 Even if multicast and other network broadcasting capabilities are often used in delivering media in our use cases, QUIC doesn't yet support multicast, and would require a QUIC protocol extension to do so. In addition, the inclusion of multicast would introduce more complexity in both the specification and
 client implimentations.
+On the other hand, UDP multicast may be considered as the last mile delivery transport outside of QUIC transport, thus
+it would be beneficial for a protocol to provide such an opportunity (e.g. RTP/QUIC -> RTP/UDP).
 
 # IANA Considerations
 
