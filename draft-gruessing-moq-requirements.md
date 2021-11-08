@@ -322,4 +322,6 @@ The authors would like the thank the many authors of of the specifications refer
 * Sam Hurst
 * Varun Singh
 
+The authors would like to thank Maxim Sharabayko for text contributions to this draft.
+
 James Gruessing would also like to thank Francesco Illy and Nicholas Book for their part in providing the needed motivation.
