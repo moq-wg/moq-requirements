@@ -157,24 +157,92 @@ thus contributing this missing functionality to QUIC datagrams.
 
 ## Use Cases From {{I-D.draft-rtpfolks-quic-rtp-over-quic}}
 
-An early draft in the "media over QUIC" space, {{I-D.draft-rtpfolks-quic-rtp-over-quic}}, defined several key use cases. The following sections are taken from that draft, with minimal editing.
+An early draft in the "media over QUIC" space,
+{{I-D.draft-rtpfolks-quic-rtp-over-quic}}, defined several key use cases. The
+following are some inspired from that document or from discussions with the
+wider community. For each we also define the number of senders or receiver in a
+given session transmitting distinct streams, if a session has bi-direction flows
+of media from senders and receivers, and the expected lowest latency
+requirements using the definitions specified in
+{{I-D.draft-ietf-mops-streaming-opcons}}.
 
-### Interactive peer-to-peer applications
+### Video Conferencing
 
-Interactive peer-to-peer applications, such as telephony or video conferencing.  Such applications operate in a trapezoid topology using a client-server signalling channel running SIP or WebRTC,  and an associated peer-to-peer media path and/or data channel. Mappings of SIP and WebRTC onto QUIC are possible, but outside the scope of this memo.  It might be desirable to transport the peer-to-peer RTP media path and data channel using QUIC, to leverage QUIC's security, stream demultiplexing, and congestion control features running over a single UDP port. This would simplify media demultiplexing, and potentially obviate the need for the congestion control work being done in the RMCAT working group.  The design of QUIC makes it difficult however, since QUIC does not support peer-to-peer NAT traversal using STUN and ICE (and indeed uses a packet format that conflicts with STUN). These applications require low latency congestion control, and would benefit from unreliable delivery modes.
+**Senders/Receivers**: Many to Many
+**Bi-directional**: Yes
+**Latency**: Ultra-Low
 
-### Interactive client-server applications
+Where media is both sent and received; This may include audio from both
+microphone(s) or other inputs, or may include "screen sharing" or inclusion of
+other content such as slide, document, or video presentation. This may be done
+as client/server, or peer to peer with a many to many relationship of both
+senders and receivers.
 
-Interactive client-server applications. For example, a "click here to speak to a representative" button on a website that starts an interactive WebRTC call.
-Because a connection is being established to a known server, such applications avoid the NAT traversal issues that complicate peer-to-peer use of QUIC, and can benefit from stream demultiplexing and (if appropriate algorithms are provided) congestion control. They would benefit from unreliable delivery modes to reduce latency.
+### Gaming
 
-### Client-server video on demand applications using WebRTC or RTSP
+**Senders/Receivers**: One to One
+**Bi-directional**: Yes
+**Latency**: Sub-Ultra-Low
 
-Client-server video on demand applications using WebRTC or RTSP. These benefit from QUIC stream demultiplexing in the same way as interactive client-server applications, but with relaxed latency bounds that make them fit better with existing congestion control algorithms and reliable delivery.
+Where media is received, and user inputs are sent by the client. This may also
+include the client receiving other types of signalling, such as triggers for
+haptic feedback. This may also carry media from the client such as microphone
+audio for in-game chat with other players.
 
-### Live video streaming from a server
+### Remote Desktop
 
-Live video streaming from a server can also benefit from stream demultiplexing.  If designed carefully, it should be easier to gateway RTP over QUIC into multicast RTP for scalable delivery than to gateway HTTP adaptive video over QUIC into multicast.
+**Senders/Receivers**: One to One
+**Bi-directional**: Yes
+**Latency**: Ultra-Low
+
+Where media is received, and user inputs are sent by the client. Latency
+requirements with this usecase are marginally different than the gaming use
+case. This may also include signalling and/or transmitting of files or devices
+connected to the user's computer.
+
+### Live Media Streaming
+
+**Senders/Receivers**: One to Many
+**Bi-directional**: No
+**Latency**: Low to Non-Low
+
+Where media is received from a live broadcast or stream. This may comprise of
+multiple audio or video outputs with different codecs or bitrates. This may also
+include other types of media essence such as subtitles or timing signalling
+information (e.g. markers to indicate change of behaviour in client such as
+advertisement breaks)
+
+### Live Media Contribution
+
+**Senders/Receivers**: One to One
+**Bi-directional**: No
+**Latency**: Ultra-Low to Low
+
+Where media is received from a source for onwards handling into a distribution
+platform. The media may comprise of multiple audio and/or video sources.
+Bitrates may either be static or set dynamically by signalling of connection
+inforation (bandwidth, latency) based on data sent by the receiver.
+
+### Live Media Syndication
+
+**Senders/Receivers**: One to One
+**Bi-directional**: No
+**Latency**: Ultra-Low to Low
+
+Where media is sent onwards to another platform for further distribution. The
+media may be compressed down to a bitrate lower than source, but larger than
+final distribution output. Streams may be redundant with failover mechanisms in
+place.
+
+### On-Demand Media Streaming
+
+**Senders/Receivers**: One to Many
+**Bi-directional**: No
+**Latency**: On Demand
+
+Where media is received from a non-live, typically pre-recorded source. This may
+feature additional outputs, bitrates, codecs, and media types described in the
+live media streaming use case.
 
 ## Suggested Use Cases for "Media Over QUIC" Going Forward
 
