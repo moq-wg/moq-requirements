@@ -13,8 +13,11 @@ stand_alone: yes
 pi: [toc, tocindent, sortrefs, symrefs, strict, compact, subcompact, comments, inline]
 
 author:
-  - ins: J. Gruessing
+  -
+    ins: J. Gruessing
     name: James Gruessing
+    organization: Nederlandse Publieke Omroep
+    country: Netherlands
     email: james.ietf@gmail.com
   -
     ins: S. Dawkins
