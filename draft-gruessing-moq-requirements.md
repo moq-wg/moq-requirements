@@ -169,7 +169,7 @@ of media from senders and receivers, and the expected lowest latency
 requirements using the definitions specified in
 {{I-D.draft-ietf-mops-streaming-opcons}}.
 
-### Video Conferencing
+## Video Conferencing
 
 **Senders/Receivers**: Many to Many
 **Bi-directional**: Yes
@@ -181,7 +181,7 @@ other content such as slide, document, or video presentation. This may be done
 as client/server, or peer to peer with a many to many relationship of both
 senders and receivers.
 
-### Gaming
+## Gaming
 
 **Senders/Receivers**: One to One
 **Bi-directional**: Yes
@@ -192,7 +192,7 @@ include the client receiving other types of signalling, such as triggers for
 haptic feedback. This may also carry media from the client such as microphone
 audio for in-game chat with other players.
 
-### Remote Desktop
+## Remote Desktop
 
 **Senders/Receivers**: One to One
 **Bi-directional**: Yes
@@ -203,7 +203,7 @@ requirements with this usecase are marginally different than the gaming use
 case. This may also include signalling and/or transmitting of files or devices
 connected to the user's computer.
 
-### Live Media Streaming
+## Live Media Streaming
 
 **Senders/Receivers**: One to Many
 **Bi-directional**: No
@@ -215,7 +215,7 @@ include other types of media essence such as subtitles or timing signalling
 information (e.g. markers to indicate change of behaviour in client such as
 advertisement breaks)
 
-### Live Media Contribution
+## Live Media Contribution
 
 **Senders/Receivers**: One to One
 **Bi-directional**: No
@@ -226,7 +226,7 @@ platform. The media may comprise of multiple audio and/or video sources.
 Bitrates may either be static or set dynamically by signalling of connection
 inforation (bandwidth, latency) based on data sent by the receiver.
 
-### Live Media Syndication
+## Live Media Syndication
 
 **Senders/Receivers**: One to One
 **Bi-directional**: No
@@ -237,7 +237,7 @@ media may be compressed down to a bitrate lower than source, but larger than
 final distribution output. Streams may be redundant with failover mechanisms in
 place.
 
-### On-Demand Media Streaming
+## On-Demand Media Streaming
 
 **Senders/Receivers**: One to Many
 **Bi-directional**: No
