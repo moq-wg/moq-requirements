@@ -34,7 +34,6 @@ normative:
   I-D.draft-ietf-quic-datagram:
 
 informative:
-  I-D.draft-dawkins-sdp-rtp-quic-questions:
   I-D.draft-rtpfolks-quic-rtp-over-quic:
   I-D.draft-hurst-quic-rtp-tunnelling:
   I-D.draft-engelbart-rtp-over-quic:
@@ -46,9 +45,7 @@ informative:
 
 --- abstract
 
-This document describes the uses cases, requirements, and considerations that
-should guide the design of the encapsulation of a real-time media transport
-protocol as a payload in the QUIC protocol.
+This document describes the uses cases, requirements, and considerations that should guide the design of the encapsulation of a real-time media transport protocol as a payload in the QUIC protocol, that will be used for live media contribution, syndication, and streaming.
 
 --- note_Note_to_Readers
 
@@ -61,23 +58,16 @@ Source code and issues for this draft can be found at
 
 # Introduction {#intro}
 
-This document describes the uses cases, requirements, and considerations that
-should guide the design of the encapsulation of a real-time media transport
-protocol as a payload in the QUIC protocol {{RFC9000}}.
+This document describes the uses cases, requirements, and considerations that should guide the design of the encapsulation of a real-time media transport protocol as a payload in the QUIC protocol ({{RFC9000}}), that will be used for live media contribution, syndication, and streaming.
+
+* Note - need to edit the following paragraph to reflect new draft scope
 
 Protocol developers have been considering the implications of the QUIC protocol ({{RFC9000}}) on media transport for several years, but the initial focus on QUIC in the IETF was to support web applications that used the HTTP/3 protocol {{I-D.draft-ietf-quic-http}}. The completion of the initial versions of the QUIC specifications, and the adoption of {{I-D.draft-ietf-quic-datagram}}, have cleared the way for proposals to use QUIC as a media transport. This document considers a number of proposals for "Media Over QUIC", and analyzes them to understand requirements and considerations.
 
-## Relationship with draft-dawkins-sdp-rtp-quic-questions
-
-Work on this draft and on {{I-D.draft-dawkins-sdp-rtp-quic-questions}} began in isolation from each other, and the authors of both drafts are still working out the scope of each draft, so there is some overlap between the drafts. At this time, it's worth saying that
-
-* This draft is intended to capture requirements for the encapsulation of Media Transport Protocols in the QUIC protocol
-
-* {{I-D.draft-dawkins-sdp-rtp-quic-questions}} is intended to capture questiona that will affect the specification of Session Description Protocol description for these encapsulated Media Transport Protocols
-
-Both specifications are open for issues and pull requests, and since there is a common author, assume that any contribution you make to either draft in GitHub will end up in the right place.
-
 # Terminology {#term}
+
+
+* Note - It's not clear that we need this section, given the new draft scope
 
 For the purposes of this document, it is assumed that we are starting with a protocol stack that looks like this:
 
@@ -98,6 +88,8 @@ and the goal is to provide a protocol stack that looks like this:
 ~~~~~~
 
 # Prior and Existing Specifications {#priorart}
+
+* Note - need to edit the following paragraph to reflect new draft scope
 
 Several existing draft specifications and protocols already exist which base
 their implementation around using existing Media Transport Protocols on top of QUIC, or define
