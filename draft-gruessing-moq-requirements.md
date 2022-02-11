@@ -34,6 +34,13 @@ normative:
   I-D.draft-ietf-quic-datagram:
 
 informative:
+  DASH:
+    target: https://www.iso.org/standard/79329.html
+    title: "ISO/IEC 23009-1:2019: Dynamic adaptive streaming over HTTP (DASH) -- Part 1: Media presentation description and segment formats (2nd edition)"
+  rtcweb:
+    target: https://datatracker.ietf.org/wg/rtcweb/about/
+    title: Real-Time Communication in WEB-browsers (rtcweb) IETF Working Group
+  I-D.draft-dawkins-sdp-rtp-quic-questions:
   I-D.draft-rtpfolks-quic-rtp-over-quic:
   I-D.draft-hurst-quic-rtp-tunnelling:
   I-D.draft-engelbart-rtp-over-quic:
@@ -42,6 +49,7 @@ informative:
   I-D.draft-sharabayko-srt:
   I-D.draft-ietf-quic-http:
   RFC3550:
+  RFC8216:
 
 --- abstract
 
@@ -244,39 +252,31 @@ Where media is received from a non-live, typically pre-recorded source. This may
 feature additional outputs, bitrates, codecs, and media types described in the
 live media streaming use case.
 
-## Suggested Use Cases for "Media Over QUIC" Going Forward
+# Suggested Use Cases for "Media Over QUIC"
 
-The use cases that are most applicable today given the existing and known future capabilities of QUIC are included in this section.
+--- note_Note_to_Readers
 
-**Editor Note:** this section is a work in progress, and is based on the opinions of the draft authors. We are happy to be guided by discussion about other use cases.
+This section is a work in progress, and is based on the opinions of the draft
+authors. We are happy to be guided by discussion about other use cases.
 
-### Unidirectional live stream contribution
+Each of the above use cases fit into three classifications of solutions, with
+the first three covering gaming, screen sharing, and general video conferencing
+largely covered by WebRTC and related protocols today. Whilst there may be
+benefit in these use cases having a QUIC based protocol it may be more
+appropriate given the size of existing deployments to extend the WebRTC
+protocol and specifications. Such work could start in a QUIC specific forum, but
+would likely need to take place in {{rtcweb}} and the W3C.
 
-Unidirectional live stream contribution. Two immediate scenarios that
-best describe this is firstly users on a streaming platform in a remote scenario
-from their phone live streaming an event or going on to an audience in real time
-in relatively low bitrates (~1-5Mbit). The second scenario is larger bitrate
-contribution feeds in broadcast. This can be an OB feed "back to base" into
-playout gallery, or from playout facilities to online distribution platforms.
+The second group of classifications covering Live Media Contribution,
+Syndication, and Streaming are likely the use cases likely to benefit most from
+this work. Existing protocols used such as HLS {{RFC8216}} and DASH {{DASH}}
+are reaching limits towards how low they can reduce latency in live streaming
+and for scenarios where low-bitrate audio streams are used add a significant
+amount of overheads compared to the media bitstream.
 
-### Distribution within a platform
-
-While a media is being contributed in real time via an ingest point to a streaming platform,
-there may be a need to distribute the media between several servers and/or perform
-a load balancing of the incoming traffic.
-The platform may peform transcoding at one or several points, or distribute (route) the media as is
-to one or many egress points. Such a distribution and load balancing may happen with or without
-the access to the encrypted payload.
-
-### Distribution (delivery) from platform to audience
-
-Distribution from platform to audience. Whilst use of WebRTC or RTSP today
-for On-Demand media streaming is not typical with adaptive streaming like HLS
-and DASH being predominantly used as WebRTC is more applicable in latency
-sensitive contexts such as live sporting events. Instead use cases where there
-is live streaming of TV linear output, or live streaming such as Twitch or
-Facebook, or non-UGC services like OTT offerings made by broadcasters.
-
+On-Demand media streaming is unlikely to benefit from work in this space,
+without notable latency requirements and protocols such as HLS and DASH meeting
+the needs of this use case.
 
 # Requirements {#requirements}
 
