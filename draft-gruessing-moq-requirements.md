@@ -298,14 +298,18 @@ prefered to use existing ecosystem for such purposes, e.g. SDP {{RFC4566}}.
 
 ## Support a range of Latencies
 
-TODO: confirm requirements for latency
-
-{{I-D.draft-ietf-mops-streaming-opcons}} describes these latency requirements for streaming media.
+{{I-D.draft-ietf-mops-streaming-opcons}} describes these latency requirements
+for streaming media:
 
 - ultra low-latency (less than 1 second)
 - low-latency live (less than 10 seconds)
 - non-low-latency live (10 seconds to a few minutes)
 - on-demand (hours or more)
+
+Support for a nominal latency in the low to ultra-low latency should be
+achieved, with consideration for minimum buffer a receiver playing content may
+need to handle congestion, packet loss, and other degradation in network
+quality.
 
 ## Congestion Control
 
@@ -319,7 +323,8 @@ TODO: confirm scope of this draft to describe lossless media transport, lossy me
 ## Flow Directionality
 
 Media should be able to flow in either direction from client to server or
-vice-versa, either individually or concurrently.
+vice-versa, either individually or concurrently but should only be negotiated at
+the start of the session.
 
 ## WebTransport
 
