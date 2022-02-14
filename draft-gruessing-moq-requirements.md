@@ -279,24 +279,22 @@ amount of overheads compared to the media bitstream.
 
 On-Demand media streaming is unlikely to benefit from work in this space,
 without notable latency requirements and protocols such as HLS and DASH meeting
-the needs of this use case.
+the needs of this use case. However larger deployments may benefit from the use
+of HTTP/3 {{I-D.draft-ietf.quic.http}}.
 
 # Requirements {#requirements}
 
-Even a cursory examination of the existing proposals listed in {{priorart}} shows that there are fundamental differences in the approaches being used - for instance, whether a proposal uses RTP as its Media Transport Protocol.
-
-In this section, we attempt to focus on high-level requirements for real time media streaming over a QUIC connection, recognizing that
-
-* additional analysis will be required, and
-
-* we are starting with requirements that are apparent for RTP-based proposals
+Even a cursory examination of the existing proposals listed in {{priorart}}
+shows that there are fundamental differences in the approaches being used.
 
 ## Codec Agility
 
 When initiating a media session, both the sender and receiver should be able to
-negotiate the codecs, bitrates and other media details based on capabilities and
-preferences.
-It may be prefered to use existing ecosystem for such purposes, e.g. SDP {{RFC4566}}.
+negotiate the codecs, bitrates, resolution, and other media details based on
+capabilities and preferences. This must be negotiable both before commencing
+playback but also during as a result of changes to device output or network
+conditions (such as reduction in available network bandwidth). It may be
+prefered to use existing ecosystem for such purposes, e.g. SDP {{RFC4566}}.
 
 ## Support a range of Latencies
 
