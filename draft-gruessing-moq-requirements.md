@@ -39,7 +39,7 @@ informative:
     title: "ISO/IEC 23009-1:2019: Dynamic adaptive streaming over HTTP (DASH) -- Part 1: Media presentation description and segment formats (2nd edition)"
   rtcweb:
     target: https://datatracker.ietf.org/wg/rtcweb/about/
-    title: Real-Time Communication in WEB-browsers (rtcweb) IETF Working Group
+    title: "Real-Time Communication in WEB-browsers (rtcweb) IETF Working Group"
   I-D.draft-dawkins-sdp-rtp-quic-questions:
   I-D.draft-rtpfolks-quic-rtp-over-quic:
   I-D.draft-hurst-quic-rtp-tunnelling:
@@ -63,7 +63,8 @@ This document describes the uses cases, requirements, and considerations that sh
 Source code and issues for this draft can be found at
 <https://github.com/fiestajetsam/draft-gruessing-moq-requirements>.
 
-Discussion of this draft should take place on the IETF Media Over QUIC (MOQ) mailing list, at https://www.ietf.org/mailman/listinfo/moq.
+Discussion of this draft should take place on the IETF Media Over QUIC (MoQ)
+mailing list, at <https://www.ietf.org/mailman/listinfo/moq>.
 
 --- middle
 
@@ -258,8 +259,6 @@ live media streaming use case.
 
 # Suggested Use Cases for "Media Over QUIC"
 
---- note_Note_to_Readers
-
 This section is a work in progress, and is based on the opinions of the draft
 authors. We are happy to be guided by discussion about other use cases.
 
@@ -281,7 +280,7 @@ amount of overheads compared to the media bitstream.
 On-Demand media streaming is unlikely to benefit from work in this space,
 without notable latency requirements and protocols such as HLS and DASH meeting
 the needs of this use case. However larger deployments may benefit from the use
-of HTTP/3 {{I-D.draft-ietf.quic.http}}.
+of HTTP/3 {{I-D.draft-ietf-quic-http}}.
 
 # Requirements {#requirements}
 
