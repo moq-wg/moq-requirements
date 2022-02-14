@@ -218,7 +218,10 @@ Where media is received from a live broadcast or stream. This may comprise of
 multiple audio or video outputs with different codecs or bitrates. This may also
 include other types of media essence such as subtitles or timing signalling
 information (e.g. markers to indicate change of behaviour in client such as
-advertisement breaks)
+advertisement breaks). The use of "live rewind" where a window of media behind
+the live edge can be made available for clients to playback, either because the
+local player falls behind edge or because the viewer wishes to play back from a
+point in the past.
 
 ## Live Media Contribution
 
