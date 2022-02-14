@@ -48,6 +48,7 @@ informative:
   I-D.draft-sharabayko-srt-over-quic:
   I-D.draft-sharabayko-srt:
   I-D.draft-ietf-quic-http:
+  I-D.draft-ietf-quic-multipath:
   RFC3550:
   RFC8216:
 
@@ -310,6 +311,17 @@ Support for a nominal latency in the low to ultra-low latency should be
 achieved, with consideration for minimum buffer a receiver playing content may
 need to handle congestion, packet loss, and other degradation in network
 quality.
+
+## Migration of Sessions
+
+Handling of migration of a session between hosts, either of sender or receiver
+should be supported. This may either happen because the sender is undergoing
+maintenence or a rebalancing of resource, because the either is experiencing a
+change in network connectivity (such as a device moving from WiFi to cellular
+connectivity) or other reasons.
+
+This may depend on QUIC capabilities such as {{I-D.draft-ietf-quic-multipath}}
+but is by no means a hard requirement.
 
 ## Congestion Control
 
