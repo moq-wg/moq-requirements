@@ -1,14 +1,14 @@
 ---
-title: QUIC Encapsulation for Media over RTP - Requirements and Use Cases
-abbrev: MoQ Requirements and Use Cases
+title: Media Over QUIC - Use cases and Requirements
+abbrev: MoQ Use Cases and Requirements
 docname: draft-gruessing-moq-requirements-latest
 category: info
 date:
 
 ipr: trust200902
 area: applications
-workgroup: AVTCORE/MMUSIC Working Groups
-keyword: Internet-Draft QUIC RTP
+workgroup: MOQ Mailing List
+keyword: Internet-Draft QUIC
 stand_alone: yes
 pi: [toc, tocindent, sortrefs, symrefs, strict, compact, subcompact, comments, inline]
 
@@ -54,22 +54,19 @@ This document describes the uses cases, requirements, and considerations that sh
 Source code and issues for this draft can be found at
 <https://github.com/fiestajetsam/draft-gruessing-moq-requirements>.
 
+Discussion of this draft should take place on the IETF Media Over QUIC (MOQ) mailing list, at https://www.ietf.org/mailman/listinfo/moq.
+
 --- middle
 
 # Introduction {#intro}
 
 This document describes the uses cases, requirements, and considerations that should guide the design of the encapsulation of a real-time media transport protocol as a payload in the QUIC protocol ({{RFC9000}}), that will be used for live media contribution, syndication, and streaming.
 
-* Note - need to edit the following paragraph to reflect new draft scope
-
 Protocol developers have been considering the implications of the QUIC protocol ({{RFC9000}}) on media transport for several years, but the initial focus on QUIC in the IETF was to support web applications that used the HTTP/3 protocol {{I-D.draft-ietf-quic-http}}. The completion of the initial versions of the QUIC specifications, and the adoption of {{I-D.draft-ietf-quic-datagram}}, have cleared the way for proposals to use QUIC as a media transport. This document considers a number of proposals for "Media Over QUIC", and analyzes them to understand requirements and considerations.
 
 # Terminology {#term}
 
-
-* Note - It's not clear that we need this section, given the new draft scope
-
-For the purposes of this document, it is assumed that we are starting with a protocol stack that looks like this:
+Within this document, we use the term "Media Transport Protocol". This is easier to understand if the reader assumes that we are starting with a protocol stack that looks like this:
 
 ~~~~~~
             Media
@@ -86,6 +83,8 @@ and the goal is to provide a protocol stack that looks like this:
     ------------------------
              QUIC
 ~~~~~~
+
+Not all of the proposals for "Media Over QUIC" follow this model, but for the ones that do, it seems useful to have a name for "the protocol layer immediately beneath media".
 
 # Prior and Existing Specifications {#priorart}
 
@@ -141,12 +140,18 @@ thus contributing this missing functionality to QUIC datagrams.
 ## Comparison of Existing Specifications
 
 * Both QRT and the Engelbart draft attempt to use existing payloads of RTP,
-  RTCP, and SDP unlike RUSH and SRT, as well as using existing Datagram frames
+  RTCP, and SDP, unlike RUSH and SRT, as well as using existing Datagram frames
 * RUSH introduces new frame types as its development pre-dates Datagram frames
 * All drafts take differing approaches to flow/stream identification and
   management; some address congestion control and others just omit the subject
   and leave it to QUIC to handle
 * Both QRT and RUSH specify ALPN identification; the Engelbart and SRT drafts do not.
+
+## Moving Beyond "RTP over QUIC".
+
+It's worth noting that work on "RTP over QUIC" is being considered in the AVTCORE working group at this time, although no proposals have been adopted by the working group.
+
+Although some of the use cases described in {{usecases}} came out of "RTP over QUIC" proposals, they are worth considering for MOQ, depending on whether "RTP over QUIC' requires major changes to RTP and RTCP, in order to meet the requirements arising out of those use cases.
 
 # Use Cases {#usecases}
 
