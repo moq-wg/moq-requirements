@@ -40,7 +40,6 @@ informative:
   rtcweb:
     target: https://datatracker.ietf.org/wg/rtcweb/about/
     title: "Real-Time Communication in WEB-browsers (rtcweb) IETF Working Group"
-  I-D.draft-dawkins-sdp-rtp-quic-questions:
   I-D.draft-rtpfolks-quic-rtp-over-quic:
   I-D.draft-hurst-quic-rtp-tunnelling:
   I-D.draft-engelbart-rtp-over-quic:
@@ -74,6 +73,10 @@ This document describes the uses cases, requirements, and considerations that sh
 
 Protocol developers have been considering the implications of the QUIC protocol ({{RFC9000}}) on media transport for several years, but the initial focus on QUIC in the IETF was to support web applications that used the HTTP/3 protocol {{I-D.draft-ietf-quic-http}}. The completion of the initial versions of the QUIC specifications, and the adoption of {{I-D.draft-ietf-quic-datagram}}, have cleared the way for proposals to use QUIC as a media transport. This document considers a number of proposals for "Media Over QUIC", and analyzes them to understand requirements and considerations.
 
+## For The Impatient Reader
+
+This document is intended to report a survey of use cases that have been discussed under the "Media Over QUIC" banner, and to propose a subset of those use cases that should be considered first. Our proposal is in {{propscope}}, our understanding of the requirements for those use cases is in {{requirements}}, and most of the rest of the document provides background for those sections.
+
 # Terminology {#term}
 
 Within this document, we use the term "Media Transport Protocol". This is easier to understand if the reader assumes that we are starting with a protocol stack that looks like this:
@@ -98,7 +101,7 @@ Not all of the proposals for "Media Over QUIC" follow this model, but for the on
 
 # Prior and Existing Specifications {#priorart}
 
-* Note - need to edit the following paragraph to reflect new draft scope
+* Note - need to edit this section to reflect new draft scope and add short characterization of WARP protocol.
 
 Several existing draft specifications and protocols already exist which base
 their implementation around using existing Media Transport Protocols on top of QUIC, or define
@@ -157,26 +160,32 @@ thus contributing this missing functionality to QUIC datagrams.
   and leave it to QUIC to handle
 * Both QRT and RUSH specify ALPN identification; the Engelbart and SRT drafts do not.
 
+* Note - need to add WARP and verify these characterizations.
+
 ## Moving Beyond "RTP over QUIC".
 
 It's worth noting that work on "RTP over QUIC" is being considered in the AVTCORE working group at this time, although no proposals have been adopted by the working group.
 
-Although some of the use cases described in {{usecases}} came out of "RTP over QUIC" proposals, they are worth considering for MOQ, depending on whether "RTP over QUIC' requires major changes to RTP and RTCP, in order to meet the requirements arising out of those use cases.
+Although some of the use cases described in {{overallusecases}} came out of "RTP over QUIC" proposals, they are worth considering for MOQ, and may be especially relevant to MOQ, depending on whether "RTP over QUIC' requires major changes to RTP and RTCP, in order to meet the requirements arising out of those use cases.
 
-# Use Cases {#usecases}
+# Use Cases Informing This Proposal {#overallusecases}
 
-## Use Cases From {{I-D.draft-rtpfolks-quic-rtp-over-quic}}
+Our goal in this section is to understand the range of use cases that have been proposed for "Media Over QUIC".
 
 An early draft in the "media over QUIC" space,
-{{I-D.draft-rtpfolks-quic-rtp-over-quic}}, defined several key use cases. The
-following are some inspired from that document or from discussions with the
-wider community. For each we also define the number of senders or receiver in a
-given session transmitting distinct streams, if a session has bi-direction flows
-of media from senders and receivers, and the expected lowest latency
-requirements using the definitions specified in
-{{I-D.draft-ietf-mops-streaming-opcons}}.
+{{I-D.draft-rtpfolks-quic-rtp-over-quic}}, defined several key use cases. Some of the
+following use cases have been inspired by that document, and others have come from discussions with the
+wider MOQ community (among other places, a side meeting at IETF 112).
 
-## Video Conferencing
+For each use case in this section, we also define
+
+* the number of senders or receiver in a given session transmitting distinct streams,
+* whether a session has bi-direction flows of media from senders and receivers, and
+* the expected lowest latency requirements using the definitions specified in {{I-D.draft-ietf-mops-streaming-opcons}}.
+
+It is likely that we should add other characteristics, as we come to understand them.
+
+## Video Conferencing {#vidconf}
 
 **Senders/Receivers**: Many to Many
 **Bi-directional**: Yes
@@ -188,18 +197,18 @@ other content such as slide, document, or video presentation. This may be done
 as client/server, or peer to peer with a many to many relationship of both
 senders and receivers.
 
-## Gaming
+## Gaming {#gaming}
 
 **Senders/Receivers**: One to One
 **Bi-directional**: Yes
-**Latency**: Sub-Ultra-Low
+**Latency**: Significantly less than "Ultra-Low"
 
 Where media is received, and user inputs are sent by the client. This may also
 include the client receiving other types of signalling, such as triggers for
 haptic feedback. This may also carry media from the client such as microphone
 audio for in-game chat with other players.
 
-## Remote Desktop
+## Remote Desktop {#remdesk}
 
 **Senders/Receivers**: One to One
 **Bi-directional**: Yes
@@ -210,7 +219,7 @@ requirements with this usecase are marginally different than the gaming use
 case. This may also include signalling and/or transmitting of files or devices
 connected to the user's computer.
 
-## Live Media Streaming
+## Live Media Streaming {#lmstream}
 
 **Senders/Receivers**: One to Many
 **Bi-directional**: No
@@ -225,7 +234,7 @@ the live edge can be made available for clients to playback, either because the
 local player falls behind edge or because the viewer wishes to play back from a
 point in the past.
 
-## Live Media Contribution
+## Live Media Contribution {#lmcont}
 
 **Senders/Receivers**: One to One
 **Bi-directional**: No
@@ -236,7 +245,7 @@ platform. The media may comprise of multiple audio and/or video sources.
 Bitrates may either be static or set dynamically by signalling of connection
 inforation (bandwidth, latency) based on data sent by the receiver.
 
-## Live Media Syndication
+## Live Media Syndication {#lmsynd}
 
 **Senders/Receivers**: One to One
 **Bi-directional**: No
@@ -247,7 +256,7 @@ media may be compressed down to a bitrate lower than source, but larger than
 final distribution output. Streams may be redundant with failover mechanisms in
 place.
 
-## On-Demand Media Streaming
+## On-Demand Media Streaming {#odstream}
 
 **Senders/Receivers**: One to Many
 **Bi-directional**: No
@@ -257,28 +266,31 @@ Where media is received from a non-live, typically pre-recorded source. This may
 feature additional outputs, bitrates, codecs, and media types described in the
 live media streaming use case.
 
-# Suggested Use Cases for "Media Over QUIC"
+# Proposed Scope for "Media Over QUIC" {#propscope}
 
-This section is a work in progress, and is based on the opinions of the draft
-authors. We are happy to be guided by discussion about other use cases.
+Our proposal is that "Media Over QUIC" discussions focus first on the use cases for Live Media Contribution ({{lmcont}}),
+Syndication ({{lmsynd}}), and Streaming ({{lmstream}}). Our reasoning is provided in {{usecaseanalysis}}.
 
-Each of the above use cases fit into three classifications of solutions, with
-the first three covering gaming, screen sharing, and general video conferencing
+## Use Case Analysis {#usecaseanalysis}
+
+Each of the above use cases in {{overallusecases}} fit into one of three classifications of solutions.
+
+The first group, covering gaming ({{gaming}}), screen sharing ({{remdesk}}), and general video conferencing ({{vidconf}}), are
 largely covered by WebRTC and related protocols today. Whilst there may be
 benefit in these use cases having a QUIC based protocol it may be more
 appropriate given the size of existing deployments to extend the WebRTC
 protocol and specifications. Such work could start in a QUIC specific forum, but
 would likely need to take place in {{rtcweb}} and the W3C.
 
-The second group of classifications covering Live Media Contribution,
-Syndication, and Streaming are likely the use cases likely to benefit most from
+The second group of classifications, covering Live Media Contribution ({{lmcont}}),
+Syndication ({{lmsynd}}), and Streaming ({{lmstream}}) are likely the use cases likely to benefit most from
 this work. Existing protocols used such as HLS {{RFC8216}} and DASH {{DASH}}
 are reaching limits towards how low they can reduce latency in live streaming
 and for scenarios where low-bitrate audio streams are used add a significant
 amount of overheads compared to the media bitstream.
 
-On-Demand media streaming is unlikely to benefit from work in this space,
-without notable latency requirements and protocols such as HLS and DASH meeting
+On-Demand media streaming ({{odstream}}) is unlikely to benefit from work in this space.
+Without notable latency requirements, protocols such as HLS and DASH largely meet
 the needs of this use case. However larger deployments may benefit from the use
 of HTTP/3 {{I-D.draft-ietf-quic-http}}.
 
