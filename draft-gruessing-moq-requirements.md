@@ -34,6 +34,13 @@ normative:
   I-D.draft-ietf-quic-datagram:
 
 informative:
+  DASH:
+    target: https://www.iso.org/standard/79329.html
+    title: "ISO/IEC 23009-1:2019: Dynamic adaptive streaming over HTTP (DASH) -- Part 1: Media presentation description and segment formats (2nd edition)"
+  rtcweb:
+    target: https://datatracker.ietf.org/wg/rtcweb/about/
+    title: "Real-Time Communication in WEB-browsers (rtcweb) IETF Working Group"
+  I-D.draft-dawkins-sdp-rtp-quic-questions:
   I-D.draft-rtpfolks-quic-rtp-over-quic:
   I-D.draft-hurst-quic-rtp-tunnelling:
   I-D.draft-engelbart-rtp-over-quic:
@@ -41,7 +48,9 @@ informative:
   I-D.draft-sharabayko-srt-over-quic:
   I-D.draft-sharabayko-srt:
   I-D.draft-ietf-quic-http:
+  I-D.draft-ietf-quic-multipath:
   RFC3550:
+  RFC8216:
 
 --- abstract
 
@@ -54,7 +63,8 @@ This document describes the uses cases, requirements, and considerations that sh
 Source code and issues for this draft can be found at
 <https://github.com/fiestajetsam/draft-gruessing-moq-requirements>.
 
-Discussion of this draft should take place on the IETF Media Over QUIC (MOQ) mailing list, at https://www.ietf.org/mailman/listinfo/moq.
+Discussion of this draft should take place on the IETF Media Over QUIC (MoQ)
+mailing list, at <https://www.ietf.org/mailman/listinfo/moq>.
 
 --- middle
 
@@ -210,7 +220,10 @@ Where media is received from a live broadcast or stream. This may comprise of
 multiple audio or video outputs with different codecs or bitrates. This may also
 include other types of media essence such as subtitles or timing signalling
 information (e.g. markers to indicate change of behaviour in client such as
-advertisement breaks)
+advertisement breaks). The use of "live rewind" where a window of media behind
+the live edge can be made available for clients to playback, either because the
+local player falls behind edge or because the viewer wishes to play back from a
+point in the past.
 
 ## Live Media Contribution
 
@@ -244,67 +257,70 @@ Where media is received from a non-live, typically pre-recorded source. This may
 feature additional outputs, bitrates, codecs, and media types described in the
 live media streaming use case.
 
-## Suggested Use Cases for "Media Over QUIC" Going Forward
+# Suggested Use Cases for "Media Over QUIC"
 
-The use cases that are most applicable today given the existing and known future capabilities of QUIC are included in this section.
+This section is a work in progress, and is based on the opinions of the draft
+authors. We are happy to be guided by discussion about other use cases.
 
-**Editor Note:** this section is a work in progress, and is based on the opinions of the draft authors. We are happy to be guided by discussion about other use cases.
+Each of the above use cases fit into three classifications of solutions, with
+the first three covering gaming, screen sharing, and general video conferencing
+largely covered by WebRTC and related protocols today. Whilst there may be
+benefit in these use cases having a QUIC based protocol it may be more
+appropriate given the size of existing deployments to extend the WebRTC
+protocol and specifications. Such work could start in a QUIC specific forum, but
+would likely need to take place in {{rtcweb}} and the W3C.
 
-### Unidirectional live stream contribution
+The second group of classifications covering Live Media Contribution,
+Syndication, and Streaming are likely the use cases likely to benefit most from
+this work. Existing protocols used such as HLS {{RFC8216}} and DASH {{DASH}}
+are reaching limits towards how low they can reduce latency in live streaming
+and for scenarios where low-bitrate audio streams are used add a significant
+amount of overheads compared to the media bitstream.
 
-Unidirectional live stream contribution. Two immediate scenarios that
-best describe this is firstly users on a streaming platform in a remote scenario
-from their phone live streaming an event or going on to an audience in real time
-in relatively low bitrates (~1-5Mbit). The second scenario is larger bitrate
-contribution feeds in broadcast. This can be an OB feed "back to base" into
-playout gallery, or from playout facilities to online distribution platforms.
-
-### Distribution within a platform
-
-While a media is being contributed in real time via an ingest point to a streaming platform,
-there may be a need to distribute the media between several servers and/or perform
-a load balancing of the incoming traffic.
-The platform may peform transcoding at one or several points, or distribute (route) the media as is
-to one or many egress points. Such a distribution and load balancing may happen with or without
-the access to the encrypted payload.
-
-### Distribution (delivery) from platform to audience
-
-Distribution from platform to audience. Whilst use of WebRTC or RTSP today
-for On-Demand media streaming is not typical with adaptive streaming like HLS
-and DASH being predominantly used as WebRTC is more applicable in latency
-sensitive contexts such as live sporting events. Instead use cases where there
-is live streaming of TV linear output, or live streaming such as Twitch or
-Facebook, or non-UGC services like OTT offerings made by broadcasters.
-
+On-Demand media streaming is unlikely to benefit from work in this space,
+without notable latency requirements and protocols such as HLS and DASH meeting
+the needs of this use case. However larger deployments may benefit from the use
+of HTTP/3 {{I-D.draft-ietf-quic-http}}.
 
 # Requirements {#requirements}
 
-Even a cursory examination of the existing proposals listed in {{priorart}} shows that there are fundamental differences in the approaches being used - for instance, whether a proposal uses RTP as its Media Transport Protocol.
-
-In this section, we attempt to focus on high-level requirements for real time media streaming over a QUIC connection, recognizing that
-
-* additional analysis will be required, and
-
-* we are starting with requirements that are apparent for RTP-based proposals
+Even a cursory examination of the existing proposals listed in {{priorart}}
+shows that there are fundamental differences in the approaches being used.
 
 ## Codec Agility
 
 When initiating a media session, both the sender and receiver should be able to
-negotiate the codecs, bitrates and other media details based on capabilities and
-preferences.
-It may be prefered to use existing ecosystem for such purposes, e.g. SDP {{RFC4566}}.
+negotiate the codecs, bitrates, resolution, and other media details based on
+capabilities and preferences. This must be negotiable both before commencing
+playback but also during as a result of changes to device output or network
+conditions (such as reduction in available network bandwidth). It may be
+prefered to use existing ecosystem for such purposes, e.g. SDP {{RFC4566}}.
 
 ## Support a range of Latencies
 
-TODO: confirm requirements for latency
-
-{{I-D.draft-ietf-mops-streaming-opcons}} describes these latency requirements for streaming media.
+{{I-D.draft-ietf-mops-streaming-opcons}} describes these latency requirements
+for streaming media:
 
 - ultra low-latency (less than 1 second)
 - low-latency live (less than 10 seconds)
 - non-low-latency live (10 seconds to a few minutes)
 - on-demand (hours or more)
+
+Support for a nominal latency in the low to ultra-low latency should be
+achieved, with consideration for minimum buffer a receiver playing content may
+need to handle congestion, packet loss, and other degradation in network
+quality.
+
+## Migration of Sessions
+
+Handling of migration of a session between hosts, either of sender or receiver
+should be supported. This may either happen because the sender is undergoing
+maintenence or a rebalancing of resource, because the either is experiencing a
+change in network connectivity (such as a device moving from WiFi to cellular
+connectivity) or other reasons.
+
+This may depend on QUIC capabilities such as {{I-D.draft-ietf-quic-multipath}}
+but is by no means a hard requirement.
 
 ## Congestion Control
 
@@ -318,7 +334,8 @@ TODO: confirm scope of this draft to describe lossless media transport, lossy me
 ## Flow Directionality
 
 Media should be able to flow in either direction from client to server or
-vice-versa, either individually or concurrently.
+vice-versa, either individually or concurrently but should only be negotiated at
+the start of the session.
 
 ## WebTransport
 
