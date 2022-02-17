@@ -376,14 +376,6 @@ From Section 8.2 of {{RFC9000}}:
 
 Although there are use cases that would benefit from a mechanism for NAT traversal, a QUIC protocol extention would be required to support those use cases today.
 
-## New Media Transport Protocols
-
-The creation of new media transport protocols should be avoided, and instead we
-should make use of RTP {{RFC3550}} and the existing ecosystem of payload formats
-and methods of signalling where possible. Work on QUIC encapsulation may reveal a need to extend
-these specificiations; in which case we should work with the relevant working
-groups and present our use-cases.
-
 ## Multicast
 
 Even if multicast and other network broadcasting capabilities are often used in delivering media in our use cases, QUIC doesn't yet support multicast, and would require a QUIC protocol extension to do so. In addition, the inclusion of multicast would introduce more complexity in both the specification and
