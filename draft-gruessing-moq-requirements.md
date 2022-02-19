@@ -99,6 +99,20 @@ and the goal is to provide a protocol stack that looks like this:
 
 Not all of the proposals for "Media Over QUIC" follow this model, but for the ones that do, it seems useful to have a name for "the protocol layer immediately beneath media".
 
+Within this document, we extend the latency requirement categories for streaming media described in {{I-D.draft-ietf-mops-streaming-opcons}}:
+
+- ultra low-latency (less than 1 second)
+- low-latency live (less than 10 seconds)
+- non-low-latency live (10 seconds to a few minutes)
+- on-demand (hours or more)
+
+These latency bands were appropriate for streaming media, which was the target for {{I-D.draft-ietf-mops-streaming-opcons}}, but some realtime media may have requirements that are significantly less than "ultra-low latency". Within this document, we are also using
+
+- ull500 (less than 500 ms)
+- ull100 (less than 100 ms)
+
+Obviously, these last two latency bands are the shortened form of "ultra-low latency - 500 ms" and "ultra-low-latency - 100 ms". Also obviously, bikeshedding on better names is welcomed.
+
 # Prior and Existing Specifications {#priorart}
 
 * Note - need to edit this section to reflect new draft scope and add short characterization of WARP protocol.
@@ -181,7 +195,7 @@ For each use case in this section, we also define
 
 * the number of senders or receiver in a given session transmitting distinct streams,
 * whether a session has bi-direction flows of media from senders and receivers, and
-* the expected lowest latency requirements using the definitions specified in {{I-D.draft-ietf-mops-streaming-opcons}}.
+* the expected lowest latency requirements using the definitions specified in {{term}}.
 
 It is likely that we should add other characteristics, as we come to understand them.
 
@@ -201,7 +215,7 @@ senders and receivers.
 
 **Senders/Receivers**: One to One
 **Bi-directional**: Yes
-**Latency**: Significantly less than "Ultra-Low"
+**Latency**: Ull100
 
 Where media is received, and user inputs are sent by the client. This may also
 include the client receiving other types of signalling, such as triggers for
@@ -310,16 +324,8 @@ prefered to use existing ecosystem for such purposes, e.g. SDP {{RFC4566}}.
 
 ## Support a range of Latencies
 
-{{I-D.draft-ietf-mops-streaming-opcons}} describes these latency requirements
-for streaming media:
-
-- ultra low-latency (less than 1 second)
-- low-latency live (less than 10 seconds)
-- non-low-latency live (10 seconds to a few minutes)
-- on-demand (hours or more)
-
-Support for a nominal latency in the low to ultra-low latency should be
-achieved, with consideration for minimum buffer a receiver playing content may
+Support for a nominal latency appropriate for the use cases that are in scope should be
+achieved, with consideration for the minimum buffer that a receiver playing content may
 need to handle congestion, packet loss, and other degradation in network
 quality.
 
