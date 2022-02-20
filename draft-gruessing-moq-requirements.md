@@ -143,8 +143,9 @@ use of separate control algorithms.
 
 {{I-D.draft-kpugin-rush}}
 
-RUSH uses its own frame types on top of QUIC as it pre-dates the datagram
-specification; in addition individual media frames are given their own stream
+Whilst RUSH predates the datagram specification, it uses its own frame types on
+top of QUIC to take advantage of QUIC implementations reassembling messages
+greater than MTU. In addition individual media frames are given their own stream
 identifiers to remove HoL blocking from processing out-of-order.
 
 It defines its own registry for signalling codec information with room for
