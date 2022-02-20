@@ -168,7 +168,6 @@ thus contributing this missing functionality to QUIC datagrams.
 
 * Both QRT and the Engelbart draft attempt to use existing payloads of RTP,
   RTCP, and SDP, unlike RUSH and SRT, as well as using existing Datagram frames
-* RUSH introduces new frame types as its development pre-dates Datagram frames
 * All drafts take differing approaches to flow/stream identification and
   management; some address congestion control and others just omit the subject
   and leave it to QUIC to handle
