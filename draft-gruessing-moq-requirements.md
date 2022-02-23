@@ -122,6 +122,8 @@ and the goal is to provide a protocol stack that looks like this:
 
 Not all of the proposals for "Media Over QUIC" follow this model, but for the ones that do, it seems useful to have a name for "the protocol layer immediately beneath media".
 
+## Latency Requirement Categories {#latent-cat}
+
 Within this document, we extend the latency requirement categories for streaming media described in {{I-D.draft-ietf-mops-streaming-opcons}}:
 
 - ultra low-latency (less than 1 second)
@@ -332,6 +334,8 @@ the needs of this use case. However larger deployments may benefit from the use
 of HTTP/3 {{I-D.draft-ietf-quic-http}}.
 
 # Requirements {#requirements}
+
+**Note: This section was written to reflect an early focus on "Media over RTP over QUIC", and will be revisited when we agree on the use cases in {{overallusecases}} that will be in scope for further work.
 
 Even a cursory examination of the existing proposals listed in {{priorart}}
 shows that there are fundamental differences in the approaches being used.
