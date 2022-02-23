@@ -34,6 +34,12 @@ normative:
   I-D.draft-ietf-quic-datagram:
 
 informative:
+  AVTCORE-2022-02:
+    target: https://datatracker.ietf.org/meeting/interim-2022-avtcore-01/session/avtcore
+    title: "AVTCORE 2022-02 interim meeting materials"
+  MOQ-ml:
+    target: https://www.ietf.org/mailman/listinfo/moq
+    title: "Moq -- Media over QUIC"
   DASH:
     target: https://www.iso.org/standard/79329.html
     title: "ISO/IEC 23009-1:2019: Dynamic adaptive streaming over HTTP (DASH) -- Part 1: Media presentation description and segment formats (2nd edition)"
@@ -53,7 +59,7 @@ informative:
 
 --- abstract
 
-This document describes the uses cases, requirements, and considerations that should guide the design of the encapsulation of a real-time media transport protocol as a payload in the QUIC protocol, that will be used for live media contribution, syndication, and streaming.
+This document describes the use cases that have been discussed in the IETF community under the banner of "Media Over QUIC", and recommends use cases on live media contribution, syndication, and streaming as the basis for discussions that should guide the design of protocols to satisfy these use cases.
 
 --- note_Note_to_Readers
 
@@ -69,15 +75,32 @@ mailing list, at <https://www.ietf.org/mailman/listinfo/moq>.
 
 # Introduction {#intro}
 
-This document describes the uses cases, requirements, and considerations that should guide the design of the encapsulation of a real-time media transport protocol as a payload in the QUIC protocol ({{RFC9000}}), that will be used for live media contribution, syndication, and streaming.
-
-Protocol developers have been considering the implications of the QUIC protocol ({{RFC9000}}) on media transport for several years, but the initial focus on QUIC in the IETF was to support web applications that used the HTTP/3 protocol {{I-D.draft-ietf-quic-http}}. The completion of the initial versions of the QUIC specifications, and the adoption of {{I-D.draft-ietf-quic-datagram}}, have cleared the way for proposals to use QUIC as a media transport. This document considers a number of proposals for "Media Over QUIC", and analyzes them to understand requirements and considerations.
+This document describes the use cases that have been discussed in the IETF community under the banner of "Media Over QUIC", and recommends use cases on live media contribution, syndication, and streaming as the basis for requirements discussions that should guide the design of protocols to satisfy these use cases.
 
 ## For The Impatient Reader
 
 This document is intended to report a survey of use cases that have been discussed under the "Media Over QUIC" banner, and to propose a subset of those use cases that should be considered first. Our proposal is in {{propscope}}, our understanding of the requirements for those use cases is in {{requirements}}, and most of the rest of the document provides background for those sections.
 
 # Terminology {#term}
+
+## The Many Meanings of "Media Over QUIC"
+
+Protocol developers have been considering the implications of the QUIC protocol ({{RFC9000}}) for media transport for several years, resulting in a large number of possible meanings of the term "Media Over QUIC", or "MOQ". As of this writing, "Media Over QUIC" has had at least these meanings:
+
+- any kind of media carried directly over the QUIC protocol, as a QUIC payload
+- any kind of media carried indirectly over the QUIC protocol, as an RTP payload
+- any kind of media carried indirectly over the QUIC protocol, as an HTTP/3 payload
+- any kind of media carried indirectly over the QUIC protocol, as a WebTransport payload
+- the encapsulation of any Media Transport Protocol ({{mtp}}) in a QUIC payload
+- an IETF mailing list ({{MOQ-ml}}) "... for discussion of video ingest and distribution protocols that use QUIC as the underlying transport"
+
+There may be IETF participants using other meanings as well.
+
+As of this writing, the second bullet ("any kind of media carried indirectly over the QUIC protocol, as an RTP payload"), seems to be in scope for the IETF AVTCORE working group, and was discussed at some length at the February 2022 AVTCORE working group meeting {{AVTCORE-2022-02}}. So, perhaps, that possible meaning is out of scope for "Media over QUIC".
+
+It will be SUPER HELPFUL if interested parties can come up with a term that unambiguously describes what we're trying to achieve.
+
+## Media Transport Protoccol {#mtp}
 
 Within this document, we use the term "Media Transport Protocol". This is easier to understand if the reader assumes that we are starting with a protocol stack that looks like this:
 
