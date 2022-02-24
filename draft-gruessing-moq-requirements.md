@@ -37,6 +37,7 @@ informative:
   AVTCORE-2022-02:
     target: https://datatracker.ietf.org/meeting/interim-2022-avtcore-01/session/avtcore
     title: "AVTCORE 2022-02 interim meeting materials"
+    date: February 2022
   MOQ-ml:
     target: https://www.ietf.org/mailman/listinfo/moq
     title: "Moq -- Media over QUIC"
@@ -46,6 +47,10 @@ informative:
   rtcweb:
     target: https://datatracker.ietf.org/wg/rtcweb/about/
     title: "Real-Time Communication in WEB-browsers (rtcweb) IETF Working Group"
+  QUIC-goals:
+    target: https://datatracker.ietf.org/doc/charter-ietf-quic/01/
+    title: "Initial Charter for QUIC Working Group"
+    date: October 4, 2016
   I-D.draft-rtpfolks-quic-rtp-over-quic:
   I-D.draft-hurst-quic-rtp-tunnelling:
   I-D.draft-engelbart-rtp-over-quic:
@@ -88,7 +93,7 @@ This document is intended to report a survey of use cases that have been discuss
 Protocol developers have been considering the implications of the QUIC protocol ({{RFC9000}}) for media transport for several years, resulting in a large number of possible meanings of the term "Media Over QUIC", or "MOQ". As of this writing, "Media Over QUIC" has had at least these meanings:
 
 - any kind of media carried directly over the QUIC protocol, as a QUIC payload
-- any kind of media carried indirectly over the QUIC protocol, as an RTP payload
+- any kind of media carried indirectly over the QUIC protocol, as an RTP payload ({{RFC3550}})
 - any kind of media carried indirectly over the QUIC protocol, as an HTTP/3 payload
 - any kind of media carried indirectly over the QUIC protocol, as a WebTransport payload
 - the encapsulation of any Media Transport Protocol ({{mtp}}) in a QUIC payload
@@ -137,6 +142,32 @@ These latency bands were appropriate for streaming media, which was the target f
 - ull100 (less than 100 ms)
 
 Obviously, these last two latency bands are the shortened form of "ultra-low latency - 500 ms" and "ultra-low-latency - 100 ms". Also obviously, bikeshedding on better names is welcomed.
+
+# Why QUIC For Media?
+
+When work on the QUIC protocol ({{RFC9000}}) was chartered ({{QUIC-goals}}), the key goals for QUIC were:
+
+- Minimizing connection establishment and overall transport latency for applications, starting with HTTP/2;
+- Providing multiplexing without head-of-line blocking;
+- Requiring only changes to path endpoints to enable deployment;
+- Enabling multipath and forward error correction extensions; and
+- Providing always-secure transport, using TLS 1.3 by default.
+
+These goals were chosen with HTTP ({{I-D.draft-ietf-quic-http}}) in mind.
+
+While work on "QUIC version 1" (version codepoint 0x00000001) was underway, protocol designers considered potential advantages of the QUIC protocol for other applications. In addition to the key goals for HTTP applications, these advantages were immediately apparent for at least some media applications:
+
+- QUIC endpoints can create bidirectional or unidirectional ordered byte streams.
+- QUIC will automatically handle congestion control, packet loss, and reordering for stream data.
+- QUIC streams allow multiple media streams to share congestion and flow control without otherwise blocking each other.
+- QUIC streams also allow partial reliability, since either the sender or receiver can terminate the stream early without affecting the overall connection.
+- With the DATAGRAM extension ({{I-D.draft-ietf-quic-datagram}}), further partially reliable models are possible, and applications can send congestion controlled datagrams below the MTU size.
+- QUIC connections are established using an ALPN.
+- QUIC endpoints can choose and change their connection ID.
+- QUIC endpoints can migrate IP address without breaking the connection.
+- Because QUIC is encapsulated in UDP, QUIC implementations can run in user space, rather than in kernel space, as TCP typically does. This allows more room for extensible APIs between application and transport, allowing more rapid implementation and deployment of new congestion control, retransmission, and prioritization mechanisms.
+- QUIC is supported in browsers via HTTP/3 or WebTransport.
+- With WebTransport, it is possible to write libraries or applications in JavaScript.
 
 # Prior and Existing Specifications {#priorart}
 
@@ -444,6 +475,6 @@ The authors would like the thank the many authors of of the specifications refer
 * Sam Hurst
 * Varun Singh
 
-The authors would like to thank Maxim Sharabayko for text contributions to this draft.
+The authors would like to thank Alan Frindell, Luke Curley, and Maxim Sharabayko for text contributions to this draft.
 
 James Gruessing would also like to thank Francesco Illy and Nicholas Book for their part in providing the needed motivation.
