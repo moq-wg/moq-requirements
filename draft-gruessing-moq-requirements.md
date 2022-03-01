@@ -59,6 +59,7 @@ informative:
   I-D.draft-sharabayko-srt:
   I-D.draft-ietf-quic-http:
   I-D.draft-ietf-quic-multipath:
+  I-D.draft-lcurley-warp:
   RFC3550:
   RFC8216:
 
@@ -221,6 +222,16 @@ leaves considerations for congestion control and pacing to prevent conflict
 between the two protocols. Apart from that, SRT provides a native suport for stream multiplexing,
 thus contributing this missing functionality to QUIC datagrams.
 
+## Warp - Segmented Live Video Transport {#warp}
+
+{{I-D.draft-lcurley-warp}}
+
+Warp's specification attemps to map Group of Picture encoding of video on top of
+QUIC streams. It depends on ISOBMFF containers to encapsulate both media as well
+as messaging, and defines prioritisation with separate considerations for audio
+and video. It doesn't yet define bi-directionality of media flows, and can be
+run over protocols like WebTransport {{I-D.draft-ietf-webtrans-overview}}.
+
 ## Comparison of Existing Specifications
 
 * Both QRT and the Engelbart draft attempt to use existing payloads of RTP,
@@ -228,9 +239,9 @@ thus contributing this missing functionality to QUIC datagrams.
 * All drafts take differing approaches to flow/stream identification and
   management; some address congestion control and others just omit the subject
   and leave it to QUIC to handle
-* Both QRT and RUSH specify ALPN identification; the Engelbart and SRT drafts do not.
+* Both QRT and RUSH specify ALPN identification; the Engelbart, Warp, and SRT
+  drafts do not.
 
-* Note - need to add WARP and verify these characterizations.
 
 ## Moving Beyond "RTP over QUIC".
 
