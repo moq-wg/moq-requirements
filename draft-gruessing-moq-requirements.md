@@ -370,10 +370,9 @@ are reaching limits towards how low they can reduce latency in live streaming
 and for scenarios where low-bitrate audio streams are used add a significant
 amount of overheads compared to the media bitstream.
 
-On-Demand media streaming ({{odstream}}) is unlikely to benefit from work in this space.
-Without notable latency requirements, protocols such as HLS and DASH largely meet
-the needs of this use case. However larger deployments may benefit from the use
-of HTTP/3 {{I-D.draft-ietf-quic-http}}.
+On-Demand media streaming ({{odstream}}) is unlikely to benefit from work in
+this space. Without notable latency requirements, protocols such as HLS and
+DASH largely meet the needs of this use case.
 
 # Requirements {#requirements}
 
