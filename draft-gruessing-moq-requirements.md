@@ -139,10 +139,10 @@ Within this document, we extend the latency requirement categories for streaming
 
 These latency bands were appropriate for streaming media, which was the target for {{I-D.draft-ietf-mops-streaming-opcons}}, but some realtime media may have requirements that are significantly less than "ultra-low latency". Within this document, we are also using
 
-- ull500 (less than 500 ms)
-- ull100 (less than 100 ms)
+- Ull-50 (less than 50 ms)
+- Ull-250 (less than 250 ms)
 
-Obviously, these last two latency bands are the shortened form of "ultra-low latency - 500 ms" and "ultra-low-latency - 100 ms". Also obviously, bikeshedding on better names is welcomed.
+Obviously, these last two latency bands are the shortened form of "ultra-low latency - 50 ms" and "ultra-low-latency - 250 ms". Perhaps less obviously, bikeshedding on better names and more useful values is welcomed.
 
 # Why QUIC For Media?
 
@@ -234,14 +234,10 @@ run over protocols like WebTransport {{I-D.draft-ietf-webtrans-overview}}.
 
 ## Comparison of Existing Specifications
 
-* Both QRT and the Engelbart draft attempt to use existing payloads of RTP,
-  RTCP, and SDP, unlike RUSH and SRT, as well as using existing Datagram frames
-* All drafts take differing approaches to flow/stream identification and
-  management; some address congestion control and others just omit the subject
-  and leave it to QUIC to handle
-* Both QRT and RUSH specify ALPN identification; the Engelbart, Warp, and SRT
-  drafts do not.
-
+* Some drafts attempt to use existing payloads of RTP, RTCP, and SDP, while others do not.
+* Some use QUIC Datagram frames, while others use QUIC streams.
+* All drafts take differing approaches to flow/stream identification and management. Some address congestion control and others just defer this to QUIC to handle.
+* Some drafts specify ALPN identification, while others do not.
 
 ## Moving Beyond "RTP over QUIC".
 
@@ -266,11 +262,35 @@ For each use case in this section, we also define
 
 It is likely that we should add other characteristics, as we come to understand them.
 
-## Video Conferencing {#vidconf}
+## Interactive Media {#interact}
+
+### Gaming {#gaming}
+
+**Senders/Receivers**: One to One
+**Bi-directional**: Yes
+**Latency**: Ull-50
+
+Where media is received, and user inputs are sent by the client. This may also
+include the client receiving other types of signalling, such as triggers for
+haptic feedback. This may also carry media from the client such as microphone
+audio for in-game chat with other players.
+
+### Remote Desktop {#remdesk}
+
+**Senders/Receivers**: One to One
+**Bi-directional**: Yes
+**Latency**: Ull-250
+
+Where media is received, and user inputs are sent by the client. Latency
+requirements with this usecase are marginally different than the gaming use
+case. This may also include signalling and/or transmitting of files or devices
+connected to the user's computer.
+
+### Video Conferencing/Telephony {#vidconf}
 
 **Senders/Receivers**: Many to Many
 **Bi-directional**: Yes
-**Latency**: Ultra-Low
+**Latency**: Ull-250
 
 Where media is both sent and received; This may include audio from both
 microphone(s) or other inputs, or may include "screen sharing" or inclusion of
@@ -278,29 +298,9 @@ other content such as slide, document, or video presentation. This may be done
 as client/server, or peer to peer with a many to many relationship of both
 senders and receivers.
 
-## Gaming {#gaming}
+## Live Media {#live-media}
 
-**Senders/Receivers**: One to One
-**Bi-directional**: Yes
-**Latency**: Ull100
-
-Where media is received, and user inputs are sent by the client. This may also
-include the client receiving other types of signalling, such as triggers for
-haptic feedback. This may also carry media from the client such as microphone
-audio for in-game chat with other players.
-
-## Remote Desktop {#remdesk}
-
-**Senders/Receivers**: One to One
-**Bi-directional**: Yes
-**Latency**: Ultra-Low
-
-Where media is received, and user inputs are sent by the client. Latency
-requirements with this usecase are marginally different than the gaming use
-case. This may also include signalling and/or transmitting of files or devices
-connected to the user's computer.
-
-## Live Media Streaming {#lmstream}
+### Live Media Streaming {#lmstream}
 
 **Senders/Receivers**: One to Many
 **Bi-directional**: No
@@ -315,7 +315,7 @@ the live edge can be made available for clients to playback, either because the
 local player falls behind edge or because the viewer wishes to play back from a
 point in the past.
 
-## Live Media Contribution {#lmcont}
+### Live Media Contribution {#lmcont}
 
 **Senders/Receivers**: One to One
 **Bi-directional**: No
@@ -326,7 +326,7 @@ platform. The media may comprise of multiple audio and/or video sources.
 Bitrates may either be static or set dynamically by signalling of connection
 inforation (bandwidth, latency) based on data sent by the receiver.
 
-## Live Media Syndication {#lmsynd}
+### Live Media Syndication {#lmsynd}
 
 **Senders/Receivers**: One to One
 **Bi-directional**: No
@@ -337,7 +337,13 @@ media may be compressed down to a bitrate lower than source, but larger than
 final distribution output. Streams may be redundant with failover mechanisms in
 place.
 
-## On-Demand Media Streaming {#odstream}
+## On-Demand Media {#od-mmedia}
+
+### On-Demand Ingest {#od-ingest}
+
+** James, can you fill this section in?**
+
+### On-Demand Media Streaming {#odstream}
 
 **Senders/Receivers**: One to Many
 **Bi-directional**: No
