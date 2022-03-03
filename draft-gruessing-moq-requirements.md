@@ -44,6 +44,10 @@ informative:
   DASH:
     target: https://www.iso.org/standard/79329.html
     title: "ISO/IEC 23009-1:2019: Dynamic adaptive streaming over HTTP (DASH) -- Part 1: Media presentation description and segment formats (2nd edition)"
+  ISOBMFF:
+    target: https://www.iso.org/standard/83102.html
+    title: "ISO/IEC 14496-12:2022 Information technology — Coding of audio-visual objects — Part 12: ISO base media file format"
+    date:  January 2022
   rtcweb:
     target: https://datatracker.ietf.org/wg/rtcweb/about/
     title: "Real-Time Communication in WEB-browsers (rtcweb) IETF Working Group"
@@ -85,11 +89,41 @@ This document describes the use cases that have been discussed in the IETF commu
 
 ## For The Impatient Reader
 
-This document is intended to report a survey of use cases that have been discussed under the "Media Over QUIC" banner, and to propose a subset of those use cases that should be considered first. Our proposal is in {{propscope}}, our understanding of the requirements for those use cases is in {{requirements}}, and most of the rest of the document provides background for those sections.
+This document is intended to report a survey of use cases that have been discussed under the "Media Over QUIC" banner, and to propose a subset of those use cases that should be considered first.
+
+Our proposal is in {{propscope}}, our understanding of the requirements for those use cases is in {{requirements}}, and most of the rest of the document provides background for those sections.
+
+## Why QUIC For Media? {#why-quic}
+
+It is not the purpose of this document to argue against proposals for work on media applications that do not involve QUIC. Such proposals are simply out of scope for this document.
+
+When work on the QUIC protocol ({{RFC9000}}) was chartered ({{QUIC-goals}}), the key goals for QUIC were:
+
+- Minimizing connection establishment and overall transport latency for applications, starting with HTTP/2,
+- Providing multiplexing without head-of-line blocking,
+- Requiring only changes to path endpoints to enable deployment,
+- Enabling multipath and forward error correction extensions, and
+- Providing always-secure transport, using TLS 1.3 by default.
+
+These goals were chosen with HTTP ({{I-D.draft-ietf-quic-http}}) in mind.
+
+While work on "QUIC version 1" (version codepoint 0x00000001) was underway, protocol designers considered potential advantages of the QUIC protocol for other applications. In addition to the key goals for HTTP applications, these advantages were immediately apparent for at least some media applications:
+
+- QUIC endpoints can create bidirectional or unidirectional ordered byte streams.
+- QUIC will automatically handle congestion control, packet loss, and reordering for stream data.
+- QUIC streams allow multiple media streams to share congestion and flow control without otherwise blocking each other.
+- QUIC streams also allow partial reliability, since either the sender or receiver can terminate the stream early without affecting the overall connection.
+- With the DATAGRAM extension ({{I-D.draft-ietf-quic-datagram}}), further partially reliable models are possible, and applications can send congestion controlled datagrams below the MTU size.
+- QUIC connections are established using an ALPN.
+- QUIC endpoints can choose and change their connection ID.
+- QUIC endpoints can migrate IP address without breaking the connection.
+- Because QUIC is encapsulated in UDP, QUIC implementations can run in user space, rather than in kernel space, as TCP typically does. This allows more room for extensible APIs between application and transport, allowing more rapid implementation and deployment of new congestion control, retransmission, and prioritization mechanisms.
+- QUIC is supported in browsers via HTTP/3 or WebTransport.
+- With WebTransport, it is possible to write libraries or applications in JavaScript.
 
 # Terminology {#term}
 
-## The Many Meanings of "Media Over QUIC"
+## The Many Meanings of "Media Over QUIC" {#moq-meaning}
 
 Protocol developers have been considering the implications of the QUIC protocol ({{RFC9000}}) for media transport for several years, resulting in a large number of possible meanings of the term "Media Over QUIC", or "MOQ". As of this writing, "Media Over QUIC" has had at least these meanings:
 
@@ -108,25 +142,23 @@ It will be SUPER HELPFUL if interested parties can come up with a term that unam
 
 ## Media Transport Protoccol {#mtp}
 
-Within this document, we use the term "Media Transport Protocol". This is easier to understand if the reader assumes that we are starting with a protocol stack that looks like this:
+This document describes considerations for work on a new "Network Transport Protocol", or possibly, extensions to an existing "Network Transport Protocol".
+
+Within this document, we use the term "Media Transport Protocol" to describe the protocol of interest. This is easier to understand if the reader assumes that we are talking about a protocol stack that looks something like this:
 
 ~~~~~~
-            Media
-    ------------------------
-    Media Transport Protocol
+               Media
+    ---------------------------
+           Media Format
+    ---------------------------
+    Media Transport Protocol(s)
+    ---------------------------
+               QUIC
 ~~~~~~
 
-and the goal is to provide a protocol stack that looks like this:
+where "Media Format" would be something like RTP payload formats or ISOBMFF {{ISOBMFF}}, and "Media Transport Protocol" would be something like RTP or HTTP. Not all of the possible proposals for "Media Over QUIC" follow this model, but for the ones that do, it seems useful to have names for "the protocol layers beteern Media and QUIC".
 
-~~~~~~
-            Media
-    ------------------------
-    Media Transport Protocol
-    ------------------------
-             QUIC
-~~~~~~
-
-Not all of the proposals for "Media Over QUIC" follow this model, but for the ones that do, it seems useful to have a name for "the protocol layer immediately beneath media".
+It is worth noting explicitly that the "Media Transport Protocol" layer might include more than one protocol. For example, a new Media Transport Protocol might be defined to run over HTTP, or even over WebTransport, which would imply HTTP as well.
 
 ## Latency Requirement Categories {#latent-cat}
 
@@ -143,32 +175,6 @@ These latency bands were appropriate for streaming media, which was the target f
 - ull100 (less than 100 ms)
 
 Obviously, these last two latency bands are the shortened form of "ultra-low latency - 500 ms" and "ultra-low-latency - 100 ms". Also obviously, bikeshedding on better names is welcomed.
-
-# Why QUIC For Media?
-
-When work on the QUIC protocol ({{RFC9000}}) was chartered ({{QUIC-goals}}), the key goals for QUIC were:
-
-- Minimizing connection establishment and overall transport latency for applications, starting with HTTP/2;
-- Providing multiplexing without head-of-line blocking;
-- Requiring only changes to path endpoints to enable deployment;
-- Enabling multipath and forward error correction extensions; and
-- Providing always-secure transport, using TLS 1.3 by default.
-
-These goals were chosen with HTTP ({{I-D.draft-ietf-quic-http}}) in mind.
-
-While work on "QUIC version 1" (version codepoint 0x00000001) was underway, protocol designers considered potential advantages of the QUIC protocol for other applications. In addition to the key goals for HTTP applications, these advantages were immediately apparent for at least some media applications:
-
-- QUIC endpoints can create bidirectional or unidirectional ordered byte streams.
-- QUIC will automatically handle congestion control, packet loss, and reordering for stream data.
-- QUIC streams allow multiple media streams to share congestion and flow control without otherwise blocking each other.
-- QUIC streams also allow partial reliability, since either the sender or receiver can terminate the stream early without affecting the overall connection.
-- With the DATAGRAM extension ({{I-D.draft-ietf-quic-datagram}}), further partially reliable models are possible, and applications can send congestion controlled datagrams below the MTU size.
-- QUIC connections are established using an ALPN.
-- QUIC endpoints can choose and change their connection ID.
-- QUIC endpoints can migrate IP address without breaking the connection.
-- Because QUIC is encapsulated in UDP, QUIC implementations can run in user space, rather than in kernel space, as TCP typically does. This allows more room for extensible APIs between application and transport, allowing more rapid implementation and deployment of new congestion control, retransmission, and prioritization mechanisms.
-- QUIC is supported in browsers via HTTP/3 or WebTransport.
-- With WebTransport, it is possible to write libraries or applications in JavaScript.
 
 # Prior and Existing Specifications {#priorart}
 
@@ -471,7 +477,7 @@ no security considerations of its own.
 
 # Acknowledgements
 
-The authors would like the thank the many authors of of the specifications referenced in {{priorart}} for their work:
+The authors would like to thank the many authors of the specifications referenced in {{priorart}} for their work:
 
 * Alan Frindell
 * Colin Perkins
