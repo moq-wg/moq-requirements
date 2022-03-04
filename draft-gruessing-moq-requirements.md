@@ -347,7 +347,13 @@ point in the past.
 
 ### On-Demand Ingest {#od-ingest}
 
-** James, can you fill this section in?**
+**Senders/Receivers**: One to Many
+**Bi-directional**: No
+**Latency**: On Demand
+
+Where media is ingested and processed for a system to later serve it to clients
+as on-demand media. This may be media captured from live output or provided as a
+pre-recorded source, and may optionally be transcoded upon ingest.
 
 ### On-Demand Media Streaming {#od-stream}
 
