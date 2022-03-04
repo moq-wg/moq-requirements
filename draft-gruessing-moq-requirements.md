@@ -69,7 +69,7 @@ informative:
 
 --- abstract
 
-This document describes the use cases that have been discussed in the IETF community under the banner of "Media Over QUIC", and recommends use cases on live media contribution, syndication, and streaming as the basis for discussions that should guide the design of protocols to satisfy these use cases.
+This document describes the use cases that have been discussed in the IETF community under the banner of "Media Over QUIC", and recommends use cases on live media ingest, syndication, and streaming as the basis for discussions that should guide the design of protocols to satisfy these use cases.
 
 --- note_Note_to_Readers
 
@@ -85,7 +85,7 @@ mailing list, at <https://www.ietf.org/mailman/listinfo/moq>.
 
 # Introduction {#intro}
 
-This document describes the use cases that have been discussed in the IETF community under the banner of "Media Over QUIC", and recommends use cases on live media contribution, syndication, and streaming as the basis for requirements discussions that should guide the design of protocols to satisfy these use cases.
+This document describes the use cases that have been discussed in the IETF community under the banner of "Media Over QUIC", and recommends use cases on live media ingest, syndication, and streaming as the basis for requirements discussions that should guide the design of protocols to satisfy these use cases.
 
 ## For The Impatient Reader
 
@@ -169,12 +169,12 @@ Within this document, we extend the latency requirement categories for streaming
 - non-low-latency live (10 seconds to a few minutes)
 - on-demand (hours or more)
 
-These latency bands were appropriate for streaming media, which was the target for {{I-D.draft-ietf-mops-streaming-opcons}}, but some realtime media may have requirements that are significantly less than "ultra-low latency". Within this document, we are also using
+These latency bands were appropriate for streaming media, which was the target for {{I-D.draft-ietf-mops-streaming-opcons}}, but some interactive media may have requirements that are significantly less than "ultra-low latency". Within this document, we are also using
 
-- ull500 (less than 500 ms)
-- ull100 (less than 100 ms)
+- Ull-50 (less than 50 ms)
+- Ull-200 (less than 200 ms)
 
-Obviously, these last two latency bands are the shortened form of "ultra-low latency - 500 ms" and "ultra-low-latency - 100 ms". Also obviously, bikeshedding on better names is welcomed.
+Obviously, these last two latency bands are the shortened form of "ultra-low latency - 50 ms" and "ultra-low-latency - 200 ms". Perhaps less obviously, bikeshedding on better names and more useful values is welcomed.
 
 # Prior and Existing Specifications {#priorart}
 
@@ -221,7 +221,7 @@ other signalling information) out of bitstream.
 {{I-D.draft-sharabayko-srt-over-quic}}
 
 Secure Reliable Transport (SRT) ({{I-D.draft-sharabayko-srt}}) itself is a general purpose transport protocol
-primarily for contribution transport use cases and this specification covers the
+primarily for ingest transport use cases and this specification covers the
 encapsulation and delivery of SRT on top of QUIC using datagram frame types.
 This specification sets some requirements regarding how the two interact and
 leaves considerations for congestion control and pacing to prevent conflict
@@ -240,14 +240,10 @@ run over protocols like WebTransport {{I-D.draft-ietf-webtrans-overview}}.
 
 ## Comparison of Existing Specifications
 
-* Both QRT and the Engelbart draft attempt to use existing payloads of RTP,
-  RTCP, and SDP, unlike RUSH and SRT, as well as using existing Datagram frames
-* All drafts take differing approaches to flow/stream identification and
-  management; some address congestion control and others just omit the subject
-  and leave it to QUIC to handle
-* Both QRT and RUSH specify ALPN identification; the Engelbart, Warp, and SRT
-  drafts do not.
-
+* Some drafts attempt to use existing payloads of RTP, RTCP, and SDP, while others do not.
+* Some use QUIC Datagram frames, while others use QUIC streams.
+* All drafts take differing approaches to flow/stream identification and management. Some address congestion control and others just defer this to QUIC to handle.
+* Some drafts specify ALPN identification, while others do not.
 
 ## Moving Beyond "RTP over QUIC".
 
@@ -272,11 +268,35 @@ For each use case in this section, we also define
 
 It is likely that we should add other characteristics, as we come to understand them.
 
-## Video Conferencing {#vidconf}
+## Interactive Media {#interact}
+
+### Gaming {#gaming}
+
+**Senders/Receivers**: One to One
+**Bi-directional**: Yes
+**Latency**: Ull-50
+
+Where media is received, and user inputs are sent by the client. This may also
+include the client receiving other types of signalling, such as triggers for
+haptic feedback. This may also carry media from the client such as microphone
+audio for in-game chat with other players.
+
+### Remote Desktop {#remdesk}
+
+**Senders/Receivers**: One to One
+**Bi-directional**: Yes
+**Latency**: Ull-50
+
+Where media is received, and user inputs are sent by the client. Latency
+requirements with this usecase are marginally different than the gaming use
+case. This may also include signalling and/or transmitting of files or devices
+connected to the user's computer.
+
+### Video Conferencing/Telephony {#vidconf}
 
 **Senders/Receivers**: Many to Many
 **Bi-directional**: Yes
-**Latency**: Ultra-Low
+**Latency**: Ull-200
 
 Where media is both sent and received; This may include audio from both
 microphone(s) or other inputs, or may include "screen sharing" or inclusion of
@@ -284,33 +304,35 @@ other content such as slide, document, or video presentation. This may be done
 as client/server, or peer to peer with a many to many relationship of both
 senders and receivers.
 
-## Gaming {#gaming}
+## Live Media {#lm-media}
+
+### Live Media Ingest {#lmingest}
 
 **Senders/Receivers**: One to One
-**Bi-directional**: Yes
-**Latency**: Ull100
+**Bi-directional**: No
+**Latency**: Ull-200 to Ultra-Low
 
-Where media is received, and user inputs are sent by the client. This may also
-include the client receiving other types of signalling, such as triggers for
-haptic feedback. This may also carry media from the client such as microphone
-audio for in-game chat with other players.
+Where media is received from a source for onwards handling into a distribution
+platform. The media may comprise of multiple audio and/or video sources.
+Bitrates may either be static or set dynamically by signalling of connection
+inforation (bandwidth, latency) based on data sent by the receiver.
 
-## Remote Desktop {#remdesk}
+### Live Media Syndication {#lmsynd}
 
 **Senders/Receivers**: One to One
-**Bi-directional**: Yes
-**Latency**: Ultra-Low
+**Bi-directional**: No
+**Latency**: Ull-200 to Ultra-Low
 
-Where media is received, and user inputs are sent by the client. Latency
-requirements with this usecase are marginally different than the gaming use
-case. This may also include signalling and/or transmitting of files or devices
-connected to the user's computer.
+Where media is sent onwards to another platform for further distribution. The
+media may be compressed down to a bitrate lower than source, but larger than
+final distribution output. Streams may be redundant with failover mechanisms in
+place.
 
-## Live Media Streaming {#lmstream}
+### Live Media Streaming {#lmstream}
 
 **Senders/Receivers**: One to Many
 **Bi-directional**: No
-**Latency**: Low to Non-Low
+**Latency**: Ull-200 to Ultra-Low
 
 Where media is received from a live broadcast or stream. This may comprise of
 multiple audio or video outputs with different codecs or bitrates. This may also
@@ -321,29 +343,13 @@ the live edge can be made available for clients to playback, either because the
 local player falls behind edge or because the viewer wishes to play back from a
 point in the past.
 
-## Live Media Contribution {#lmcont}
+## On-Demand Media {#od-media}
 
-**Senders/Receivers**: One to One
-**Bi-directional**: No
-**Latency**: Ultra-Low to Low
+### On-Demand Ingest {#od-ingest}
 
-Where media is received from a source for onwards handling into a distribution
-platform. The media may comprise of multiple audio and/or video sources.
-Bitrates may either be static or set dynamically by signalling of connection
-inforation (bandwidth, latency) based on data sent by the receiver.
+** James, can you fill this section in?**
 
-## Live Media Syndication {#lmsynd}
-
-**Senders/Receivers**: One to One
-**Bi-directional**: No
-**Latency**: Ultra-Low to Low
-
-Where media is sent onwards to another platform for further distribution. The
-media may be compressed down to a bitrate lower than source, but larger than
-final distribution output. Streams may be redundant with failover mechanisms in
-place.
-
-## On-Demand Media Streaming {#odstream}
+### On-Demand Media Streaming {#od-stream}
 
 **Senders/Receivers**: One to Many
 **Bi-directional**: No
@@ -355,28 +361,28 @@ live media streaming use case.
 
 # Proposed Scope for "Media Over QUIC" {#propscope}
 
-Our proposal is that "Media Over QUIC" discussions focus first on the use cases for Live Media Contribution ({{lmcont}}),
+Our proposal is that "Media Over QUIC" discussions focus first on the use cases described in {{lm-media}}, which are Live Media Ingest ({{lmingest}}),
 Syndication ({{lmsynd}}), and Streaming ({{lmstream}}). Our reasoning is provided in {{usecaseanalysis}}.
 
 ## Use Case Analysis {#usecaseanalysis}
 
 Each of the above use cases in {{overallusecases}} fit into one of three classifications of solutions.
 
-The first group, covering gaming ({{gaming}}), screen sharing ({{remdesk}}), and general video conferencing ({{vidconf}}), are
+The first group, in {{interact}}, covering gaming ({{gaming}}), screen sharing ({{remdesk}}), and general video conferencing ({{vidconf}}), are
 largely covered by WebRTC and related protocols today. Whilst there may be
 benefit in these use cases having a QUIC based protocol it may be more
 appropriate given the size of existing deployments to extend the WebRTC
 protocol and specifications. Such work could start in a QUIC specific forum, but
 would likely need to take place in {{rtcweb}} and the W3C.
 
-The second group of classifications, covering Live Media Contribution ({{lmcont}}),
-Syndication ({{lmsynd}}), and Streaming ({{lmstream}}) are likely the use cases likely to benefit most from
+The second group of classifications, in {{lm-media}}, covering Live Media Ingest ({{lmingest}}),
+Live Media Syndication ({{lmsynd}}), and Live Media Streaming ({{lmstream}}) are likely the use cases likely to benefit most from
 this work. Existing protocols used such as HLS {{RFC8216}} and DASH {{DASH}}
 are reaching limits towards how low they can reduce latency in live streaming
 and for scenarios where low-bitrate audio streams are used add a significant
 amount of overheads compared to the media bitstream.
 
-On-Demand media streaming ({{odstream}}) is unlikely to benefit from work in
+The third group, {{od-media}}, covering On-Demand Media Ingest ({{od-ingest}}) and On-Demand Media streaming ({{od-stream}}) is unlikely to benefit from work in
 this space. Without notable latency requirements, protocols such as HLS and
 DASH largely meet the needs of this use case.
 
