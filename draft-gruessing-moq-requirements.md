@@ -26,14 +26,32 @@ author:
     country: United States of America
     email: spencerdawkins.ietf@gmail.com
 
-normative:
+informative:
+  RFC3550:
   RFC4566:
+  RFC6363:
+  RFC6716:
+  RFC7230:
+  RFC7540:
+  RFC7826:
+  RFC8216:
   RFC9000:
-  I-D.draft-ietf-webtrans-overview:
+
+  I-D.draft-cardwell-iccrg-bbr-congestion-control:
+  I-D.draft-engelbart-rtp-over-quic:
+  I-D.draft-hurst-quic-rtp-tunnelling:
+  I-D.draft-kpugin-rush:
+  I-D.draft-lcurley-warp:
+  I-D.draft-rtpfolks-quic-rtp-over-quic:
+  I-D.draft-sharabayko-srt:
+  I-D.draft-sharabayko-srt-over-quic:
+
   I-D.draft-ietf-mops-streaming-opcons:
   I-D.draft-ietf-quic-datagram:
+  I-D.draft-ietf-quic-http:
+  I-D.draft-ietf-quic-multipath:
+  I-D.draft-ietf-webtrans-overview:
 
-informative:
   AVTCORE-2022-02:
     target: https://datatracker.ietf.org/meeting/interim-2022-avtcore-01/session/avtcore
     title: "AVTCORE 2022-02 interim meeting materials"
@@ -48,24 +66,13 @@ informative:
     target: https://www.iso.org/standard/83102.html
     title: "ISO/IEC 14496-12:2022 Information technology — Coding of audio-visual objects — Part 12: ISO base media file format"
     date:  January 2022
-  rtcweb:
-    target: https://datatracker.ietf.org/wg/rtcweb/about/
-    title: "Real-Time Communication in WEB-browsers (rtcweb) IETF Working Group"
+  WebRTC:
+    target: https://www.w3.org/groups/wg/webrtc
+    title: "Web Real-Time Communications Working Group"
   QUIC-goals:
     target: https://datatracker.ietf.org/doc/charter-ietf-quic/01/
     title: "Initial Charter for QUIC Working Group"
     date: October 4, 2016
-  I-D.draft-rtpfolks-quic-rtp-over-quic:
-  I-D.draft-hurst-quic-rtp-tunnelling:
-  I-D.draft-engelbart-rtp-over-quic:
-  I-D.draft-kpugin-rush:
-  I-D.draft-sharabayko-srt-over-quic:
-  I-D.draft-sharabayko-srt:
-  I-D.draft-ietf-quic-http:
-  I-D.draft-ietf-quic-multipath:
-  I-D.draft-lcurley-warp:
-  RFC3550:
-  RFC8216:
 
 --- abstract
 
@@ -85,7 +92,7 @@ mailing list, at <https://www.ietf.org/mailman/listinfo/moq>.
 
 # Introduction {#intro}
 
-This document describes the use cases that have been discussed in the IETF community under the banner of "Media Over QUIC", and recommends use cases on live media ingest, syndication, and streaming as the basis for requirements discussions that should guide the design of protocols to satisfy these use cases.
+This document describes the use cases that have been discussed in the IETF community under the banner of "Media Over QUIC", and recommends use cases on live media ingest, syndication, and streaming as the basis for discussions that should guide the design of protocols to satisfy these use cases.
 
 ## For The Impatient Reader
 
@@ -99,7 +106,7 @@ It is not the purpose of this document to argue against proposals for work on me
 
 When work on the QUIC protocol ({{RFC9000}}) was chartered ({{QUIC-goals}}), the key goals for QUIC were:
 
-- Minimizing connection establishment and overall transport latency for applications, starting with HTTP/2,
+- Minimizing connection establishment and overall transport latency for applications, starting with HTTP,
 - Providing multiplexing without head-of-line blocking,
 - Requiring only changes to path endpoints to enable deployment,
 - Enabling multipath and forward error correction extensions, and
@@ -136,9 +143,7 @@ Protocol developers have been considering the implications of the QUIC protocol 
 
 There may be IETF participants using other meanings as well.
 
-As of this writing, the second bullet ("any kind of media carried indirectly over the QUIC protocol, as an RTP payload"), seems to be in scope for the IETF AVTCORE working group, and was discussed at some length at the February 2022 AVTCORE working group meeting {{AVTCORE-2022-02}}. So, perhaps, that possible meaning is out of scope for "Media over QUIC".
-
-It will be SUPER HELPFUL if interested parties can come up with a term that unambiguously describes what we're trying to achieve.
+As of this writing, the second bullet ("any kind of media carried indirectly over the QUIC protocol, as an RTP payload"), seems to be in scope for the IETF AVTCORE working group, and was discussed at some length at the February 2022 AVTCORE working group meeting {{AVTCORE-2022-02}}, although no drafts in this space have been adopted by the AVTCORE working group. So, perhaps, that possible meaning is out of scope for "Media over QUIC".
 
 ## Media Transport Protoccol {#mtp}
 
@@ -270,6 +275,13 @@ It is likely that we should add other characteristics, as we come to understand 
 
 ## Interactive Media {#interact}
 
+The use cases described in this section have one particular attribute in common - the target latency for these cases are on the order of one or two RTTs. In order to meet those targets, it is not possible to rely on protocol mechanisms that require multiple RTTs to function effectively. For example,
+
+* When the target latency is on the order of one RTT, it makes sense to use FEC {{RFC6363}} and codec-level packet loss concealment {{RFC6716}}, rather than selectively retransmitting only lost packets. These mechanisms use more bytes, but do not require multiple RTTs in order to recover from packet loss.
+* When the target latency is on the order of one RTT, it is impossible to use congestion control schemes like BBR {{I-D.draft-cardwell-iccrg-bbr-congestion-control}}, since BBR has probing mechanisms that rely on temporarily inducing delay and amortizing the consequences of that over multiple RTTs.
+
+This may help to explain why these use cases often rely on protocols such as RTP {{RFC3550}}, which provide low-level control of packetization and transmission.
+
 ### Gaming {#gaming}
 
 **Senders/Receivers**: One to One
@@ -296,15 +308,21 @@ connected to the user's computer.
 
 **Senders/Receivers**: Many to Many
 **Bi-directional**: Yes
-**Latency**: Ull-200
+**Latency**: Ull-50 to Ull-200
 
 Where media is both sent and received; This may include audio from both
 microphone(s) or other inputs, or may include "screen sharing" or inclusion of
 other content such as slide, document, or video presentation. This may be done
 as client/server, or peer to peer with a many to many relationship of both
-senders and receivers.
+senders and receivers. The target for latency may be as large as Ull-200 for
+some media types such as audio, but other media types in this use case have much
+more stringent latency targets.
 
 ## Live Media {#lm-media}
+
+The use cases in this section, unlike the use cases described in {{interact}}, still have "humans in the loop", but these humans expect media to be "responsive", where the responsiveness is more on the order of 5 to 10 RTTs. This allows the use of protocol mechanisms that require more than one or two RTTs - as noted in {{interact}}, end-to-end recovery from packet loss and congestion avoidance are two such protocol mechanisms that can be used with Live Media.
+
+To illustrate the difference, the responsiveness expected with videoconferencing is much greater than watching a video, even if the video is being produced "live" and sent to a platform for syndication and distribution.
 
 ### Live Media Ingest {#lmingest}
 
@@ -345,6 +363,8 @@ point in the past.
 
 ## On-Demand Media {#od-media}
 
+Finally, the "On-Demand" use cases described in this section do not have a tight linkage between ingest and streaming, allowing significant transcoding, processing, insertion of video clips in a news article, etc. The latency constraints for the use cases in this section may be dominated by the time required for whatever actions are required before media are available for streaming.
+
 ### On-Demand Ingest {#od-ingest}
 
 **Senders/Receivers**: One to Many
@@ -352,8 +372,7 @@ point in the past.
 **Latency**: On Demand
 
 Where media is ingested and processed for a system to later serve it to clients
-as on-demand media. This may be media captured from live output or provided as a
-pre-recorded source, and may optionally be transcoded upon ingest.
+as on-demand media. This media provided from a pre-recorded source, or captured from live output, but in either case, this media is not immediately passed to viewers, but is stored for "on-demand" retrieval, and may be transcoded upon ingest.
 
 ### On-Demand Media Streaming {#od-stream}
 
@@ -368,29 +387,42 @@ live media streaming use case.
 # Proposed Scope for "Media Over QUIC" {#propscope}
 
 Our proposal is that "Media Over QUIC" discussions focus first on the use cases described in {{lm-media}}, which are Live Media Ingest ({{lmingest}}),
-Syndication ({{lmsynd}}), and Streaming ({{lmstream}}). Our reasoning is provided in {{usecaseanalysis}}.
-
-## Use Case Analysis {#usecaseanalysis}
+Syndication ({{lmsynd}}), and Streaming ({{lmstream}}). Our reasoning for this suggestion follows.
 
 Each of the above use cases in {{overallusecases}} fit into one of three classifications of solutions.
 
-The first group, in {{interact}}, covering gaming ({{gaming}}), screen sharing ({{remdesk}}), and general video conferencing ({{vidconf}}), are
-largely covered by WebRTC and related protocols today. Whilst there may be
+## Analysis for Interactive Use Cases {#analy-interact}
+
+The first group, Interactive Media, as described in {{interact}}, and covering gaming ({{gaming}}), screen sharing ({{remdesk}}), and general video conferencing ({{vidconf}}), are
+largely covered by RTP, often in conjunction with WebRTC {{WebRTC}}, and related protocols today.
+
+Whilst there may be
 benefit in these use cases having a QUIC based protocol it may be more
-appropriate given the size of existing deployments to extend the WebRTC
-protocol and specifications. Such work could start in a QUIC specific forum, but
-would likely need to take place in {{rtcweb}} and the W3C.
+appropriate given the size of existing deployments to extend the RTP
+protocols and specifications.
+
+## Analysis for Live Media Use Cases {#analy-lm}
 
 The second group of classifications, in {{lm-media}}, covering Live Media Ingest ({{lmingest}}),
-Live Media Syndication ({{lmsynd}}), and Live Media Streaming ({{lmstream}}) are likely the use cases likely to benefit most from
-this work. Existing protocols used such as HLS {{RFC8216}} and DASH {{DASH}}
+Live Media Syndication ({{lmsynd}}), and Live Media Streaming ({{lmstream}}) are likely the use cases that will benefit most from
+this work.
+
+Existing ingest and streaming protocols such as HLS {{RFC8216}} and DASH {{DASH}}
 are reaching limits towards how low they can reduce latency in live streaming
-and for scenarios where low-bitrate audio streams are used add a significant
-amount of overheads compared to the media bitstream.
+and for scenarios where low-bitrate audio streams are used, these protocols add a significant
+amount of overhead compared to the media bitstream itself.
+
+For this reason, we suggest that work on "Media Over QUIC" protocols target these use cases at this time.
+
+## Analysis for On-Demand Use Cases {#analy-od}
 
 The third group, {{od-media}}, covering On-Demand Media Ingest ({{od-ingest}}) and On-Demand Media streaming ({{od-stream}}) is unlikely to benefit from work in
-this space. Without notable latency requirements, protocols such as HLS and
-DASH largely meet the needs of this use case.
+this space. Without the same "Live Media" latency requirements that would motivate deployment of new protocols, existing protocols such as HLS and
+DASH are probably "good enough" to meet the needs of these use cases.
+
+This does not mean that existing protocols in this space are perfect. Segmented protocols such as HLS and DASH were developed to overcome the deficiencies of TCP, as used in HTTP/1.1 {{RFC7230}} and HTTP/2 {{RFC7540}}, and do not make full use of the possible congestion window along the path from sender to receiver. Other protocols in this space have their own deficiencies. For example, RTSP {{RFC7826}} does not have easy ways to add support for new media codecs.
+
+Our expectation is that these use cases will not drive work in the "Media Over QUIC" space, but as new protocols come into being, they may very well be taken up for these use cases as well.
 
 # Requirements {#requirements}
 
