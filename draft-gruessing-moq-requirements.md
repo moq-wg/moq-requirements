@@ -50,6 +50,8 @@ informative:
   I-D.draft-rtpfolks-quic-rtp-over-quic:
   I-D.draft-sharabayko-srt:
   I-D.draft-sharabayko-srt-over-quic:
+  I-D.draft-jennings-moq-quicr-arch:
+  I-D.draft-jennings-moq-quicr-proto:
 
   I-D.draft-ietf-mops-streaming-opcons:
   I-D.draft-ietf-quic-datagram:
@@ -248,6 +250,18 @@ QUIC streams. It depends on ISOBMFF containers to encapsulate both media as well
 as messaging, and defines prioritisation with separate considerations for audio
 and video. It doesn't yet define bi-directionality of media flows, and can be
 run over protocols like WebTransport {{I-D.draft-ietf-webtrans-overview}}.
+
+## QuicR {#quicr}
+
+{{I-D.draft-jennings-moq-quicr-proto}}
+
+QuicR comprisees of both an architectural document
+{{I-D.draft-jennings-moq-quicr-arch}} as well as a protocol specification.
+QuicR's focus is around Pub/Sub patterns for both client negotiation as well as
+relaying media and allows implementations to use either streams or datagrams to
+carry media, and whilst it does not yet appear to define a means of media
+encapsulation, it does appear possible for QuicR to overlay support for both
+{{kpugin}} and {{warp}}.
 
 ## Comparison of Existing Specifications
 
