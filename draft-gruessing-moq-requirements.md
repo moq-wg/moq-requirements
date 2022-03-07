@@ -1,6 +1,6 @@
 ---
-title: Media Over QUIC - Use cases and Requirements
-abbrev: MoQ Use Cases and Requirements
+title: Media Over QUIC - Use Cases and Considerations for Media Transport Protocol Design
+abbrev: MoQ Use Cases and Considerations
 docname: draft-gruessing-moq-requirements-latest
 category: info
 date:
@@ -35,7 +35,12 @@ informative:
   RFC7540:
   RFC7826:
   RFC8216:
+  RFC8298:
+  RFC8312:
+  RFC8836:
   RFC9000:
+  RFC9002:
+  RFC8698:
 
   I-D.draft-cardwell-iccrg-bbr-congestion-control:
   I-D.draft-engelbart-rtp-over-quic:
@@ -76,7 +81,7 @@ informative:
 
 --- abstract
 
-This document describes the use cases that have been discussed in the IETF community under the banner of "Media Over QUIC", and recommends use cases on live media ingest, syndication, and streaming as the basis for discussions that should guide the design of protocols to satisfy these use cases.
+This document describes use cases that have been discussed in the IETF community under the banner of "Media Over QUIC", provides analysis about those use cases, recommends a subset of use cases that cover live media ingest, syndication, and streaming for further exploration, and describes considerations that should guide the design of protocols to satisfy these use cases.
 
 --- note_Note_to_Readers
 
@@ -92,13 +97,15 @@ mailing list, at <https://www.ietf.org/mailman/listinfo/moq>.
 
 # Introduction {#intro}
 
-This document describes the use cases that have been discussed in the IETF community under the banner of "Media Over QUIC", and recommends use cases on live media ingest, syndication, and streaming as the basis for discussions that should guide the design of protocols to satisfy these use cases.
+This document describes use cases that have been discussed in the IETF community under the banner of "Media Over QUIC", provides analysis about those use cases, recommends a subset of use cases that cover live media ingest, syndication, and streaming for further exploration, and describes considerations that should guide the design of protocols to satisfy these use cases.
 
 ## For The Impatient Reader
 
-This document is intended to report a survey of use cases that have been discussed under the "Media Over QUIC" banner, and to propose a subset of those use cases that should be considered first.
+- Our proposal is to focus on live media use cases, as described in {{propscope}}, rather than on interactive media use cases or on-demand use cases.
+- The reasoning behind this proposal can be found in {{analy-interact}}.
+- The considerations for protocol work to satisfy the proposed use cases can be found in {{considerations}}.
 
-Our proposal is in {{propscope}}, our understanding of the requirements for those use cases is in {{requirements}}, and most of the rest of the document provides background for those sections.
+Most of the rest of this document provides background for these sections.
 
 ## Why QUIC For Media? {#why-quic}
 
@@ -128,6 +135,8 @@ While work on "QUIC version 1" (version codepoint 0x00000001) was underway, prot
 - QUIC is supported in browsers via HTTP/3 or WebTransport.
 - With WebTransport, it is possible to write libraries or applications in JavaScript.
 
+The specific advantages of interest may vary from use case to use case, but these advantages justify further investigation of "Media Over QUIC".
+
 # Terminology {#term}
 
 ## The Many Meanings of "Media Over QUIC" {#moq-meaning}
@@ -139,15 +148,15 @@ Protocol developers have been considering the implications of the QUIC protocol 
 - any kind of media carried indirectly over the QUIC protocol, as an HTTP/3 payload
 - any kind of media carried indirectly over the QUIC protocol, as a WebTransport payload
 - the encapsulation of any Media Transport Protocol ({{mtp}}) in a QUIC payload
-- an IETF mailing list ({{MOQ-ml}}) "... for discussion of video ingest and distribution protocols that use QUIC as the underlying transport"
+- an IETF mailing list ({{MOQ-ml}}), which was requested "... for discussion of video ingest and distribution protocols that use QUIC as the underlying transport", although discussion of other Media Over QUIC proposals have also been discussed there.
 
 There may be IETF participants using other meanings as well.
 
-As of this writing, the second bullet ("any kind of media carried indirectly over the QUIC protocol, as an RTP payload"), seems to be in scope for the IETF AVTCORE working group, and was discussed at some length at the February 2022 AVTCORE working group meeting {{AVTCORE-2022-02}}, although no drafts in this space have been adopted by the AVTCORE working group. So, perhaps, that possible meaning is out of scope for "Media over QUIC".
+As of this writing, the second bullet ("any kind of media carried indirectly over the QUIC protocol, as an RTP payload"), seems to be in scope for the IETF AVTCORE working group, and was discussed at some length at the February 2022 AVTCORE working group meeting {{AVTCORE-2022-02}}, although no drafts in this space have yet been adopted by the AVTCORE working group.
 
 ## Media Transport Protoccol {#mtp}
 
-This document describes considerations for work on a new "Network Transport Protocol", or possibly, extensions to an existing "Network Transport Protocol".
+This document describes considerations for work on extensions to existing "Media Transport Protocols" or creation of new "Media Transport Protocols".
 
 Within this document, we use the term "Media Transport Protocol" to describe the protocol of interest. This is easier to understand if the reader assumes that we are talking about a protocol stack that looks something like this:
 
@@ -161,9 +170,9 @@ Within this document, we use the term "Media Transport Protocol" to describe the
                QUIC
 ~~~~~~
 
-where "Media Format" would be something like RTP payload formats or ISOBMFF {{ISOBMFF}}, and "Media Transport Protocol" would be something like RTP or HTTP. Not all of the possible proposals for "Media Over QUIC" follow this model, but for the ones that do, it seems useful to have names for "the protocol layers beteern Media and QUIC".
+where "Media Format" would be something like RTP payload formats or ISOBMFF {{ISOBMFF}}, and "Media Transport Protocol" would be something like RTP or HTTP. Not all possible proposals for "Media Over QUIC" follow this model, but for the ones that do, it seems useful to have names for "the protocol layers beteern Media and QUIC".
 
-It is worth noting explicitly that the "Media Transport Protocol" layer might include more than one protocol. For example, a new Media Transport Protocol might be defined to run over HTTP, or even over WebTransport, which would imply HTTP as well.
+It is worth noting explicitly that the "Media Transport Protocol" layer might include more than one protocol. For example, a new Media Transport Protocol might be defined to run over HTTP, or even over WebTransport and HTTP.
 
 ## Latency Requirement Categories {#latent-cat}
 
@@ -179,15 +188,12 @@ These latency bands were appropriate for streaming media, which was the target f
 - Ull-50 (less than 50 ms)
 - Ull-200 (less than 200 ms)
 
-Obviously, these last two latency bands are the shortened form of "ultra-low latency - 50 ms" and "ultra-low-latency - 200 ms". Perhaps less obviously, bikeshedding on better names and more useful values is welcomed.
+Perhaps obviously, these last two latency bands are the shortened form of "ultra-low latency - 50 ms" and "ultra-low-latency - 200 ms". Perhaps less obviously, bikeshedding on better names and more useful values is welcomed.
 
 # Prior and Existing Specifications {#priorart}
 
-* Note - need to edit this section to reflect new draft scope and add short characterization of WARP protocol.
-
-Several existing draft specifications and protocols already exist which base
-their implementation around using existing Media Transport Protocols on top of QUIC, or define
-their own. With the exception of RUSH ({{kpugin}}), it is unknown if the other specifications
+Several draft specifications have been proposed which either encapsulate existing Media Transport Protocols in QUIC, or define
+their own new Media Transport Protocol on top of QUIC. With the exception of RUSH ({{kpugin}}), it is unknown if the other specifications listed in this section
 have had any deployments or interop with multiple implementations.
 
 ## QRT: QUIC RTP Tunnelling {#hurst}
@@ -245,20 +251,18 @@ run over protocols like WebTransport {{I-D.draft-ietf-webtrans-overview}}.
 
 ## Comparison of Existing Specifications
 
+** Additional details for this comparison could usefully be added here. **
+
 * Some drafts attempt to use existing payloads of RTP, RTCP, and SDP, while others do not.
 * Some use QUIC Datagram frames, while others use QUIC streams.
 * All drafts take differing approaches to flow/stream identification and management. Some address congestion control and others just defer this to QUIC to handle.
 * Some drafts specify ALPN identification, while others do not.
 
-## Moving Beyond "RTP over QUIC".
-
-It's worth noting that work on "RTP over QUIC" is being considered in the AVTCORE working group at this time, although no proposals have been adopted by the working group.
-
-Although some of the use cases described in {{overallusecases}} came out of "RTP over QUIC" proposals, they are worth considering for MOQ, and may be especially relevant to MOQ, depending on whether "RTP over QUIC' requires major changes to RTP and RTCP, in order to meet the requirements arising out of those use cases.
-
 # Use Cases Informing This Proposal {#overallusecases}
 
 Our goal in this section is to understand the range of use cases that have been proposed for "Media Over QUIC".
+
+Although some of the use cases described in this section came out of "RTP over QUIC" proposals, they are worth considering in the broader "Media Over QUIC" context, and may be especially relevant to MOQ, depending on whether "RTP over QUIC" requires major changes to RTP and RTCP, in order to meet the requirements arising out of the corresponding use cases.
 
 An early draft in the "media over QUIC" space,
 {{I-D.draft-rtpfolks-quic-rtp-over-quic}}, defined several key use cases. Some of the
@@ -284,9 +288,11 @@ This may help to explain why these use cases often rely on protocols such as RTP
 
 ### Gaming {#gaming}
 
-**Senders/Receivers**: One to One
-**Bi-directional**: Yes
-**Latency**: Ull-50
+|Attribute | Value |
+| -----+----------------
+|**Senders/Receivers**|  One to One
+| **Bi-directional**| Yes
+| **Latency**|  Ull-50
 
 Where media is received, and user inputs are sent by the client. This may also
 include the client receiving other types of signalling, such as triggers for
@@ -295,9 +301,11 @@ audio for in-game chat with other players.
 
 ### Remote Desktop {#remdesk}
 
-**Senders/Receivers**: One to One
-**Bi-directional**: Yes
-**Latency**: Ull-50
+|Attribute | Value |
+| -----+----------------
+|**Senders/Receivers**|  One to One
+| **Bi-directional**| Yes
+| **Latency**|  Ull-50
 
 Where media is received, and user inputs are sent by the client. Latency
 requirements with this usecase are marginally different than the gaming use
@@ -306,9 +314,11 @@ connected to the user's computer.
 
 ### Video Conferencing/Telephony {#vidconf}
 
-**Senders/Receivers**: Many to Many
-**Bi-directional**: Yes
-**Latency**: Ull-50 to Ull-200
+|Attribute | Value |
+| -----+----------------
+|**Senders/Receivers**|  Many to Many
+| **Bi-directional**| Yes
+| **Latency**|  Ull-50 to Ull-200
 
 Where media is both sent and received; This may include audio from both
 microphone(s) or other inputs, or may include "screen sharing" or inclusion of
@@ -326,9 +336,11 @@ To illustrate the difference, the responsiveness expected with videoconferencing
 
 ### Live Media Ingest {#lmingest}
 
-**Senders/Receivers**: One to One
-**Bi-directional**: No
-**Latency**: Ull-200 to Ultra-Low
+|Attribute | Value |
+| -----+----------------
+|**Senders/Receivers**|  One to One
+| **Bi-directional**| No
+| **Latency**|  Ull-200 to Ultra-Low
 
 Where media is received from a source for onwards handling into a distribution
 platform. The media may comprise of multiple audio and/or video sources.
@@ -337,9 +349,11 @@ inforation (bandwidth, latency) based on data sent by the receiver.
 
 ### Live Media Syndication {#lmsynd}
 
-**Senders/Receivers**: One to One
-**Bi-directional**: No
-**Latency**: Ull-200 to Ultra-Low
+|Attribute | Value |
+| -----+----------------
+|**Senders/Receivers**|  One to One
+| **Bi-directional**| No
+| **Latency**|  Ull-200 to Ultra-Low
 
 Where media is sent onwards to another platform for further distribution. The
 media may be compressed down to a bitrate lower than source, but larger than
@@ -348,9 +362,11 @@ place.
 
 ### Live Media Streaming {#lmstream}
 
-**Senders/Receivers**: One to Many
-**Bi-directional**: No
-**Latency**: Ull-200 to Ultra-Low
+|Attribute | Value |
+| -----+----------------
+|**Senders/Receivers**|  One to Many
+| **Bi-directional**| No
+| **Latency**| Ull-200 to Ultra-Low
 
 Where media is received from a live broadcast or stream. This may comprise of
 multiple audio or video outputs with different codecs or bitrates. This may also
@@ -367,18 +383,22 @@ Finally, the "On-Demand" use cases described in this section do not have a tight
 
 ### On-Demand Ingest {#od-ingest}
 
-**Senders/Receivers**: One to Many
-**Bi-directional**: No
-**Latency**: On Demand
+|Attribute | Value |
+| -----+----------------
+|**Senders/Receivers**|  One to Many
+| **Bi-directional**| No
+| **Latency**|  On Demand
 
 Where media is ingested and processed for a system to later serve it to clients
 as on-demand media. This media provided from a pre-recorded source, or captured from live output, but in either case, this media is not immediately passed to viewers, but is stored for "on-demand" retrieval, and may be transcoded upon ingest.
 
 ### On-Demand Media Streaming {#od-stream}
 
-**Senders/Receivers**: One to Many
-**Bi-directional**: No
-**Latency**: On Demand
+|Attribute | Value |
+| -----+----------------
+|**Senders/Receivers**|  One to Many
+| **Bi-directional**| No
+| **Latency**|  On Demand
 
 Where media is received from a non-live, typically pre-recorded source. This may
 feature additional outputs, bitrates, codecs, and media types described in the
@@ -424,26 +444,31 @@ This does not mean that existing protocols in this space are perfect. Segmented 
 
 Our expectation is that these use cases will not drive work in the "Media Over QUIC" space, but as new protocols come into being, they may very well be taken up for these use cases as well.
 
-# Requirements {#requirements}
-
-**Note: This section was written to reflect an early focus on "Media over RTP over QUIC", and will be revisited when we agree on the use cases in {{overallusecases}} that will be in scope for further work.
+# Considerations for Protocol Work {#considerations}
 
 Even a cursory examination of the existing proposals listed in {{priorart}}
-shows that there are fundamental differences in the approaches being used.
+shows that there are fundamental differences in the approaches being used. This sction is intended to "up-level" the conversation beyond specific protocols, so that we can more likely agree on what is important for protocol design work.
+
+Please note that the considerations in this section are focused especially on the use cases described in {{lm-media}}, although other use cases are mentioned for comparison and contrast.
+
+## Here Be Dragons
+
+The discussion in {{considerations}} is less mature than in most other sections of this document. The good news is that this section is fertile ground for people who would like to contribute to future revisions of this document. Comments are even more welcome for this section than for the rest of the document, for which they are welcome. The authors suggest that high-level comments are most appropriate at this time.
 
 ## Codec Agility
 
-When initiating a media session, both the sender and receiver should be able to
-negotiate the codecs, bitrates, resolution, and other media details based on
-capabilities and preferences. This must be negotiable both before commencing
-playback but also during as a result of changes to device output or network
-conditions (such as reduction in available network bandwidth). It may be
+When initiating a media session, both the sender and receiver will need to agree on the codecs, bitrates, resolution, and other media details based on
+capabilities and preferences. This agreement needs to take place before commencing
+media transmission, but might also take place during media transmission, perhaps as a result of changes to device output or network
+conditions (such as reduction in available network bandwidth).
+
+It may be
 prefered to use existing ecosystem for such purposes, e.g. SDP {{RFC4566}}.
 
-## Support a range of Latencies
+## Support an Appropriate Range of Latencies
 
 Support for a nominal latency appropriate for the use cases that are in scope should be
-achieved, with consideration for the minimum buffer that a receiver playing content may
+achievable, with consideration for the minimum buffer that a receiver playing content may
 need to handle congestion, packet loss, and other degradation in network
 quality.
 
@@ -456,12 +481,17 @@ change in network connectivity (such as a device moving from WiFi to cellular
 connectivity) or other reasons.
 
 This may depend on QUIC capabilities such as {{I-D.draft-ietf-quic-multipath}}
-but is by no means a hard requirement.
+but support for full QUIC operation over multiple paths between senders and receivers is by no means essential.
 
-## Congestion Control
+## Appropriate Congestion Control {#acc}
 
-TODO: Confirm these requirements, consider looking at how RFC 8836 applies to
-this requirement.
+An appropriate congestion control mechanism will depend upon the use cases under consideration.
+
+It's worth remembering that we have more experience with QUIC carrying HTTP traffic than with any other type of application at this time, and consequently, we have more experience with congestion control mechanisms such as NewReno {{RFC9002}}, Cubic {{RFC8312}}, and BBR {{I-D.draft-cardwell-iccrg-bbr-congestion-control}} being used with QUIC than with any other congestion control mechanisms. These congestion control mechanisms may also be appropriate for the on-demand use cases described in {{od-media}}.
+
+Conversely, for the interactive use cases described in {{interact}}, these congestion control mechanisms are very likely inappropriate, especially when QUIC is being used with a Media Transport Protocol such as RTP, which provides its own congestion control mechanism, and which does not seem to interact well with a second, QUIC-level congestion control mechanism. Congestion control mechanisms such as SCReAM {{RFC8298}} or NADA {{RFC8698}} may be more appropriate for media. "Congestion Control Requirements for Interactive Real-Time Media" {{RFC8836}} is a useful reference.
+
+Awkwardly, the live media use cases described in {{lm-media}} live somewhere in the middle, and work will be needed to understand the characteristics of an appropriate congestion control mechanism for these use cases.
 
 ## Support Lossless and Lossy Media Transport
 
@@ -475,34 +505,35 @@ the start of the session.
 
 ## WebTransport
 
-TODO: Unsure if this should be a requirement. If it is, we have to consider two
-things: WebTransport supports HTTP/2, are we going to explicitly exclude it?
-Also, WebTransport {{I-D.draft-ietf-webtrans-overview}} has normative language
-around congestion control which may be at odds with our potential requirements.
+TODO: Unsure of the importance of this consideration for live media use cases. If this is critical, we have to consider two
+things:
+
+- WebTransport supports HTTP/2, are we going to explicitly exclude it?
+- Also, WebTransport {{I-D.draft-ietf-webtrans-overview}} has normative language
+around congestion control, which may be at odds with the considerations described in {{acc}}.
 
 ## Authentication
 
-The encapsulation SHOULD have capabilities beyond what QUIC provides to allow hosts
-to authenticate one another, this should be kept simple but robust in nature to
+In order to allow hosts to authenticate one another, capabilities beyond what QUIC provides may be necessary. This should be kept simple but robust in nature to
 prevent attacks like credential brute-forcing.
 
 TODO: More details are required here
 
-# Non-requirements
+## Considerations Implying QUIC Extensions
 
-This section covers topics that are explicitly out of scope for the time being.
+Most of the discussion of protocol work in this document has avoided mentioning capabilities that may be useful for some use cases, but seem to imply the need for extensions to the QUIC protocol, beyond what is already being considered in the IETF QUIC working group. These are included in this section, for completeness' sake.
 
-## NAT Traversal
+### NAT Traversal
 
 From Section 8.2 of {{RFC9000}}:
 
 > Path validation is not designed as a NAT traversal mechanism. Though the mechanism described here might be effective for the creation of NAT bindings that support NAT traversal, the expectation is that one endpoint is able to receive packets without first having sent a packet on that path. Effective NAT traversal needs additional synchronization mechanisms that are not provided here.
 
-Although there are use cases that would benefit from a mechanism for NAT traversal, a QUIC protocol extention would be required to support those use cases today.
+Although there are use cases that would benefit from a mechanism for NAT traversal, a QUIC protocol extention would be needed to support those use cases.
 
-## Multicast
+### Multicast
 
-Even if multicast and other network broadcasting capabilities are often used in delivering media in our use cases, QUIC doesn't yet support multicast, and would require a QUIC protocol extension to do so. In addition, the inclusion of multicast would introduce more complexity in both the specification and
+Even if multicast and other network broadcasting capabilities are often used in delivering media in our use cases, QUIC doesn't yet support multicast, and a QUIC protocol extension would be needed to do so. In addition, the inclusion of multicast would introduce more complexity in both the specification and
 client implimentations.
 On the other hand, UDP multicast may be considered as the last mile delivery transport outside of QUIC transport, thus
 it would be beneficial for a protocol to provide such an opportunity (e.g. RTP/QUIC -> RTP/UDP).
