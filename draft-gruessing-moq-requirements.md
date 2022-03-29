@@ -187,7 +187,7 @@ Within this document, we extend the latency requirement categories for streaming
 
 These latency bands were appropriate for streaming media, which was the target for {{I-D.draft-ietf-mops-streaming-opcons}}, but some interactive media may have requirements that are significantly less than "ultra-low latency". Within this document, we are also using
 
-- Ull-50 (less than 50 ms)
+- near real-time (less than 50 ms)
 - Ull-200 (less than 200 ms)
 
 Perhaps obviously, these last two latency bands are the shortened form of "ultra-low latency - 50 ms" and "ultra-low-latency - 200 ms". Perhaps less obviously, bikeshedding on better names and more useful values is welcomed.
