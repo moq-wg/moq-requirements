@@ -317,6 +317,14 @@ senders and receivers. The target for latency may be as large as Ull-200 for
 some media types such as audio, but other media types in this use case have much
 more stringent latency targets.
 
+## Hybrid Interactive and Live Media
+
+For the video conferencing/telephony use case, there can be additional scenarios
+where the audience greatly outnumbers the concurrent active participants, but
+any member of the audience could participate. As this has a much larger total
+number of participants - as many as Live Media Streaming {{lmstream}}, but with
+the bi-directionality of confercing, this should be considered a "hybrid".
+
 ## Live Media {#lm-media}
 
 The use cases in this section, unlike the use cases described in {{interact}}, still have "humans in the loop", but these humans expect media to be "responsive", where the responsiveness is more on the order of 5 to 10 RTTs. This allows the use of protocol mechanisms that require more than one or two RTTs - as noted in {{interact}}, end-to-end recovery from packet loss and congestion avoidance are two such protocol mechanisms that can be used with Live Media.
