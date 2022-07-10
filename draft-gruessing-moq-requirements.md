@@ -39,16 +39,8 @@ informative:
   RFC9000:
 
   I-D.draft-cardwell-iccrg-bbr-congestion-control:
-  I-D.draft-engelbart-rtp-over-quic:
-  I-D.draft-hurst-quic-rtp-tunnelling:
   I-D.draft-kpugin-rush:
-  I-D.draft-lcurley-warp:
   I-D.draft-rtpfolks-quic-rtp-over-quic:
-  I-D.draft-sharabayko-srt:
-  I-D.draft-sharabayko-srt-over-quic:
-  I-D.draft-jennings-moq-quicr-arch:
-  I-D.draft-jennings-moq-quicr-proto:
-
   I-D.draft-ietf-mops-streaming-opcons:
   I-D.draft-ietf-quic-datagram:
   I-D.draft-ietf-quic-http:
@@ -169,78 +161,12 @@ Perhaps less obviously, bikeshedding on better names and more useful values is w
 
 # Prior and Existing Specifications {#priorart}
 
-Several draft specifications have been proposed which either encapsulate existing Media Transport Protocols in QUIC, or define
-their own new Media Transport Protocol on top of QUIC. With the exception of RUSH ({{kpugin}}), it is unknown if the other specifications listed in this section
-have had any deployments or interop with multiple implementations.
-
-## QRT: QUIC RTP Tunnelling {#hurst}
-
-{{I-D.draft-hurst-quic-rtp-tunnelling}}
-
-QRT encapsulates RTP and RTCP and define the means of using QUIC datagrams
-with them, defining a new payload within a datagram frame which distinguishes
-packets for a RTP packet flow vs RTCP.
-
-## RTP over QUIC {#englebart}
-
-{{I-D.draft-engelbart-rtp-over-quic}}
-
-This specification also encapsulates RTP and RTCP but unlike QRT which simply
-relies on the default QUIC congestion control mechanisms, it defines a set of
-requirements around QUIC implementation's congestion controller to permit the
-use of separate control algorithms.
-
-## RUSH - Reliable (unreliable) streaming protocol {#kpugin}
-
-{{I-D.draft-kpugin-rush}}
-
-Whilst RUSH predates the datagram specification, it uses its own frame types on
-top of QUIC to take advantage of QUIC implementations reassembling messages
-greater than MTU. In addition individual media frames are given their own stream
-identifiers to remove HoL blocking from processing out-of-order.
-
-It defines its own registry for signalling codec information with room for
-future expansion but presently is limited to a subset of popular video and audio
-codecs and doesn't include other types (such as subtitles, transcriptions, or
-other signalling information) out of bitstream.
-
-## Tunnelling SRT over QUIC {#sharabayko}
-
-{{I-D.draft-sharabayko-srt-over-quic}}
-
-Secure Reliable Transport (SRT) ({{I-D.draft-sharabayko-srt}}) itself is a general purpose transport protocol
-primarily for ingest transport use cases and this specification covers the
-encapsulation and delivery of SRT on top of QUIC using datagram frame types.
-This specification sets some requirements regarding how the two interact and
-leaves considerations for congestion control and pacing to prevent conflict
-between the two protocols. Apart from that, SRT provides a native suport for stream multiplexing,
-thus contributing this missing functionality to QUIC datagrams.
-
-## Warp - Segmented Live Video Transport {#warp}
-
-{{I-D.draft-lcurley-warp}}
-
-Warp's specification attemps to map Group of Picture encoding of video on top of
-QUIC streams. It depends on ISOBMFF containers to encapsulate both media as well
-as messaging, and defines prioritisation with separate considerations for audio
-and video. It doesn't yet define bi-directionality of media flows, and can be
-run over protocols like WebTransport {{I-D.draft-ietf-webtrans-overview}}.
-
-## QuicR {#quicr}
-
-{{I-D.draft-jennings-moq-quicr-proto}}
-
-QuicR comprisees of both an architectural document
-{{I-D.draft-jennings-moq-quicr-arch}} as well as a protocol specification.
-QuicR's focus is around Pub/Sub patterns for both client negotiation as well as
-relaying media and allows implementations to use either streams or datagrams to
-carry media, and whilst it does not yet appear to define a means of media
-encapsulation, it does appear possible for QuicR to overlay support for both
-{{kpugin}} and {{warp}}.
+Several draft specifications have been proposed which either encapsulate
+existing Media Transport Protocols in QUIC, or define their own new Media
+Transport Protocol on top of QUIC. Some have already seen deployment into the
+wild (e.g. {{I-D.draft-kpugin-rush}}) where as others are unconfirmed.
 
 ## Comparison of Existing Specifications
-
-** Additional details for this comparison could usefully be added here. **
 
 * Some drafts attempt to use existing payloads of RTP, RTCP, and SDP, while others do not.
 * Some use QUIC Datagram frames, while others use QUIC streams.
