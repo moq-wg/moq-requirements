@@ -40,6 +40,10 @@ informative:
 
   I-D.draft-cardwell-iccrg-bbr-congestion-control:
   I-D.draft-kpugin-rush:
+  I-D.draft-lcurley-warp:
+  I-D.draft-sharabayko-srt-over-quic:
+  I-D.draft-engelbart-rtp-over-quic:
+  I-D.draft-jennings-moq-quicr-arch:
   I-D.draft-rtpfolks-quic-rtp-over-quic:
   I-D.draft-ietf-mops-streaming-opcons:
   I-D.draft-ietf-quic-datagram:
@@ -162,13 +166,17 @@ Perhaps less obviously, bikeshedding on better names and more useful values is w
 # Prior and Existing Specifications {#priorart}
 
 Several draft specifications have been proposed which either encapsulate
-existing Media Transport Protocols in QUIC, or define their own new Media
-Transport Protocol on top of QUIC. Some have already seen deployment into the
-wild (e.g. {{I-D.draft-kpugin-rush}}) where as others are unconfirmed.
+existing Media Transport Protocols in QUIC
+({{I-D.draft-sharabayko-srt-over-quic}}), make use of RTP, RTCP, and SDP
+({{I-D.draft-engelbart-rtp-over-quic}}) or define their own new Media Transport
+Protocol on top of QUIC. Some have already seen deployment into the wild (e.g.
+{{I-D.draft-kpugin-rush}}, {{I-D.draft-lcurley-warp}}) where as others are
+unconfirmed. Whilst most just focus on defining wire format,
+{{I-D.draft-jennings-moq-quicr-arch}} defines an architecture using a pub/sub
+model for both producers and consumers.
 
 ## Comparison of Existing Specifications
 
-* Some drafts attempt to use existing payloads of RTP, RTCP, and SDP, while others do not.
 * Some use QUIC Datagram frames, while others use QUIC streams.
 * All drafts take differing approaches to flow/stream identification and management. Some address congestion control and others just defer this to QUIC to handle.
 * Some drafts specify ALPN identification, while others do not.
@@ -384,21 +392,10 @@ no security considerations of its own.
 
 # Acknowledgements
 
-The authors would like to thank the many authors of the specifications referenced in {{priorart}} for their work:
+The authors would like to thank the many authors of the specifications
+referenced in {{priorart}} for their work. The authors would also like to thank
+Alan Frindell, Luke Curley, and Maxim Sharabayko for text contributions to this
+draft.
 
-* Alan Frindell
-* Colin Perkins
-* Jake Weissman
-* Joerg Ott
-* Jordi Cenzano
-* Kirill Pugin
-* Maria Sharabayko
-* Mathis Engelbart
-* Maxim Sharabayko
-* Roni Even
-* Sam Hurst
-* Varun Singh
-
-The authors would like to thank Alan Frindell, Luke Curley, and Maxim Sharabayko for text contributions to this draft.
-
-James Gruessing would also like to thank Francesco Illy and Nicholas Book for their part in providing the needed motivation.
+James Gruessing would also like to thank Francesco Illy and Nicholas Book for
+their part in providing the needed motivation.
