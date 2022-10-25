@@ -32,10 +32,6 @@ informative:
   RFC3550:
   RFC6363:
   RFC6716:
-  RFC7230:
-  RFC7540:
-  RFC7826:
-  RFC8216:
   RFC9000:
 
   I-D.draft-cardwell-iccrg-bbr-congestion-control:
@@ -56,16 +52,14 @@ informative:
     target: https://datatracker.ietf.org/meeting/interim-2022-moq-01/materials/slides-interim-2022-moq-01-sessa-progressing-moq-00.pdf
     title: "MOQ Use Cases and Requirements"
     date: October 21, 2022
-  DASH:
-    target: https://www.iso.org/standard/79329.html
-    title: "ISO/IEC 23009-1:2019: Dynamic adaptive streaming over HTTP (DASH) -- Part 1: Media presentation description and segment formats (2nd edition)"
-  WebRTC:
-    target: https://www.w3.org/groups/wg/webrtc
-    title: "Web Real-Time Communications Working Group"
+  WebTrans-charter:
+    target: https://datatracker.ietf.org/wg/webtrans/about/
+    title: "WebTransport (webtrans)"
+    date: March 10, 2021
 
 --- abstract
 
-This document describes the chartered use cases that guide development of a simple, low-latency media delivery solution for ingest and distribution of media, and the requirements for this solution that result from these use cases.
+This document describes use cases and requirements that guide the specification of a simple, low-latency media delivery solution for ingest and distribution of media, using either the QUIC protocol or WebTransport.
 
 --- note_Note_to_Readers
 
@@ -81,13 +75,13 @@ mailing list, at <https://www.ietf.org/mailman/listinfo/moq>.
 
 # Introduction {#intro}
 
+This document describes use cases and requirements that guide the specification of a simple, low-latency media delivery solution for ingest and distribution of media, using either the QUIC protocol {{RFC9000}} or WebTransport {{WebTrans-charter}}.
+
 This document describes the chartered {{MOQ-charter}} use cases that guide development of a simple, low-latency media delivery solution for ingest and distribution of media, and the requirements for this solution that result from these use cases.
 
-## Intention for this version of the document
+## Note for MOQ Working Group participants
 
-RFC Editor: If this document reaches you, please remove this section!
-
-This version of the document is intended to provide the MOQ working group with a starting point for work on the "Use Cases and Requirements document" milestone, as described in {{MOQ-ucr}}.
+This version of the document is intended to provide the MOQ working group with a starting point for work on the "Use Cases and Requirements document" milestone. The update implements the work plan described in {{MOQ-ucr}}. The authors intend to request MOQ working group adoption after IETF 115, so we can begin work on these topics in earnest.
 
 # Terminology {#term}
 
@@ -100,8 +94,8 @@ Our goal in this section is to understand the range of use cases that are in sco
 For each use case in this section, we also describe
 
 * the number of senders or receiver in a given session transmitting distinct streams,
-* whether a session has bi-direction flows of media from senders and receivers, and
-* the expected lowest latency requirements.
+* whether a session has bi-directional flows of media from senders and receivers, and
+* the worst-case expected RTT requirements.
 
 It is likely that we should add other characteristics, as we come to understand them.
 
@@ -110,9 +104,9 @@ It is likely that we should add other characteristics, as we come to understand 
 The use cases described in this section have one particular attribute in common - the target latency for these cases are on the order of one or two RTTs. In order to meet those targets, it is not possible to rely on protocol mechanisms that require multiple RTTs to function effectively. For example,
 
 * When the target latency is on the order of one RTT, it makes sense to use FEC {{RFC6363}} and codec-level packet loss concealment {{RFC6716}}, rather than selectively retransmitting only lost packets. These mechanisms use more bytes, but do not require multiple RTTs in order to recover from packet loss.
-* When the target latency is on the order of one RTT, it is impossible to use congestion control schemes like BBR {{I-D.draft-cardwell-iccrg-bbr-congestion-control}}, since BBR has probing mechanisms that rely on temporarily inducing delay and amortizing the consequences of that over multiple RTTs.
+* When the target latency is on the order of one RTT, it is impossible to use congestion control schemes like BBR {{I-D.draft-cardwell-iccrg-bbr-congestion-control}}, since BBR has probing mechanisms that rely on temporarily inducing delay, but these mechanisms can then amortize the consequences of induced delay over multiple RTTs.
 
-This may help to explain why interactive use cases have often relied on protocols such as RTP {{RFC3550}}, which provide low-level control of packetization and transmission, and make no provision for retransmission.
+This may help to explain why interactive use cases have typically relied on protocols such as RTP {{RFC3550}}, which provide low-level control of packetization and transmission, and make no provision for retransmission.
 
 ### Gaming {#gaming}
 
@@ -123,7 +117,7 @@ This may help to explain why interactive use cases have often relied on protocol
 | **Latency**|  Ull-50
 
 Where media is received, and user inputs are sent by the client. This may also
-include the client receiving other types of signalling, such as triggers for
+include the client receiving other types of signaling, such as triggers for
 haptic feedback. This may also carry media from the client such as microphone
 audio for in-game chat with other players.
 
@@ -136,7 +130,7 @@ audio for in-game chat with other players.
 | **Latency**|  Ull-50
 
 Where media is received, and user inputs are sent by the client. Latency
-requirements with this usecase are marginally different than the gaming use
+requirements with this use case are marginally different than the gaming use
 case. This may also include signalling and/or transmitting of files or devices
 connected to the user's computer.
 
@@ -162,7 +156,7 @@ For the video conferencing/telephony use case, there can be additional scenarios
 where the audience greatly outnumbers the concurrent active participants, but
 any member of the audience could participate. As this has a much larger total
 number of participants - as many as Live Media Streaming {{lmstream}}, but with
-the bi-directionality of confercing, this should be considered a "hybrid".
+the bi-directionality of conferencing, this should be considered a "hybrid".
 
 ## Live Media {#lm-media}
 
@@ -180,8 +174,8 @@ To illustrate the difference, the responsiveness expected with videoconferencing
 
 Where media is received from a source for onwards handling into a distribution
 platform. The media may comprise of multiple audio and/or video sources.
-Bitrates may either be static or set dynamically by signalling of connection
-inforation (bandwidth, latency) based on data sent by the receiver.
+Bitrates may either be static or set dynamically by signaling of connection
+information (bandwidth, latency) based on data sent by the receiver.
 
 ### Live Media Syndication {#lmsynd}
 
@@ -215,17 +209,19 @@ point in the past.
 
 # Requirements for Protocol Work {#req-sec}
 
-*Note: the initial high-level organization for this section is taken from Suhas Nandakumar's presentation, "Progressing MOQ" {{Prog-MOQ}}, at the October 2022 MOQ virtual interim meeting, which was in turn taken from the MOQ working group charter {{MOQ-charter}}. We'll move this mention to the acknowledgement section, if the structure changes significantly.*
+Our goal in this section is to understand the requirements that result from the use cases described in {{overallusecases}}.
 
-## Common Publication Protocol Between Ingest and Distribution {#pub-proto}
+*Note: the initial high-level organization for this section is taken from Suhas Nandakumar's presentation, "Progressing MOQ" {{Prog-MOQ}}, at the October 2022 MOQ virtual interim meeting, which was in turn taken from the MOQ working group charter {{MOQ-charter}}. We think this is a reasonable starting point. We won't be surprised to see the high-level structure change a bit as things develop, but we didn't want to have this section COMPLETELY blank when we request working group adoption.
 
-## Naming and Addressing Media {#naming}
+## Common Publication Protocol for Media Ingest and Distribution {#pub-proto}
+
+## Naming and Addressing Media Resources {#naming}
 
 ## Packaging Media {#Packaging}
 
 ## Client Media Request Protocol {#media-request}
 
-## End to End Security {MOQ-security}
+## Security {#MOQ-security}
 
 # IANA Considerations
 
@@ -240,11 +236,13 @@ no security considerations of its own.
 
 # Acknowledgements
 
-The authors would like to thank several authors of individual drafts that provided input during the "Media Over QUIC" charter process:
+The authors would like to thank several authors of individual drafts that fed into the "Media Over QUIC" charter process:
 
 - Kirill Pugin, Alan Frindell, Jordi Cenzano, and Jake Weissman ({{I-D.draft-kpugin-rush}},
 - Luke Curley ({{I-D.draft-lcurley-warp}}), and
 - Cullen Jennings and Suhas Nandakumar ({{I-D.draft-jennings-moq-quicr-arch}}), together with Christian Huitema ({{I-D.draft-jennings-moq-quicr-proto}}).
+
+We would also like to thank Suhas Nandakumar for his presentation, "Progressing MOQ" {{Prog-MOQ}}, at the October 2022 MOQ virtual interim meeting, that we used as a starting point for the Requirements section ({{req-sec}}).
 
 James Gruessing would also like to thank Francesco Illy and Nicholas Book for
 their part in providing the needed motivation.
