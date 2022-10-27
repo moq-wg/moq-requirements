@@ -59,7 +59,7 @@ informative:
 
 --- abstract
 
-This document describes use cases and requirements that guide the specification of a simple, low-latency media delivery solution for ingest and distribution of media, using either the QUIC protocol or WebTransport.
+This document describes use cases and requirements that guide the specification of a simple, low-latency media delivery solution for ingest and distribution, using either the QUIC protocol or WebTransport.
 
 --- note_Note_to_Readers
 
@@ -75,13 +75,11 @@ mailing list, at <https://www.ietf.org/mailman/listinfo/moq>.
 
 # Introduction {#intro}
 
-This document describes use cases and requirements that guide the specification of a simple, low-latency media delivery solution for ingest and distribution of media, using either the QUIC protocol {{RFC9000}} or WebTransport {{WebTrans-charter}}.
-
-This document describes the chartered {{MOQ-charter}} use cases that guide development of a simple, low-latency media delivery solution for ingest and distribution of media, and the requirements for this solution that result from these use cases.
+This document describes use cases and requirements that guide the specification of a simple, low-latency media delivery solution for ingest and distribution {{MOQ-charter}}, using either the QUIC protocol {{RFC9000}} or WebTransport {{WebTrans-charter}}.
 
 ## Note for MOQ Working Group participants
 
-This version of the document is intended to provide the MOQ working group with a starting point for work on the "Use Cases and Requirements document" milestone. The update implements the work plan described in {{MOQ-ucr}}. The authors intend to request MOQ working group adoption after IETF 115, so we can begin work on these topics in earnest.
+This version of the document is intended to provide the MOQ working group with a starting point for work on the "Use Cases and Requirements document" milestone. The update implements the work plan described in {{MOQ-ucr}}. The authors intend to request MOQ working group adoption after IETF 115, so the working group can begin to focus on these topics in earnest.
 
 # Terminology {#term}
 
@@ -221,7 +219,7 @@ Our goal in this section is to understand the requirements that result from the 
 
 ## Client Media Request Protocol {#media-request}
 
-## Security {#MOQ-security}
+## End-to-end Security {#MOQ-security}
 
 # IANA Considerations
 
@@ -242,7 +240,7 @@ The authors would like to thank several authors of individual drafts that fed in
 - Luke Curley ({{I-D.draft-lcurley-warp}}), and
 - Cullen Jennings and Suhas Nandakumar ({{I-D.draft-jennings-moq-quicr-arch}}), together with Christian Huitema ({{I-D.draft-jennings-moq-quicr-proto}}).
 
-We would also like to thank Suhas Nandakumar for his presentation, "Progressing MOQ" {{Prog-MOQ}}, at the October 2022 MOQ virtual interim meeting, that we used as a starting point for the Requirements section ({{req-sec}}).
+We would also like to thank Suhas Nandakumar for his presentation, "Progressing MOQ" {{Prog-MOQ}}, at the October 2022 MOQ virtual interim meeting. We used his outline as a starting point for the Requirements section ({{req-sec}}).
 
 James Gruessing would also like to thank Francesco Illy and Nicholas Book for
 their part in providing the needed motivation.
