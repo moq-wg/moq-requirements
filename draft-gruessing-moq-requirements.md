@@ -211,15 +211,43 @@ Our goal in this section is to understand the requirements that result from the 
 
 *Note: the initial high-level organization for this section is taken from Suhas Nandakumar's presentation, "Progressing MOQ" {{Prog-MOQ}}, at the October 2022 MOQ virtual interim meeting, which was in turn taken from the MOQ working group charter {{MOQ-charter}}. We think this is a reasonable starting point. We won't be surprised to see the high-level structure change a bit as things develop, but we didn't want to have this section COMPLETELY blank when we request working group adoption.
 
+TODO: Describe overall, high level requirements that we previously stated in earlier versions of this document.
+
 ## Common Publication Protocol for Media Ingest and Distribution {#pub-proto}
 
-## Naming and Addressing Media Resources {#naming}
-
-## Packaging Media {#Packaging}
+Many of the use cases have bi-directional flows of media, with clients both sending and receiving media concurrently, thus the protocol should have a unified approach in connection negotiation and signalling to send and received media both at the start and ongoing in the lifetime of a session including describing when flow of media is unsupported (e.g. a live media server signalling it does not support receiving from a given client).
 
 ## Client Media Request Protocol {#media-request}
 
+In the initiation of a session both client and server must perform negotiation in order to agree upon a variety of details before media can move in any direction:
+
+* Is the client authenticated and subsequently authorised to initiate a connection?
+* What media is available, and for each what are the parameters such as codec, bitrate, and resolution etc?
+* Is sending of media from a client permitted? If so, what media is accepted?
+
+Re-negotiation in an existing protocol should be supported to allow changes in what is being sent of received.
+
+## Naming and Addressing Media Resources {#naming}
+
+As multiple streams of media may be available for concurrent sending such as multiple camera views or audio tracks, a means of both identifying the technical properties of each resource (codec, bitrate, etc) as well as a useful identification for playback should be part of the protocol. A base level of optional metadata e.g. the known language of an audio track or name of participant's camera should be supported, but further extended metadata of the contents of the media or its ontology should not be supported.
+
+## Packaging Media {#Packaging}
+
+Packaging of media describes how encapsulation of media to carry the raw media will work. There are at a high level two approaches to this:
+
+* Within the protocol itself, where the protocol defines the carrying for each media encoding the ancillary data required for decoding the media.
+* A common encapsulation format such as ISOBMFF which defines a generic method for all media and handles ancillary decode information.
+
+The working group must agree on which approach should be taken to the packaging of media, taking into consideration the various technical trade offs that each provide.
+
 ## End-to-end Security {#MOQ-security}
+
+End-to-end security describes the use of encryption of the media stream(s) to provide confidentiality in the presence of intermediates or receiver's and prevent or restrict ability to decrypt the media. There are two primary use cases for this:
+
+* Media Confidentiality, which applies primarily to video conferencing and telephony use cases where participants in a call want to assert that an intermediate is unable to observe their private conversation.
+* Media Rights Management, which applies to live media use cases where controls on receivers are authorised to decode a media stream.
+
+Both media confidentiality and rights management use cases should be supported in the signalling of the protocol in a unified way to inform intermediates and receivers that the media stream is encrypted, including an identifier to describe what system is used to encrypt the media, as well as any other opaque information carried to aid in decryption. Further this requires the packaging of media to support carrying encrypted media payloads. Key negotiation and exchange should happen externally of the core protocol, however consideration must be made to support signaling of changes to keying in an existing connection to support re-keying without re-negotiating the session.
 
 # IANA Considerations
 
