@@ -83,7 +83,7 @@ This version of the document is intended to provide the MOQ working group with a
 
 # Terminology {#term}
 
-(To Do)
+{::boilerplate bcp14-tagged}
 
 # Use Cases Informing This Proposal {#overallusecases}
 
