@@ -242,12 +242,15 @@ The working group must agree on which approach should be taken to the packaging 
 
 ## End-to-end Security {#MOQ-security}
 
-End-to-end security describes the use of encryption of the media stream(s) to provide confidentiality in the presence of intermediates or receiver's and prevent or restrict ability to decrypt the media. There are two primary use cases for this:
+End-to-end security describes the use of encryption of the media stream(s) to provide confidentiality in the presence of unauthorized intermediates or observers and prevent or restrict ability to decrypt the media without authorization. Generally, there are three aspects of end-to-end media security:
 
-* Media Confidentiality, which applies primarily to video conferencing and telephony use cases where participants in a call want to assert that an intermediate is unable to observe their private conversation.
-* Media Rights Management, which applies to live media use cases where controls on receivers are authorised to decode a media stream.
+* Media Rights Management, which refers to the authorization of receivers to decode a media stream.
+* Sender-to-Receiver Media Security, which refers to the ability of media senders and receivers to transfer media while protected from authorized intermediates and observers, and
+* Node-to-node Media Security, which refers to security when authorized intermediaries are needed to transform media into a form acceptable to authorized receivers. For example, this might refer to a video transcoder between the media sender and receiver.
 
-Both media confidentiality and rights management use cases should be supported in the signalling of the protocol in a unified way to inform intermediates and receivers that the media stream is encrypted, including an identifier to describe what system is used to encrypt the media, as well as any other opaque information carried to aid in decryption. Further this requires the packaging of media to support carrying encrypted media payloads. Key negotiation and exchange should happen externally of the core protocol, however consideration must be made to support signaling of changes to keying in an existing connection to support re-keying without re-negotiating the session.
+**Note: "Node-to-node" refers to a path segment connecting two MOQ nodes, that makes up part of the end-to-end path between the MOQ sender and ultimate MOQ receiver.
+
+The working group must agree on a number of details here, and perhaps the first question is whether the MOQ protocol makes any provision for "node-to-node" media security, or simply treats authorized transcoders as MOQ receivers. If that's the decision all MOQ media security is "sender-to-receiver", but some "ends" may not be either senders or ultimate receivers, from a certain point of view.
 
 # IANA Considerations
 
