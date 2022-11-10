@@ -92,27 +92,25 @@ Our goal in this section is to understand the range of use cases that are in sco
 For each use case in this section, we also describe
 
 * the number of senders or receiver in a given session transmitting distinct streams,
-* whether a session has bi-directional flows of media from senders and receivers, and
-* the worst-case expected RTT requirements.
+* whether a session has bi-directional flows of media from senders and receivers, which may also include timely non-media such as haptics or timed events.
 
 It is likely that we should add other characteristics, as we come to understand them.
 
 ## Interactive Media {#interact}
 
-The use cases described in this section have one particular attribute in common - the target latency for these cases are on the order of one or two RTTs. In order to meet those targets, it is not possible to rely on protocol mechanisms that require multiple RTTs to function effectively. For example,
+The use cases described in this section have one particular attribute in common - the target the lowest possible latency as can be achieved at the trade off of data loss and complexity. For example,
 
-* When the target latency is on the order of one RTT, it makes sense to use FEC {{RFC6363}} and codec-level packet loss concealment {{RFC6716}}, rather than selectively retransmitting only lost packets. These mechanisms use more bytes, but do not require multiple RTTs in order to recover from packet loss.
-* When the target latency is on the order of one RTT, it is impossible to use congestion control schemes like BBR {{I-D.draft-cardwell-iccrg-bbr-congestion-control}}, since BBR has probing mechanisms that rely on temporarily inducing delay, but these mechanisms can then amortize the consequences of induced delay over multiple RTTs.
+* It may make sense to use FEC {{RFC6363}} and codec-level packet loss concealment {{RFC6716}}, rather than selectively retransmitting only lost packets. These mechanisms use more bytes, but do not require multiple round trips in order to recover from packet loss.
+* It's generally infeasible to use congestion control schemes like BBR {{I-D.draft-cardwell-iccrg-bbr-congestion-control}} in many deployments, since BBR has probing mechanisms that rely on temporarily inducing delay, but these mechanisms can then amortize the consequences of induced delay over multiple RTTs.
 
-This may help to explain why interactive use cases have typically relied on protocols such as RTP {{RFC3550}}, which provide low-level control of packetization and transmission, and make no provision for retransmission.
+This may help to explain why interactive use cases have typically relied on protocols such as RTP {{RFC3550}}, which provide low-level control of packetization and transmission, with addtional support for retransmission as an optional extension.
 
 ### Gaming {#gaming}
 
 |Attribute | Value |
 | -----+----------------
 |**Senders/Receivers**|  One to One
-| **Bi-directional**| Yes
-| **Latency**|  Ull-50
+|**Bi-directional**| Yes
 
 Where media is received, and user inputs are sent by the client. This may also
 include the client receiving other types of signaling, such as triggers for
@@ -124,8 +122,7 @@ audio for in-game chat with other players.
 |Attribute | Value |
 | -----+----------------
 |**Senders/Receivers**|  One to One
-| **Bi-directional**| Yes
-| **Latency**|  Ull-50
+|**Bi-directional**| Yes
 
 Where media is received, and user inputs are sent by the client. Latency
 requirements with this use case are marginally different than the gaming use
@@ -137,14 +134,13 @@ connected to the user's computer.
 |Attribute | Value |
 | -----+----------------
 |**Senders/Receivers**|  Many to Many
-| **Bi-directional**| Yes
-| **Latency**|  Ull-50 to Ull-200
+|**Bi-directional**| Yes
 
 Where media is both sent and received; This may include audio from both
-microphone(s) or other inputs, or may include "screen sharing" or inclusion of
+microphone(s) and/or cameras, or may include "screen sharing" or inclusion of
 other content such as slide, document, or video presentation. This may be done
 as client/server, or peer to peer with a many to many relationship of both
-senders and receivers. The target for latency may be as large as Ull-200 for
+senders and receivers. The target for latency may be as large as 200ms or more for
 some media types such as audio, but other media types in this use case have much
 more stringent latency targets.
 
@@ -154,21 +150,18 @@ For the video conferencing/telephony use case, there can be additional scenarios
 where the audience greatly outnumbers the concurrent active participants, but
 any member of the audience could participate. As this has a much larger total
 number of participants - as many as Live Media Streaming {{lmstream}}, but with
-the bi-directionality of conferencing, this should be considered a "hybrid".
+the bi-directionality of conferencing, this should be considered a "hybrid". There can be additional functionality as well that overlap between the two, such as "live rewind", or recording abilities.
 
 ## Live Media {#lm-media}
 
-The use cases in this section, unlike the use cases described in {{interact}}, still have "humans in the loop", but these humans expect media to be "responsive", where the responsiveness is more on the order of 5 to 10 RTTs. This allows the use of protocol mechanisms that require more than one or two RTTs - as noted in {{interact}}, end-to-end recovery from packet loss and congestion avoidance are two such protocol mechanisms that can be used with Live Media.
-
-To illustrate the difference, the responsiveness expected with videoconferencing is much greater than watching a video, even if the video is being produced "live" and sent to a platform for syndication and distribution.
+The use cases in this section like those in {{interact}} do set some expectations to minimise high and/or highly variable latency, however their key difference is that are seldom bi-directional as their basis is on mass-consumption of media or the contribution of it into a platform to syndicate, or distribute. Latency is less noticeable over loss, and may be more accepting of having slightly more latency to increase guarantee of delivery.
 
 ### Live Media Ingest {#lmingest}
 
 |Attribute | Value |
 | -----+----------------
 |**Senders/Receivers**|  One to One
-| **Bi-directional**| No
-| **Latency**|  Ull-200 to Ultra-Low
+|**Bi-directional**| No
 
 Where media is received from a source for onwards handling into a distribution
 platform. The media may comprise of multiple audio and/or video sources.
@@ -180,8 +173,7 @@ information (bandwidth, latency) based on data sent by the receiver.
 |Attribute | Value |
 | -----+----------------
 |**Senders/Receivers**|  One to One
-| **Bi-directional**| No
-| **Latency**|  Ull-200 to Ultra-Low
+|**Bi-directional**| No
 
 Where media is sent onwards to another platform for further distribution. The
 media may be compressed down to a bitrate lower than source, but larger than
@@ -193,8 +185,7 @@ place.
 |Attribute | Value |
 | -----+----------------
 |**Senders/Receivers**|  One to Many
-| **Bi-directional**| No
-| **Latency**| Ull-200 to Ultra-Low
+|**Bi-directional**| No
 
 Where media is received from a live broadcast or stream. This may comprise of
 multiple audio or video outputs with different codecs or bitrates. This may also
@@ -244,7 +235,7 @@ The working group must agree on which approach should be taken to the packaging 
 
 End-to-end security describes the use of encryption of the media stream(s) to provide confidentiality in the presence of unauthorized intermediates or observers and prevent or restrict ability to decrypt the media without authorization. Generally, there are three aspects of end-to-end media security:
 
-* Media Rights Management, which refers to the authorization of receivers to decode a media stream.
+* Digital Rights Management, which refers to the authorization of receivers to decode a media stream.
 * Sender-to-Receiver Media Security, which refers to the ability of media senders and receivers to transfer media while protected from authorized intermediates and observers, and
 * Node-to-node Media Security, which refers to security when authorized intermediaries are needed to transform media into a form acceptable to authorized receivers. For example, this might refer to a video transcoder between the media sender and receiver.
 
