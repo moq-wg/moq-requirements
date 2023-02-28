@@ -200,7 +200,9 @@ point in the past.
 
 Our goal in this section is to understand the requirements that result from the use cases described in {{overallusecases}}.
 
-*Note: the initial high-level organization for this section was taken from Suhas Nandakumar's presentation, "Progressing MOQ" {{Prog-MOQ}}, at the October 2022 MOQ virtual interim meeting, which was in turn taken from the MOQ working group charter {{MOQ-charter}}. Some changes have been made to the high-level structure after discussions with Suhas, and we won't be surprised to see the high-level structure change again as things develop, but we didn't want to have this section COMPLETELY blank when we request working group adoption.
+## Notes to the Reader
+
+* Note: the intention for the requirements in this document is that they are useful for MOQ working group participants, to recognize constraints, and useful for readers outside the MOQ working group to understand the high-level functionality of the MOQ protocol, as they consider implementation and deployment of systems that rely on the MOQ protocol.
 
 ## Specific Protocol Considerations {#proto-cons}
 
