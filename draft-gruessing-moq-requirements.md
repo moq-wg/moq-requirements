@@ -206,6 +206,19 @@ Our goal in this section is to understand the requirements that result from the 
 
 ## Specific Protocol Considerations {#proto-cons}
 
+### Network Entities
+
+As use cases cover various scenarios of both tranmitting and receiving media from entities (many of whom this happens concurrently) the protocol should consist of the following types of entities:
+
+Publisher
+: An entity which transmits media over the protocol, either from a source such as a camera and/or microphone, from files on storage, or contributed from a different protocol.
+
+Subscriber
+: An entity that receives media with no further onwards journey, to store and/or present the media.
+
+Relay
+: An entity which receives media from one or more entities and subsequently transmits the media to one or more entities. Relays can modify the media in any way, such as adding, replacing or removing media, converting the media where the relay has access to unencrypted media or the ability to decrypt it.
+
 ### Common push protocol for ingest and distribution
 
 ### Allow configurable latency - live streaming , interactive, media conferencing
@@ -218,9 +231,9 @@ Our goal in this section is to understand the requirements that result from the 
 
 ## Publishing Media {#pub-media}
 
-Many of the use cases have bi-directional flows of media, with clients both sending and receiving media concurrently, thus the protocol should have a unified approach in connection negotiation and signalling to send and received media both at the start and ongoing in the lifetime of a session including describing when flow of media is unsupported (e.g. a live media server signalling it does not support receiving from a given client).
+Many of the use cases have bi-directional flows of media, with entities both sending and receiving media concurrently, thus the protocol should have a unified approach in connection negotiation and signalling to send and received media both at the start and ongoing in the lifetime of a session including describing when flow of media is unsupported (e.g. a live media server signalling it does not support receiving from a given entity).
 
-In the initiation of a session both client and server must perform negotiation in order to agree upon a variety of details before media can move in any direction:
+In the initiation of a session both publisher and subscriber (even in the context of a relay) must perform negotiation in order to agree upon a variety of details before media can move in any direction:
 
 * Is the client authenticated and subsequently authorised to initiate a connection?
 * What media is available, and for each what are the parameters such as codec, bitrate, and resolution etc?
@@ -228,21 +241,19 @@ In the initiation of a session both client and server must perform negotiation i
 
 Re-negotiation in an existing protocol should be supported to allow changes in what is being sent or received.
 
-### Support way to specify media types (ads, subtitles, main media), qualities (bitrate, resolution, layers), codec
-
 ### Need a way to identify the variations uniquely
-
-### Media data/Application data granularity
 
 ### Individual frames vs group of frames vs something different ?
 
-### Metadata available to relays/proxies to make caching decisions
+### Cache metadata for relays
+
+Relays should signal to subscribers information pertaining to cache metadata to permit requests for media that was received in the past and persisted (either temporarily or permanently). Publishers should also be able to transmit desireable cache metadata however noting relays may choose to override this with other values based on their configuration.
 
 ### Identifier, priority, dependencies, cacheability
 
-### Application data can be end-to-end encrypted ( publisher to consumer)
+### Media can be end-to-end encrypted (publisher to subscriber)
 
-
+In some use cases despite the underlying protocol having guarantees over confidentiality and authentication, media still may be required to be encrypted to assert that relays or other intermediaries are unable to observe and/or modify the media, or to tie playback of the media to external authentication (e.g. DRM). The protocol should support signalling of both the presence of encryption within media as well as any relevant metadata necessary for a subscriber to decrypt and/or authenticate.
 
 ## Naming and Addressing Media Resources {#naming}
 
@@ -304,8 +315,6 @@ End-to-end security describes the use of encryption of the media stream(s) to pr
 **Note: "Node-to-node" refers to a path segment connecting two MOQ nodes, that makes up part of the end-to-end path between the MOQ sender and ultimate MOQ receiver.
 
 The working group must agree on a number of details here, and perhaps the first question is whether the MOQ protocol makes any provision for "node-to-node" media security, or simply treats authorized transcoders as MOQ receivers. If that's the decision all MOQ media security is "sender-to-receiver", but some "ends" may not be either senders or ultimate receivers, from a certain point of view.
-
-### Consider possible options as DRM, MLS, or something different ???
 
 # IANA Considerations
 
