@@ -240,10 +240,6 @@ Re-negotiation in an existing protocol should be supported to allow changes in w
 
 ### Identifier, priority, dependencies, cacheability
 
-### Application data can be end-to-end encrypted ( publisher to consumer)
-
-
-
 ## Naming and Addressing Media Resources {#naming}
 
 As multiple streams of media may be available for concurrent sending such as multiple camera views or audio tracks, a means of both identifying the technical properties of each resource (codec, bitrate, etc) as well as a useful identification for playback should be part of the protocol. A base level of optional metadata e.g. the known language of an audio track or name of participant's camera should be supported, but further extended metadata of the contents of the media or its ontology should not be supported.
@@ -303,9 +299,7 @@ End-to-end security describes the use of encryption of the media stream(s) to pr
 
 **Note: "Node-to-node" refers to a path segment connecting two MOQ nodes, that makes up part of the end-to-end path between the MOQ sender and ultimate MOQ receiver.
 
-The working group must agree on a number of details here, and perhaps the first question is whether the MOQ protocol makes any provision for "node-to-node" media security, or simply treats authorized transcoders as MOQ receivers. If that's the decision all MOQ media security is "sender-to-receiver", but some "ends" may not be either senders or ultimate receivers, from a certain point of view.
-
-### Consider possible options as DRM, MLS, or something different ???
+Support for encrypted media SHOULD be available in the protocol to support the above use cases, with key exchange and decryption authorisation handled externally. The protocol SHOULD provide metadata for entities which process media to perform key exchange and decrypt.
 
 # IANA Considerations
 
