@@ -289,7 +289,13 @@ The working group must agree on which approach should be taken to the packaging 
 
 ### Support push of media data to consumers
 
-## End-to-end Security {#MOQ-security}
+## Security {#MOQ-security}
+
+### Authentication & Authorisation
+
+Whilst QUIC and conversely TLS supports the ability for mutual authentication through client and server presenting certificates and performing validation, this is infeasible in many use cases where provisioning of client TLS certificates is unsupported or infeasible. Thus, support for a primitive method of authentication between MoQ entities SHOULD be included to authenticate entities between one another, noting that implementations and deployments should determine which authorisation model if any is applicable.
+
+### Media Encryption
 
 End-to-end security describes the use of encryption of the media stream(s) to provide confidentiality in the presence of unauthorized intermediates or observers and prevent or restrict ability to decrypt the media without authorization. Generally, there are three aspects of end-to-end media security:
 
