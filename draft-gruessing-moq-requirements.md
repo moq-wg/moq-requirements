@@ -206,7 +206,7 @@ Our goal in this section is to understand the requirements that result from the 
 
 ## Specific Protocol Considerations {#proto-cons}
 
-### Common push protocol for ingest and distribution
+In order to support the various topologies and patterns of media flows with the protocol, the protocol MUST support both sending and receiving of media streams, as separate actions or concurrently in a given connection.
 
 ### Allow configurable latency - live streaming , interactive, media conferencing
 
