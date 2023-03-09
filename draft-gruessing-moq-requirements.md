@@ -261,13 +261,7 @@ Packaging of media describes how encapsulation of media to carry the raw media w
 * Within the protocol itself, where the protocol defines the carrying for each media encoding the ancillary data required for decoding the media.
 * A common encapsulation format such as ISOBMFF which defines a generic method for all media and handles ancillary decode information.
 
-The working group must agree on which approach should be taken to the packaging of media, taking into consideration the various technical trade offs that each provide.
-
-### Use existing container format like CMAF
-
-### Support Raw container format
-
-### Do we need other formats ?
+The working group must agree on which approach should be taken to the packaging of media, taking into consideration the various technical trade offs that each provide. If the working group decides on a common encapsulation format, the mechanisms within the protocol SHOULD allow for new encapsulation formats to be used.
 
 ## Media Consumption {#med-consumption}
 
