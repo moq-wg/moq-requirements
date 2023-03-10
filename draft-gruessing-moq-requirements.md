@@ -208,9 +208,9 @@ Our goal in this section is to understand the requirements that result from the 
 
 In order to support the various topologies and patterns of media flows with the protocol, the protocol MUST support both sending and receiving of media streams, as separate actions or concurrently in a given connection.
 
-### Allow configurable latency - live streaming , interactive, media conferencing
+### Delivery Assurance vs. Delay
 
-### Support media transport mapping over QUIC Streams/QUIC Datagram (needs further evaluation)
+Different use cases have varying requirements with respect to the tradeoffs associated in having guarantee of delivery vs delay - in some (such as telefony) it may be acceptable to drop some or all of the media as a result of changes in network connectivity, throughput, or congestion whereas in other scenarios all media must arrive at the receiving end even if delayed. There SHOULD be support for some means for a connection to signal which media may be abandoned, and behaviours of both senders receivers defined when delay or loss occurs.
 
 ### Support Webtransport/H3/Raw QUIC as media transport
 
