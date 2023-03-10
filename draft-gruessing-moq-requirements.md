@@ -219,7 +219,7 @@ Many of the use cases will be deployed in contexts where web browsers are the co
 
 Considerations should be made clear with respect to modes where WebTransport "falls back" to using HTTP/2 or other future non-QUIC based protocol.
 
-### Media Negotiation & Agility
+### Media Negotiation & Agility {MOQ-negotiation}
 
 All entities which directly process media will have support for a variety of media codecs, conversely there SHOULD be capability in the protocol for sender and receiver to negotiate which media codecs will be used in a given session, as well as defining behaviours when one or more is not supported. Media encryption {{MOQ-media-encryption}} should also be factored in as part of the negotiation. Renegotiation SHOULD also be possible, allowing for changes in codec within an existing session. Consideration should be made if relays are also able to facilitate negotation even if not directly processing media.
 
@@ -257,10 +257,6 @@ As multiple streams of media may be available for concurrent sending such as mul
 
 ### Allows CDN/Relay to known the billing relationship associated with the data being stored/distributed.
 
-### Identifies elemental streams
-
-### Maps to an variants/renditions encoded
-
 ### Allows subscribing or requesting for the data matching the name by the consumers
 
 ## Packaging Media {#Packaging}
@@ -274,21 +270,15 @@ The working group must agree on which approach should be taken to the packaging 
 
 ## Media Consumption {#med-consumption}
 
-### Allows consumers to ask for the media data by name.
-
-### Allows consumers to ask the right quality/variant.
+Receivers SHOULD be able to as part of negotiation of a session {{MOQ-negotiation}} specify which media to receive, not just with respect to the media format and codec, but also the varient thereof such as resolution or bitrate.
 
 ## Relays, Caches, and other MOQ Network Elements {#MOQ-network-entities}
 
-### Allow caching and distribution of media data as applicable
-
-### Store/distribute the data via trust relayed by Origin
-
 ### Support pipelining to keep latencies at the minimum
 
-### Support selective drop/cache decisions based on metadata
-
 ### Support push of media data to consumers
+
+To enable use cases where receivers may wish to address a particular time of media in addition to having the most recently produced media available, both "pull" and "push" of media SHOULD be supported, with consideration that producers and intermediates SHOULD also signal what media is available (commonly referred to as a "DVR window"). Behaviours around cache durations for each MoQ entity should be defined.
 
 ## Security {#MOQ-security}
 
