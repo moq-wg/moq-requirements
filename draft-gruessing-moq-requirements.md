@@ -39,6 +39,7 @@ informative:
   I-D.draft-lcurley-warp:
   I-D.draft-jennings-moq-quicr-arch:
   I-D.draft-jennings-moq-quicr-proto:
+  I-D.draft-ietf-webtrans-overview:
 
   MOQ-charter:
     target: https://datatracker.ietf.org/wg/moq/about/
@@ -212,9 +213,11 @@ In order to support the various topologies and patterns of media flows with the 
 
 Different use cases have varying requirements with respect to the tradeoffs associated in having guarantee of delivery vs delay - in some (such as telefony) it may be acceptable to drop some or all of the media as a result of changes in network connectivity, throughput, or congestion whereas in other scenarios all media must arrive at the receiving end even if delayed. There SHOULD be support for some means for a connection to signal which media may be abandoned, and behaviours of both senders receivers defined when delay or loss occurs.
 
-### Support Webtransport/H3/Raw QUIC as media transport
+### Support Webtransport/Raw QUIC as media transport
 
-### Supports media over QUIC Streams/QUIC Datagrams
+Many of the use cases will be deployed in contexts where web browsers are the common application runtime; thus the use of existing protocols and APIs is desireable for implementations. Support for WebTransport {{I-D.draft-ietf-webtrans-overview}} SHOULD be defined, however SHOULD NOT be required by all implementations or deployments.
+
+Considerations should be made clear with respect to modes where WebTransport "falls back" to using HTTP/2 or other future non-QUIC based protocol.
 
 ## Publishing Media {#pub-media}
 
