@@ -219,6 +219,14 @@ Many of the use cases will be deployed in contexts where web browsers are the co
 
 Considerations should be made clear with respect to modes where WebTransport "falls back" to using HTTP/2 or other future non-QUIC based protocol.
 
+### Media Negotiation & Agility
+
+All entities which directly process media will have support for a variety of media codecs, conversely there SHOULD be capability in the protocol for sender and receiver to negotiate which media codecs will be used in a given session, as well as defining behaviours when one or more is not supported. Media encryption {{MOQ-media-encryption}} should also be factored in as part of the negotiation. Renegotiation SHOULD also be possible, allowing for changes in codec within an existing session. Consideration should be made if relays are also able to facilitate negotation even if not directly processing media.
+
+The protocol SHOULD remain codec agnostic as much as possible, and should allow for new media formats and codecs to be supported without change in specification.
+
+The working group should consider if a minimum, suggestive set of codecs should be supported for the purposes of interop, however this SHOULD avoid being strict to simplify use cases and deployments that don't require certain capability e.g. telephony which may not require video codecs.
+
 ## Publishing Media {#pub-media}
 
 Many of the use cases have bi-directional flows of media, with clients both sending and receiving media concurrently, thus the protocol should have a unified approach in connection negotiation and signalling to send and received media both at the start and ongoing in the lifetime of a session including describing when flow of media is unsupported (e.g. a live media server signalling it does not support receiving from a given client).
@@ -228,8 +236,6 @@ In the initiation of a session both client and server must perform negotiation i
 * Is the client authenticated and subsequently authorised to initiate a connection?
 * What media is available, and for each what are the parameters such as codec, bitrate, and resolution etc?
 * Is sending of media from a client permitted? If so, what media is accepted?
-
-Re-negotiation in an existing protocol should be supported to allow changes in what is being sent or received.
 
 ### Support way to specify media types (ads, subtitles, main media), qualities (bitrate, resolution, layers), codec
 
@@ -268,8 +274,6 @@ The working group must agree on which approach should be taken to the packaging 
 
 ## Media Consumption {#med-consumption}
 
-### Consumers are authorized at the Origin.
-
 ### Allows consumers to ask for the media data by name.
 
 ### Allows consumers to ask the right quality/variant.
@@ -292,7 +296,7 @@ The working group must agree on which approach should be taken to the packaging 
 
 Whilst QUIC and conversely TLS supports the ability for mutual authentication through client and server presenting certificates and performing validation, this is infeasible in many use cases where provisioning of client TLS certificates is unsupported or infeasible. Thus, support for a primitive method of authentication between MoQ entities SHOULD be included to authenticate entities between one another, noting that implementations and deployments should determine which authorisation model if any is applicable.
 
-### Media Encryption
+### Media Encryption {#MOQ-media-encryption}
 
 End-to-end security describes the use of encryption of the media stream(s) to provide confidentiality in the presence of unauthorized intermediates or observers and prevent or restrict ability to decrypt the media without authorization. Generally, there are three aspects of end-to-end media security:
 
