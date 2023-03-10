@@ -211,7 +211,7 @@ In order to support the various topologies and patterns of media flows with the 
 
 ### Delivery Assurance vs. Delay
 
-Different use cases have varying requirements with respect to the tradeoffs associated in having guarantee of delivery vs delay - in some (such as telefony) it may be acceptable to drop some or all of the media as a result of changes in network connectivity, throughput, or congestion whereas in other scenarios all media must arrive at the receiving end even if delayed. There SHOULD be support for some means for a connection to signal which media may be abandoned, and behaviours of both senders receivers defined when delay or loss occurs.
+Different use cases have varying requirements with respect to the tradeoffs associated in having guarantee of delivery vs delay - in some (such as telefony) it may be acceptable to drop some or all of the media as a result of changes in network connectivity, throughput, or congestion whereas in other scenarios all media must arrive at the receiving end even if delayed. There SHOULD be support for some means for a connection to signal which media may be abandoned, and behaviours of both senders receivers defined when delay or loss occurs. Where multiple variants of media are sent, this SHOULD be done so in a way that provides pipelining so each media stream may be processed in parallel.
 
 ### Support Webtransport/Raw QUIC as media transport
 
@@ -246,7 +246,6 @@ In the initiation of a session both client and server must perform negotiation i
 ### Individual frames vs group of frames vs something different ?
 
 ### Metadata available to relays/proxies to make caching decisions
-
 ### Identifier, priority, dependencies, cacheability
 
 ## Naming and Addressing Media Resources {#naming}
@@ -274,9 +273,7 @@ Receivers SHOULD be able to as part of negotiation of a session {{MOQ-negotiatio
 
 ## Relays, Caches, and other MOQ Network Elements {#MOQ-network-entities}
 
-### Support pipelining to keep latencies at the minimum
-
-### Support push of media data to consumers
+### Pull & Push
 
 To enable use cases where receivers may wish to address a particular time of media in addition to having the most recently produced media available, both "pull" and "push" of media SHOULD be supported, with consideration that producers and intermediates SHOULD also signal what media is available (commonly referred to as a "DVR window"). Behaviours around cache durations for each MoQ entity should be defined.
 
