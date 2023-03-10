@@ -219,7 +219,7 @@ Many of the use cases will be deployed in contexts where web browsers are the co
 
 Considerations should be made clear with respect to modes where WebTransport "falls back" to using HTTP/2 or other future non-QUIC based protocol.
 
-### Media Negotiation & Agility {MOQ-negotiation}
+### Media Negotiation & Agility {#MOQ-negotiation}
 
 All entities which directly process media will have support for a variety of media codecs, conversely there SHOULD be capability in the protocol for sender and receiver to negotiate which media codecs will be used in a given session, as well as defining behaviours when one or more is not supported. Media encryption {{MOQ-media-encryption}} should also be factored in as part of the negotiation. Renegotiation SHOULD also be possible, allowing for changes in codec within an existing session. Consideration should be made if relays are also able to facilitate negotation even if not directly processing media.
 
