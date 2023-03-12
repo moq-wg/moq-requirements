@@ -256,8 +256,6 @@ As multiple streams of media may be available for concurrent sending such as mul
 
 ### Scoped to an Origin/Domain, Application specific.
 
-### Allows CDN/Relay to known the billing relationship associated with the data being stored/distributed.
-
 ### Allows subscribing or requesting for the data matching the name by the consumers
 
 ## Packaging Media {#Packaging}
