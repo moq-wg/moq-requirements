@@ -215,13 +215,15 @@ Different use cases have varying requirements with respect to the tradeoffs asso
 
 ### Support Webtransport/Raw QUIC as media transport
 
-Many of the use cases will be deployed in contexts where web browsers are the common application runtime; thus the use of existing protocols and APIs is desireable for implementations. Support for WebTransport {{I-D.draft-ietf-webtrans-overview}} SHOULD be defined, however SHOULD NOT be required by all implementations or deployments.
+There should be a degree of decoupling from the underlying transport protocol and MoQ itself despite the "Q" in the name, in particular to provide future agility and prevent any potential ossification being tied to specific version(s) of dependant protocols.
+
+Many of the use cases will be deployed in contexts where web browsers are the common application runtime; thus the use of existing protocols and APIs is desireable for implementations. Support for WebTransport {{I-D.draft-ietf-webtrans-overview}} SHOULD be defined, however should not be required by all implementations or deployments.
 
 Considerations should be made clear with respect to modes where WebTransport "falls back" to using HTTP/2 or other future non-QUIC based protocol.
 
 ### Media Negotiation & Agility {#MOQ-negotiation}
 
-All entities which directly process media will have support for a variety of media codecs, consequently there SHOULD be capability in the protocol for sender and receiver to negotiate which media codecs will be used in a given session, as well as defining behaviours when one or more is not supported. Media encryption {{MOQ-media-encryption}} should also be factored in as part of the negotiation. Renegotiation SHOULD also be possible, allowing for changes in codec within an existing session. Consideration should be made if relays are also able to facilitate negotiation even if not directly processing media.
+All entities which directly process media will have support for a variety of media codecs, consequently there SHOULD be capability in the protocol for sender and receiver to negotiate which media codecs will be used in a given session, as well as defining behaviours when one or more is not supported. Media encryption {{MOQ-media-encryption}} should also be factored in as part of the negotiation. Renegotiation SHOULD also be possible, allowing for changes in codec within an existing session.
 
 The protocol SHOULD remain codec agnostic as much as possible, and should allow for new media formats and codecs to be supported without change in specification.
 
