@@ -229,6 +229,21 @@ The protocol SHOULD remain codec agnostic as much as possible, and should allow 
 
 The working group should consider if a minimum, suggestive set of codecs should be supported for the purposes of interop, however this SHOULD avoid being strict to simplify use cases and deployments that don't require certain capability e.g. telephony which may not require video codecs.
 
+## Media Data Model
+
+As the protocol will handle many different types of media, classifications, and variations when all entities describe the media a model should be defined which represents this, with a clear addressing scheme. This should factor in at least, but not limited to allow future types:
+
+Media Types
+: Video, audio, subtitles, ancillary data
+
+Classifications
+: Codec, media language, layers
+
+Variations
+: For each stream, the resolution(s), bitrate(s). Each variant should be uniquely identifiable.
+
+Considerations should be made to addressing of individual audio/video frames as opposed to groups, in addition to how the model incorporates signalling of prioritisation, media dependency, and cacheability to all entities.
+
 ## Publishing Media {#pub-media}
 
 Many of the use cases have bi-directional flows of media, with clients both sending and receiving media concurrently, thus the protocol should have a unified approach in connection negotiation and signalling to send and received media both at the start and ongoing in the lifetime of a session including describing when flow of media is unsupported (e.g. a live media server signalling it does not support receiving from a given client).
@@ -238,17 +253,6 @@ In the initiation of a session both client and server must perform negotiation i
 * Is the client authenticated and subsequently authorised to initiate a connection?
 * What media is available, and for each what are the parameters such as codec, bitrate, and resolution etc?
 * Is sending of media from a client permitted? If so, what media is accepted?
-
-### Support way to specify media types (ads, subtitles, main media), qualities (bitrate, resolution, layers), codec
-
-### Need a way to identify the variations uniquely
-
-### Media data/Application data granularity
-
-### Individual frames vs group of frames vs something different ?
-
-### Metadata available to relays/proxies to make caching decisions
-### Identifier, priority, dependencies, cacheability
 
 ## Naming and Addressing Media Resources {#naming}
 
