@@ -252,7 +252,7 @@ In the initiation of a session both client and server must perform negotiation i
 
 * Is the client authenticated and subsequently authorised to initiate a connection?
 * What media is available, and for each what are the parameters such as codec, bitrate, and resolution etc?
-* Is sending of media from a client permitted? If so, what media is accepted?
+* Can media move bi-directionally, or is it unidirectional only?
 
 ## Naming and Addressing Media Resources {#naming}
 
