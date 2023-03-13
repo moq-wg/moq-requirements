@@ -215,15 +215,15 @@ Different use cases have varying requirements with respect to the tradeoffs asso
 
 ### Support Webtransport/Raw QUIC as media transport
 
-There should be a degree of decoupling from the underlying transport protocol and MoQ itself despite the "Q" in the name, in particular to provide future agility and prevent any potential ossification being tied to specific version(s) of dependant protocols.
+There should be a degree of decoupling from the underlying transport protocols and MoQ itself despite the "Q" in the name, in particular to provide future agility and prevent any potential ossification being tied to specific version(s) of dependant protocols.
 
-Many of the use cases will be deployed in contexts where web browsers are the common application runtime; thus the use of existing protocols and APIs is desireable for implementations. Support for WebTransport {{I-D.draft-ietf-webtrans-overview}} SHOULD be defined, however should not be required by all implementations or deployments.
+Many of the use cases will be deployed in contexts where web browsers are the common application runtime; thus the use of existing protocols and APIs is desireable for implementations. Support for WebTransport {{I-D.draft-ietf-webtrans-overview}} will be defined, however should not be required by all implementations or deployments.
 
 Considerations should be made clear with respect to modes where WebTransport "falls back" to using HTTP/2 or other future non-QUIC based protocol.
 
 ### Media Negotiation & Agility {#MOQ-negotiation}
 
-All entities which directly process media will have support for a variety of media codecs, consequently there SHOULD be capability in the protocol for sender and receiver to negotiate which media codecs will be used in a given session, as well as defining behaviours when one or more is not supported. Media encryption {{MOQ-media-encryption}} should also be factored in as part of the negotiation. Renegotiation SHOULD also be possible, allowing for changes in codec within an existing session.
+All entities which directly process media will have support for a variety of media codecs, both codecs which exist now and codecs that will be defined in the future. Consequently the protocol will provide the capability for sender and receiver to negotiate which media codecs will be used in a given session.
 
 The protocol SHOULD remain codec agnostic as much as possible, and should allow for new media formats and codecs to be supported without change in specification.
 
@@ -237,10 +237,10 @@ Media Types
 : Video, audio, subtitles, ancillary data
 
 Classifications
-: Codec, media language, layers
+: Codec, language, layers
 
 Variations
-: For each stream, the resolution(s), bitrate(s). Each variant should be uniquely identifiable.
+: For each stream, the resolution(s), bitrate(s). Each variant should be uniquely identifiable and addressable.
 
 Considerations should be made to addressing of individual audio/video frames as opposed to groups, in addition to how the model incorporates signalling of prioritisation, media dependency, and cacheability to all entities.
 
