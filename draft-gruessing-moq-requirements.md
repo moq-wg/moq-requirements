@@ -217,7 +217,7 @@ Different use cases have varying requirements with respect to the tradeoffs asso
 
 There should be a degree of decoupling from the underlying transport protocols and MoQ itself despite the "Q" in the name, in particular to provide future agility and prevent any potential ossification being tied to specific version(s) of dependant protocols.
 
-Many of the use cases will be deployed in contexts where web browsers are the common application runtime; thus the use of existing protocols and APIs is desireable for implementations. Support for WebTransport {{I-D.draft-ietf-webtrans-overview}} will be defined, however should not be required by all implementations or deployments.
+Many of the use cases will be deployed in contexts where web browsers are the common application runtime; thus the use of existing protocols and APIs is desireable for implementations. Support for WebTransport {{I-D.draft-ietf-webtrans-overview}} will be defined, although implementations or deployments running outside browsers will not need to use WebTransport, thus support for the protocol running directly atop QUIC should be provided.
 
 Considerations should be made clear with respect to modes where WebTransport "falls back" to using HTTP/2 or other future non-QUIC based protocol.
 
