@@ -39,6 +39,7 @@ informative:
   I-D.draft-lcurley-warp:
   I-D.draft-jennings-moq-quicr-arch:
   I-D.draft-jennings-moq-quicr-proto:
+  I-D.draft-ietf-webtrans-overview:
 
   MOQ-charter:
     target: https://datatracker.ietf.org/wg/moq/about/
@@ -206,15 +207,42 @@ Our goal in this section is to understand the requirements that result from the 
 
 ## Specific Protocol Considerations {#proto-cons}
 
-### Common push protocol for ingest and distribution
+In order to support the various topologies and patterns of media flows with the protocol, the protocol MUST support both sending and receiving of media streams, as separate actions or concurrently in a given connection.
 
-### Allow configurable latency - live streaming , interactive, media conferencing
+### Delivery Assurance vs. Delay
 
-### Support media transport mapping over QUIC Streams/QUIC Datagram (needs further evaluation)
+Different use cases have varying requirements with respect to the tradeoffs associated in having guarantee of delivery vs delay - in some (such as telephony) it may be acceptable to drop some or all of the media as a result of changes in network connectivity, throughput, or congestion whereas in other scenarios all media must arrive at the receiving end even if delayed. There SHOULD be support for some means for a connection to signal which media may be abandoned, and behaviours of both senders receivers defined when delay or loss occurs. Where multiple variants of media are sent, this SHOULD be done so in a way that provides pipelining so each media stream may be processed in parallel.
 
-### Support Webtransport/H3/Raw QUIC as media transport
+### Support Webtransport/Raw QUIC as media transport
 
-### Supports media over QUIC Streams/QUIC Datagrams
+There should be a degree of decoupling from the underlying transport protocols and MoQ itself despite the "Q" in the name, in particular to provide future agility and prevent any potential ossification being tied to specific version(s) of dependant protocols.
+
+Many of the use cases will be deployed in contexts where web browsers are the common application runtime; thus the use of existing protocols and APIs is desireable for implementations. Support for WebTransport {{I-D.draft-ietf-webtrans-overview}} will be defined, although implementations or deployments running outside browsers will not need to use WebTransport, thus support for the protocol running directly atop QUIC should be provided.
+
+Considerations should be made clear with respect to modes where WebTransport "falls back" to using HTTP/2 or other future non-QUIC based protocol.
+
+### Media Negotiation & Agility {#MOQ-negotiation}
+
+All entities which directly process media will have support for a variety of media codecs, both codecs which exist now and codecs that will be defined in the future. Consequently the protocol will provide the capability for sender and receiver to negotiate which media codecs will be used in a given session.
+
+The protocol SHOULD remain codec agnostic as much as possible, and should allow for new media formats and codecs to be supported without change in specification.
+
+The working group should consider if a minimum, suggestive set of codecs should be supported for the purposes of interop, however this SHOULD avoid being strict to simplify use cases and deployments that don't require certain capability e.g. telephony which may not require video codecs.
+
+## Media Data Model
+
+As the protocol will handle many different types of media, classifications, and variations when all entities describe the media a model should be defined which represents this, with a clear addressing scheme. This should factor in at least, but not limited to allow future types:
+
+Media Types
+: Video, audio, subtitles, ancillary data
+
+Classifications
+: Codec, language, layers
+
+Variations
+: For each stream, the resolution(s), bitrate(s). Each variant should be uniquely identifiable and addressable.
+
+Considerations should be made to addressing of individual audio/video frames as opposed to groups, in addition to how the model incorporates signalling of prioritisation, media dependency, and cacheability to all entities.
 
 ## Publishing Media {#pub-media}
 
@@ -224,37 +252,13 @@ In the initiation of a session both client and server must perform negotiation i
 
 * Is the client authenticated and subsequently authorised to initiate a connection?
 * What media is available, and for each what are the parameters such as codec, bitrate, and resolution etc?
-* Is sending of media from a client permitted? If so, what media is accepted?
-
-Re-negotiation in an existing protocol should be supported to allow changes in what is being sent or received.
-
-### Support way to specify media types (ads, subtitles, main media), qualities (bitrate, resolution, layers), codec
-
-### Need a way to identify the variations uniquely
-
-### Media data/Application data granularity
-
-### Individual frames vs group of frames vs something different ?
-
-### Metadata available to relays/proxies to make caching decisions
-
-### Identifier, priority, dependencies, cacheability
-
-### Application data can be end-to-end encrypted ( publisher to consumer)
-
-
+* Can media move bi-directionally, or is it unidirectional only?
 
 ## Naming and Addressing Media Resources {#naming}
 
 As multiple streams of media may be available for concurrent sending such as multiple camera views or audio tracks, a means of both identifying the technical properties of each resource (codec, bitrate, etc) as well as a useful identification for playback should be part of the protocol. A base level of optional metadata e.g. the known language of an audio track or name of participant's camera should be supported, but further extended metadata of the contents of the media or its ontology should not be supported.
 
 ### Scoped to an Origin/Domain, Application specific.
-
-### Allows CDN/Relay to known the billing relationship associated with the data being stored/distributed.
-
-### Identifies elemental streams
-
-### Maps to an variants/renditions encoded
 
 ### Allows subscribing or requesting for the data matching the name by the consumers
 
@@ -265,35 +269,25 @@ Packaging of media describes how encapsulation of media to carry the raw media w
 * Within the protocol itself, where the protocol defines the carrying for each media encoding the ancillary data required for decoding the media.
 * A common encapsulation format such as ISOBMFF which defines a generic method for all media and handles ancillary decode information.
 
-The working group must agree on which approach should be taken to the packaging of media, taking into consideration the various technical trade offs that each provide.
-
-### Use existing container format like CMAF
-
-### Support Raw container format
-
-### Do we need other formats ?
+The working group must agree on which approach should be taken to the packaging of media, taking into consideration the various technical trade offs that each provide. If the working group decides on a common encapsulation format, the mechanisms within the protocol SHOULD allow for new encapsulation formats to be used.
 
 ## Media Consumption {#med-consumption}
 
-### Consumers are authorized at the Origin.
-
-### Allows consumers to ask for the media data by name.
-
-### Allows consumers to ask the right quality/variant.
+Receivers SHOULD be able to as part of negotiation of a session {{MOQ-negotiation}} specify which media to receive, not just with respect to the media format and codec, but also the varient thereof such as resolution or bitrate.
 
 ## Relays, Caches, and other MOQ Network Elements {#MOQ-network-entities}
 
-### Allow caching and distribution of media data as applicable
+### Pull & Push
 
-### Store/distribute the data via trust relayed by Origin
+To enable use cases where receivers may wish to address a particular time of media in addition to having the most recently produced media available, both "pull" and "push" of media SHOULD be supported, with consideration that producers and intermediates SHOULD also signal what media is available (commonly referred to as a "DVR window"). Behaviours around cache durations for each MoQ entity should be defined.
 
-### Support pipelining to keep latencies at the minimum
+## Security {#MOQ-security}
 
-### Support selective drop/cache decisions based on metadata
+### Authentication & Authorisation
 
-### Support push of media data to consumers
+Whilst QUIC and conversely TLS supports the ability for mutual authentication through client and server presenting certificates and performing validation, this is infeasible in many use cases where provisioning of client TLS certificates is unsupported or infeasible. Thus, support for a primitive method of authentication between MoQ entities SHOULD be included to authenticate entities between one another, noting that implementations and deployments should determine which authorisation model if any is applicable.
 
-## End-to-end Security {#MOQ-security}
+### Media Encryption {#MOQ-media-encryption}
 
 End-to-end security describes the use of encryption of the media stream(s) to provide confidentiality in the presence of unauthorized intermediates or observers and prevent or restrict ability to decrypt the media without authorization. Generally, there are three aspects of end-to-end media security:
 
@@ -303,9 +297,7 @@ End-to-end security describes the use of encryption of the media stream(s) to pr
 
 **Note: "Node-to-node" refers to a path segment connecting two MOQ nodes, that makes up part of the end-to-end path between the MOQ sender and ultimate MOQ receiver.
 
-The working group must agree on a number of details here, and perhaps the first question is whether the MOQ protocol makes any provision for "node-to-node" media security, or simply treats authorized transcoders as MOQ receivers. If that's the decision all MOQ media security is "sender-to-receiver", but some "ends" may not be either senders or ultimate receivers, from a certain point of view.
-
-### Consider possible options as DRM, MLS, or something different ???
+Support for encrypted media SHOULD be available in the protocol to support the above use cases, with key exchange and decryption authorisation handled externally. The protocol SHOULD provide metadata for entities which process media to perform key exchange and decrypt.
 
 # IANA Considerations
 
