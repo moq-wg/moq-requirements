@@ -41,22 +41,25 @@ informative:
   I-D.draft-jennings-moq-quicr-proto:
   I-D.draft-ietf-webtrans-overview:
 
+  IESG-sdwg:
+    target: https://www.ietf.org/about/groups/iesg/statements/support-documents/
+    title: "Support Documents in IETF Working Groups"
+    date: 13 Nov 2016
+
   MOQ-charter:
     target: https://datatracker.ietf.org/wg/moq/about/
     title: "Media Over QUIC (moq)"
     date: September 8, 2022
-  Prog-MOQ:
-    target: https://datatracker.ietf.org/meeting/interim-2022-moq-01/materials/slides-interim-2022-moq-01-sessa-moq-use-cases-and-requirements-individual-draft-working-group-draft-00
-    title: "Progressing MOQ"
-    date: October 21, 2022
-  MOQ-ucr:
-    target: https://datatracker.ietf.org/meeting/interim-2022-moq-01/materials/slides-interim-2022-moq-01-sessa-progressing-moq-00.pdf
-    title: "MOQ Use Cases and Requirements"
-    date: October 21, 2022
+
   WebTrans-charter:
     target: https://datatracker.ietf.org/wg/webtrans/about/
     title: "WebTransport (webtrans)"
     date: March 10, 2021
+
+  Prog-MOQ:
+    target: https://datatracker.ietf.org/meeting/interim-2022-moq-01/materials/slides-interim-2022-moq-01-sessa-moq-use-cases-and-requirements-individual-draft-working-group-draft-00
+    title: "Progressing MOQ"
+    date: October 21, 2022
 
 --- abstract
 
@@ -76,11 +79,17 @@ mailing list, at <https://www.ietf.org/mailman/listinfo/moq>.
 
 # Introduction {#intro}
 
-This document describes use cases and requirements that guide the specification of a simple, low-latency media delivery solution for ingest and distribution {{MOQ-charter}}, using either the QUIC protocol {{RFC9000}} or WebTransport {{WebTrans-charter}}.
+This document describes use cases and requirements that guide the specification of a simple, low-latency media delivery solution for ingest and distribution {{MOQ-charter}}, using either the QUIC protocol {{RFC9000}} or WebTransport {{WebTrans-charter}} as transport protocols.
 
 ## Note for MOQ Working Group participants
 
-This version of the document is intended to provide the MOQ working group with a starting point for work on the "Use Cases and Requirements document" milestone. The update implements the work plan described in {{MOQ-ucr}}. The authors intend to request MOQ working group adoption after IETF 115, so the working group can begin to focus on these topics in earnest.
+When adopted, this document is intended to capture use cases that are in scope for work on the MOQ protocol {{MOQ-charter}}, and requirements that arise from these use cases.
+
+As of this writing, the authors have not planned to request publication on this document, based on our understanding of the IESG's statement on "Support Documents in IETF Working Groups" {{IESG-sdwg}}, which says (among other things):
+
+> While writing down such things as requirements and use cases help to get a common understanding (and often common language) between participants in the working group, support documentation doesn’t always have a high archival value. Under most circumstances, the IESG encourages the community to consider alternate mechanisms for publishing this content, such as on a working group wiki, in an informational appendix of a solution document, or simply as an expired draft.
+
+It seems reasonable for the working group to improve this document, and then consider whether the result justifies publication as a part of the RFC archival document series.
 
 # Terminology {#term}
 
