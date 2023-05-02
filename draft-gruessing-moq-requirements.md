@@ -86,6 +86,34 @@ This version of the document is intended to provide the MOQ working group with a
 
 {::boilerplate bcp14-tagged}
 
+## Distinguishing between Interactive and Live Streaming Use Cases
+
+The MOQ charter {{MOQ-charter}} lists three use cases as being in scope of the MOQ protocol
+
+> use cases including live streaming, gaming, and media conferencing
+
+but does not include (directly or by reference) a definition of "live streaming" or "interactive" (a term that has been used to describe gaming and media conferencing, as distinct from "live streaming"). It seems useful to describe these two terms, as classes of use cases, before we describe individual use cases in more detail.
+
+**Note: these descriptions are a starting point. Feedback and pushback are both welcomed.**
+
+We propose these definitions:
+
+**Live Streaming**:
+: a use case with unidirectional media flows
+
+Live Streaming use cases allow consumers of media to "watch together", without having a sense that one consumer is experiencing the media before another consumer. This does not require the delivery of live media to be strictly synchronized between media consumers, but only that from the viewpoint of individual consumers, media delivery appears to be synchronized..
+
+It is common for live streaming use cases to send media in one direction, and "something else" in the other direction - for instance, a video receiver might be returning requests that the sender change the media encoding or media rate in use, or reorgient a camera. This type of feedback doesn't qualify as "bidirectional media".
+
+**Interactive**:
+: a use case with coupled bidirectional media flows
+
+Interactive use cases have bidirectional media flows sufficiently coupled with each other, that media from one sender can cause the receiver to reply by sending its own media back to the original sender.
+
+For instance, a speaker in a conferencing application might make a statement, and then ask, "but what do you folks think?" If one of the listeners is able to answer in a timeframe that seems natural, without without waiting for the current speaker to explicitly "hand over" control of the conversation, this would qualify as "Interactive".
+
+If two sender/receivers are each sending media to the other, but what's being carried in one direction has no relationship with what's being carried in the other direction, this would not qualify as "Interactive".
+
 # Use Cases Informing This Proposal {#overallusecases}
 
 Our goal in this section is to understand the range of use cases that are in scope for "Media Over QUIC" {{MOQ-charter}}.
