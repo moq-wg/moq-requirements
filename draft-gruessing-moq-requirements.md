@@ -41,6 +41,10 @@ informative:
   I-D.draft-jennings-moq-quicr-proto:
   I-D.draft-ietf-webtrans-overview:
 
+  ISOBMFF:
+    title: "Information Technology - Coding Of Audio-Visual Objects - Part 12: ISO Base Media File Format"
+    date: 2022
+
   MOQ-charter:
     target: https://datatracker.ietf.org/wg/moq/about/
     title: "Media Over QUIC (moq)"
@@ -264,12 +268,18 @@ As multiple streams of media may be available for concurrent sending such as mul
 
 ## Packaging Media {#Packaging}
 
-Packaging of media describes how encapsulation of media to carry the raw media will work. There are at a high level two approaches to this:
+Packaging of media describes how raw media will be encapsulated. There are at a high level two approaches to this:
 
-* Within the protocol itself, where the protocol defines the carrying for each media encoding the ancillary data required for decoding the media.
-* A common encapsulation format such as ISOBMFF which defines a generic method for all media and handles ancillary decode information.
+* Within the protocol itself, where the protocol defines the ancillary data required to decode each media type the protocol supports.
+* A common encapsulation format such as ISOBMFF {{ISOBMFF}} which defines a generic method for all media and handles ancillary decode information.
 
-The working group must agree on which approach should be taken to the packaging of media, taking into consideration the various technical trade offs that each provide. If the working group decides on a common encapsulation format, the mechanisms within the protocol SHOULD allow for new encapsulation formats to be used.
+The working group must agree on which approach should be taken to the packaging of media, taking into consideration the various technical trade offs that each approach provides.
+
+- If the working group decides to describe media encapsulation as part of the MOQ protocol, this will require a new version of the MOQ protocol in order to signal the receiver that a new media encapsulation format may be present.
+
+- If the working group decides to use a common encapsulation format, the mechanisms within the protocol SHOULD allow for new encapsulation formats to be used. Without encapsulation agility, adding or changing the way media is encapsulated will also require a new version of the MOQ protocol, to signal the receiver that a new media encapsulation format may be present.
+
+MOQ protocol specifications will provide details on the supported media encapsulation(s).
 
 ## Media Consumption {#med-consumption}
 
