@@ -180,7 +180,9 @@ The use cases in this section like those in {{interact}} do set some expectation
 Where media is received from a source for onwards handling into a distribution
 platform. The media may comprise of multiple audio and/or video sources.
 Bitrates may either be static or set dynamically by signaling of connection
-information (bandwidth, latency) based on data sent by the receiver.
+information (bandwidth, latency) based on data sent by the receiver, and the
+media may go through additional steps of transcoding or transformation before
+being distributed.
 
 ### Live Media Syndication {#lmsynd}
 
@@ -189,10 +191,11 @@ information (bandwidth, latency) based on data sent by the receiver.
 |**Senders/Receivers**|  One to One
 |**Bi-directional**| No
 
-Where media is sent onwards to another platform for further distribution. The
-media may be compressed down to a bitrate lower than source, but larger than
-final distribution output. Streams may be redundant with failover mechanisms in
-place.
+Where media is sent onwards to another platform for further distribution and not
+directly used for presentation to an audience, however may be monitored by
+operational systems and/or people. The media may be compressed down to a bitrate
+lower than source, but larger than final distribution output. Streams may be
+redundant with failover mechanisms in place.
 
 ### Live Media Streaming {#lmstream}
 
@@ -201,14 +204,20 @@ place.
 |**Senders/Receivers**|  One to Many
 |**Bi-directional**| No
 
-Where media is received from a live broadcast or stream. This may comprise of
-multiple audio or video outputs with different codecs or bitrates. This may also
-include other types of media essence such as subtitles or timing signalling
-information (e.g. markers to indicate change of behaviour in client such as
-advertisement breaks). The use of "live rewind" where a window of media behind
-the live edge can be made available for clients to playback, either because the
-local player falls behind edge or because the viewer wishes to play back from a
-point in the past.
+Where media is received from a live broadcast or stream either as a broadcast
+with fixed duration or as ongoing 24/7 output. The number of receivers may vary
+depending on the type of content; breaking news events may see sharp, sudden
+spikes, whereas sporting and entertainment events may see a more gradual ramp
+up with a higher sustained peak with some changes based on match breaks or
+interludes.
+
+These broadcasts may comprise of multiple audio or video outputs with different
+codecs or bitrates, and may also include other types of media essence such as
+subtitles or timing signalling information (e.g.  markers to indicate change of
+behaviour in client such as advertisement breaks).  The use of "live rewind"
+where a window of media behind the live edge can be made available for clients
+to playback, either because the local player falls behind edge or because the
+viewer wishes to play back from a point in the past.
 
 # Requirements for Protocol Work {#req-sec}
 
