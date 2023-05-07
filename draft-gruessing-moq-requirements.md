@@ -135,13 +135,14 @@ audio for in-game chat with other players.
 
 |Attribute | Value |
 | -----+----------------
-|**Senders/Receivers**|  One to One
+|**Senders/Receivers**|  One to Many
 |**Bi-directional**| Yes
 
-Where media is received, and user inputs are sent by the client. Latency
-requirements with this use case are marginally different than the gaming use
-case. This may also include signalling and/or transmitting of files or devices
-connected to the user's computer.
+Where media is received, and user inputs are sent by the client, however it may
+have multiple participants providing input. Latency requirements with this use
+case are marginally different than the gaming use case. This may also include
+signalling and/or transmitting of files or devices connected to the user's
+computer.
 
 ### Video Conferencing/Telephony {#vidconf}
 
@@ -211,10 +212,10 @@ spikes, whereas sporting and entertainment events may see a more gradual ramp
 up with a higher sustained peak with some changes based on match breaks or
 interludes.
 
-These broadcasts may comprise of multiple audio or video outputs with different
+Such broadcasts may comprise of multiple audio or video outputs with different
 codecs or bitrates, and may also include other types of media essence such as
-subtitles or timing signalling information (e.g.  markers to indicate change of
-behaviour in client such as advertisement breaks).  The use of "live rewind"
+subtitles or timing signalling information (e.g. markers to indicate change of
+behaviour in client such as advertisement breaks). The use of "live rewind"
 where a window of media behind the live edge can be made available for clients
 to playback, either because the local player falls behind edge or because the
 viewer wishes to play back from a point in the past.
