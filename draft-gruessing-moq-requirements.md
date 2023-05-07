@@ -167,6 +167,13 @@ any member of the audience could participate. As this has a much larger total
 number of participants - as many as Live Media Streaming {{lmstream}}, but with
 the bi-directionality of conferencing, this should be considered a "hybrid". There can be additional functionality as well that overlap between the two, such as "live rewind", or recording abilities.
 
+Another consideration is the limits of "human bandwidth" - as the number of
+sources are included into a given session increase, the amount of media that can
+usefully understood by a single person diminishes. To put it more simply - too
+many people talking at once is much more difficult to understand than one person
+speaking at a time. Subsequently this will define some limitations in the number
+of concurrent or semi-concurrent, bidirectional communications that occur.
+
 ## Live Media {#lm-media}
 
 The use cases in this section like those in {{interact}} do set some expectations to minimise high and/or highly variable latency, however their key difference is that are seldom bi-directional as their basis is on mass-consumption of media or the contribution of it into a platform to syndicate, or distribute. Latency is less noticeable over loss, and may be more accepting of having slightly more latency to increase guarantee of delivery.
