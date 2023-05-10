@@ -94,16 +94,9 @@ The MOQ charter {{MOQ-charter}} lists three use cases as being in scope of the M
 
 but does not include (directly or by reference) a definition of "live streaming" or "interactive" (a term that has been used to describe gaming and media conferencing, as distinct from "live streaming"). It seems useful to describe these two terms, as classes of use cases, before we describe individual use cases in more detail.
 
-**Note: these descriptions are a starting point. Feedback and pushback are both welcomed.**
+MOQ participants have discussed making this distinction based on quantitative measures such as latency, but since MOQ use cases can include an arbitrary number of relays, we offer a distinction that is based on how users experience that distinction. If two users are able to interact in the way that seems interactive, as described in the proposed definitions, the use case is interactive; if two users are unable to interact in that way, the use case is live streaming.
 
 We propose these definitions:
-
-**Live Streaming**:
-: a use case with unidirectional media flows
-
-Live Streaming use cases allow consumers of media to "watch together", without having a sense that one consumer is experiencing the media before another consumer. This does not require the delivery of live media to be strictly synchronized between media consumers, but only that from the viewpoint of individual consumers, media delivery appears to be synchronized..
-
-It is common for live streaming use cases to send media in one direction, and "something else" in the other direction - for instance, a video receiver might be returning requests that the sender change the media encoding or media rate in use, or reorgient a camera. This type of feedback doesn't qualify as "bidirectional media".
 
 **Interactive**:
 : a use case with coupled bidirectional media flows
@@ -112,7 +105,16 @@ Interactive use cases have bidirectional media flows sufficiently coupled with e
 
 For instance, a speaker in a conferencing application might make a statement, and then ask, "but what do you folks think?" If one of the listeners is able to answer in a timeframe that seems natural, without without waiting for the current speaker to explicitly "hand over" control of the conversation, this would qualify as "Interactive".
 
+**Live Streaming**:
+: a use case with unidirectional media flows, or uncoupled bidirectional flows
+
+Live Streaming use cases allow consumers of media to "watch together", without having a sense that one consumer is experiencing the media before another consumer. This does not require the delivery of live media to be strictly synchronized between media consumers, but only that from the viewpoint of individual consumers, media delivery **appears to be** synchronized.
+
+It is common for live streaming use cases to send media in one direction, and "something else" in the other direction - for instance, a video receiver might be returning requests that the sender change the media encoding or media rate in use, or reorgient a camera. This type of feedback doesn't qualify as "bidirectional media".
+
 If two sender/receivers are each sending media to the other, but what's being carried in one direction has no relationship with what's being carried in the other direction, this would not qualify as "Interactive".
+
+**Note: these descriptions are a starting point. Feedback and pushback are both welcomed.**
 
 # Use Cases Informing This Proposal {#overallusecases}
 
