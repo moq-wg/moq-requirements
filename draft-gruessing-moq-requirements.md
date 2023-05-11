@@ -41,6 +41,10 @@ informative:
   I-D.draft-jennings-moq-quicr-proto:
   I-D.draft-ietf-webtrans-overview:
 
+  CMAF:
+    title: "Information technology — Multimedia application format (MPEG-A) — Part 19: Common media application format (CMAF) for segmented media"
+    date: 2020
+
   ISOBMFF:
     title: "Information Technology - Coding Of Audio-Visual Objects - Part 12: ISO Base Media File Format"
     date: 2022
@@ -280,7 +284,7 @@ As multiple streams of media may be available for concurrent sending such as mul
 Packaging of media describes how raw media will be encapsulated. There are at a high level two approaches to this:
 
 * Within the protocol itself, where the protocol defines the ancillary data required to decode each media type the protocol supports.
-* A common encapsulation format such as ISOBMFF {{ISOBMFF}} which defines a generic method for all media and handles ancillary decode information.
+* A common encapsulation format such as there are advantages to using an existing generic media packaging format (such as CMAF {{CMAF}} or other ISOBMFF {{ISOBMFF}} subsets) which define a generic method for all media and handles ancillary decode information.
 
 The working group must agree on which approach should be taken to the packaging of media, taking into consideration the various technical trade offs that each approach provides.
 
@@ -338,6 +342,8 @@ The authors would like to thank several authors of individual drafts that fed in
 - Cullen Jennings and Suhas Nandakumar ({{I-D.draft-jennings-moq-quicr-arch}}), together with Christian Huitema ({{I-D.draft-jennings-moq-quicr-proto}}).
 
 We would also like to thank Suhas Nandakumar for his presentation, "Progressing MOQ" {{Prog-MOQ}}, at the October 2022 MOQ virtual interim meeting. We used his outline as a starting point for the Requirements section ({{req-sec}}).
+
+We would also like to thank Cullen Jennings for suggesting that we distinguish between interactive and live streaming use cases based on the users' perception, rather than quantitative measurements.
 
 James Gruessing would also like to thank Francesco Illy and Nicholas Book for
 their part in providing the needed motivation.
