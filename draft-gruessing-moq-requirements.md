@@ -143,11 +143,12 @@ frequency of user input.
 |**Senders/Receivers**|  One to Many
 |**Bi-directional**| Yes
 
-Where media is received, and user inputs are sent by the client, however it may
-have multiple participants providing input. Latency requirements with this use
-case are marginally different than the gaming use case. This may also include
-signalling and/or transmitting of files or devices connected to the user's
-computer.
+Similar to the gaming use case, but where a user wishes to observe or control
+the graphical user interface of another computer through local user interfaces.
+Latency requirements with this use case are marginally different than the gaming
+use case as greater input latency may be more tolerated by users. This use case
+may also include a need to support signalling and/or transmitting of files or
+devices connected to the user's computer.
 
 ### Video Conferencing/Telephony {#vidconf}
 
