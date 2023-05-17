@@ -126,10 +126,15 @@ This may help to explain why interactive use cases have typically relied on prot
 |**Senders/Receivers**|  One to One
 |**Bi-directional**| Yes
 
-Where media is received, and user inputs are sent by the client. This may also
-include the client receiving other types of signaling, such as triggers for
-haptic feedback. This may also carry media from the client such as microphone
-audio for in-game chat with other players.
+In this use case the computation for running a video game (single or
+multiplayer) is performed externally on a hosted service, with user inputs from
+input devices sent to the server, and video and audio of gameplay returned. This
+may also include the client receiving other types of signaling, such as triggers
+for haptic feedback, as well as media from the client such as microphone audio
+for in-game chat with other players. Latency may be considerably important in
+this use case as updates to video occur in response user input, with certain
+genres of games having high requirements in responsiveness and/or a high
+frequency of user input.
 
 ### Remote Desktop {#remdesk}
 
