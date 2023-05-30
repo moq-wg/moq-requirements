@@ -128,13 +128,13 @@ This may help to explain why interactive use cases have typically relied on prot
 
 In this use case the computation for running a video game (single or
 multiplayer) is performed externally on a hosted service, with user inputs from
-input devices sent to the server, and video and audio of gameplay returned. This
-may also include the client receiving other types of signaling, such as triggers
-for haptic feedback, as well as media from the client such as microphone audio
-for in-game chat with other players. Latency may be considerably important in
-this use case as updates to video occur in response user input, with certain
-genres of games having high requirements in responsiveness and/or a high
-frequency of user input.
+input devices sent to the server, and media, usually video and audio of gameplay
+returned. This may also include the client receiving other types of signaling,
+such as triggers for haptic feedback, as well as the client sending media such
+as microphone audio for in-game chat with other players. Latency may be
+considerably important in this use case as updates to video occur in response
+user input, with certain genres of games having high requirements in
+responsiveness and/or a high frequency of user input.
 
 ### Remote Desktop {#remdesk}
 
@@ -143,12 +143,12 @@ frequency of user input.
 |**Senders/Receivers**|  One to Many
 |**Bi-directional**| Yes
 
-Similar to the gaming use case, but where a user wishes to observe or control
-the graphical user interface of another computer through local user interfaces.
-Latency requirements with this use case are marginally different than the gaming
-use case as greater input latency may be more tolerated by users. This use case
-may also include a need to support signalling and/or transmitting of files or
-devices connected to the user's computer.
+Similar to the gaming use case in many requirements, but where a user wishes to
+observe or control the graphical user interface of another computer through
+local user interfaces.  Latency requirements with this use case are marginally
+different than the gaming use case as greater input latency may be more
+tolerated by users. This use case may also include a need to support signalling
+and/or transmitting of files or devices connected to the user's computer.
 
 ### Video Conferencing/Telephony {#vidconf}
 
@@ -177,8 +177,9 @@ Another consideration is the limits of "human bandwidth" - as the number of
 sources are included into a given session increase, the amount of media that can
 usefully understood by a single person diminishes. To put it more simply - too
 many people talking at once is much more difficult to understand than one person
-speaking at a time. Subsequently this will define some limitations in the number
-of concurrent or semi-concurrent, bidirectional communications that occur.
+speaking at a time, and this varies on the audience and circumstance.
+Subsequently this will define some limitations in the number of potential
+concurrent or semi-concurrent, bidirectional communications that occur.
 
 ## Live Media {#lm-media}
 
@@ -229,9 +230,9 @@ Such broadcasts may comprise of multiple audio or video outputs with different
 codecs or bitrates, and may also include other types of media essence such as
 subtitles or timing signalling information (e.g. markers to indicate change of
 behaviour in client such as advertisement breaks). The use of "live rewind"
-where a window of media behind the live edge can be made available for clients
-to playback, either because the local player falls behind edge or because the
-viewer wishes to play back from a point in the past.
+where a window of media between the live edge and trailing edge can be made
+available for clients to playback, either because the local player falls behind
+edge or because the viewer wishes to play back from a point in the past.
 
 # Requirements for Protocol Work {#req-sec}
 
