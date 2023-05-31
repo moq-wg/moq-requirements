@@ -397,7 +397,11 @@ The authors would like to thank several authors of individual drafts that fed in
 
 We would also like to thank Suhas Nandakumar for his presentation, "Progressing MOQ" {{Prog-MOQ}}, at the October 2022 MOQ virtual interim meeting. We used his outline as a starting point for the Requirements section ({{req-sec}}).
 
-We would also like to thank Cullen Jennings for suggesting that we distinguish between interactive and live streaming use cases based on the users' perception, rather than quantitative measurements.
+We would also like to thank Cullen Jennings for suggesting that we distinguish
+between interactive and live streaming use cases based on the users' perception,
+rather than quantitative measurements. In addition we would also like to thank
+Lucas Pardue, Alan Frindell, and Bernard Aboba for their reviews of the
+document.
 
 James Gruessing would also like to thank Francesco Illy and Nicholas Book for
 their part in providing the needed motivation.
