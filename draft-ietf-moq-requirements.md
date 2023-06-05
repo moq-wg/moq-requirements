@@ -1,7 +1,7 @@
 ---
 title: Media Over QUIC - Use Cases and Requirements for Media Transport Protocol Design
 abbrev: MoQ Use Cases and Requirements
-docname: draft-gruessing-moq-requirements-latest
+docname: draft-ietf-moq-requirements-latest
 category: info
 stream: IETF
 date:
@@ -18,13 +18,11 @@ author:
     ins: J. Gruessing
     name: James Gruessing
     organization: Nederlandse Publieke Omroep
-    country: Netherlands
     email: james.ietf@gmail.com
   -
     ins: S. Dawkins
     name: Spencer Dawkins
     organization: Tencent America LLC
-    country: United States of America
     email: spencerdawkins.ietf@gmail.com
 
 informative:
