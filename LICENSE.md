@@ -1,4 +1,4 @@
 # License
 
 See the
-[guidelines for contributions](https://github.com/fiestajetsam/draft-gruessing-moq-requirements/blob/main/CONTRIBUTING.md).
+[guidelines for contributions](https://github.com/moq-wg/moq-requirements/blob/main/CONTRIBUTING.md).

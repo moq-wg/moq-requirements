@@ -1,17 +1,17 @@
-# Media over QUIC Requirements and Use Cases
+# Media Over QUIC - Use Cases and Requirements for Media Transport Protocol Design
 
-This is the working area for the individual Internet-Draft, "Media over QUIC Requirements and Use Cases".
+This is the working area for the IETF [MOQ Working Group](https://datatracker.ietf.org/wg/moq/documents/) Internet-Draft, "Media Over QUIC - Use Cases and Requirements for Media Transport Protocol Design".
 
-* [Editor's Copy](https://fiestajetsam.github.io/draft-gruessing-moq-requirements/#go.draft-gruessing-moq-requirements.html)
-* [Datatracker Page](https://datatracker.ietf.org/doc/draft-gruessing-moq-requirements)
-* [Individual Draft](https://datatracker.ietf.org/doc/html/draft-gruessing-moq-requirements)
-* [Compare Editor's Copy to Individual Draft](https://fiestajetsam.github.io/draft-gruessing-moq-requirements/#go.draft-gruessing-moq-requirements.diff)
+* [Editor's Copy](https://moq-wg.github.io/moq-requirements/#go.draft-ietf-moq-requirements.html)
+* [Datatracker Page](https://datatracker.ietf.org/doc/draft-ietf-moq-requirements)
+* [Working Group Draft](https://datatracker.ietf.org/doc/html/draft-ietf-moq-requirements)
+* [Compare Editor's Copy to Working Group Draft](https://moq-wg.github.io/moq-requirements/#go.draft-ietf-moq-requirements.diff)
 
 
 ## Contributing
 
 See the
-[guidelines for contributions](https://github.com/fiestajetsam/draft-gruessing-moq-requirements/blob/main/CONTRIBUTING.md).
+[guidelines for contributions](https://github.com/moq-wg/moq-requirements/blob/main/CONTRIBUTING.md).
 
 Contributions can be made by creating pull requests.
 The GitHub interface supports creating pull requests using the Edit (✏) button.
