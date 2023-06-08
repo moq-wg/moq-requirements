@@ -118,7 +118,7 @@ We propose these definitions:
 
 Interactive use cases have bidirectional media flows sufficiently coupled with each other, that media from one sender can cause the receiver to reply by sending its own media back to the original sender.
 
-For instance, a speaker in a conferencing application might make a statement, and then ask, "but what do you folks think?" If one of the listeners is able to answer in a timeframe that seems natural, without without waiting for the current speaker to explicitly "hand over" control of the conversation, this would qualify as "Interactive".
+For instance, a speaker in a conferencing application might make a statement, and then ask, "but what do you folks think?" If one of the listeners is able to answer in a timeframe that seems natural, without waiting for the current speaker to explicitly "hand over" control of the conversation, this would qualify as "Interactive".
 
 **Live Streaming**:
 : a use case with unidirectional media flows, or uncoupled bidirectional flows
@@ -189,29 +189,13 @@ and/or transmitting of files or devices connected to the user's computer.
 |**Senders/Receivers**|  Many to Many
 |**Bi-directional**| Yes
 
-Where media is both sent and received; This may include audio from both
-microphone(s) and/or cameras, or may include "screen sharing" or inclusion of
-other content such as slide, document, or video presentation. This may be done
+In the Video Conferencing/Telephony use case, media is both sent and received.
+This use case typically includes audio and video media, and may also include one or more  additional media types, such as "screen sharing" and other content such as slides, documents, or video presentations.
+This may be done
 as client/server, or peer to peer with a many to many relationship of both
 senders and receivers. The target for latency may be as large as 200ms or more for
 some media types such as audio, but other media types in this use case have much
 more stringent latency targets.
-
-## Hybrid Interactive and Live Media
-
-For the video conferencing/telephony use case, there can be additional scenarios
-where the audience greatly outnumbers the concurrent active participants, but
-any member of the audience could participate. As this has a much larger total
-number of participants - as many as Live Media Streaming {{lmstream}}, but with
-the bi-directionality of conferencing, this should be considered a "hybrid". There can be additional functionality as well that overlap between the two, such as "live rewind", or recording abilities.
-
-Another consideration is the limits of "human bandwidth" - as the number of
-sources are included into a given session increase, the amount of media that can
-usefully understood by a single person diminishes. To put it more simply - too
-many people talking at once is much more difficult to understand than one person
-speaking at a time, and this varies on the audience and circumstance.
-Subsequently this will define some limitations in the number of potential
-concurrent or semi-concurrent, bidirectional communications that occur.
 
 ## Live Media {#lm-media}
 
@@ -263,8 +247,23 @@ codecs or bitrates, and may also include other types of media essence such as
 subtitles or timing signalling information (e.g. markers to indicate change of
 behaviour in client such as advertisement breaks). The use of "live rewind"
 where a window of media between the live edge and trailing edge can be made
-available for clients to playback, either because the local player falls behind
+available for clients to playback, either because the local player falls behind the leading
 edge or because the viewer wishes to play back from a point in the past.
+
+## Hybrid Interactive and Live Media
+
+For the video conferencing/telephony use case, there can be additional scenarios
+where the audience greatly outnumbers the concurrent active participants, but
+any member of the audience could participate.
+This use case can have an audience as large as Live Media Streaming as described in {{lmstream}}, but also relies on the interactivity and bi-directionality of conferencing as in Video Conferencing as described in {{vidconf}}. For this reason, this type of use case can be considered a "hybridThere can be additional functionality as well that overlap between the two, such as "live rewind", or recording abilities.
+
+Another consideration is the limits of "human bandwidth" - as the number of
+sources are included into a given session increase, the amount of media that can
+usefully understood by a single person diminishes. To put it more simply - too
+many people talking at once is much more difficult to understand than one person
+speaking at a time, and this varies on the audience and circumstance.
+Subsequently this will define some limitations in the number of potential
+concurrent or semi-concurrent, bidirectional communications that occur.
 
 # Requirements for Protocol Work {#req-sec}
 
@@ -360,7 +359,7 @@ To enable use cases where receivers may wish to address a particular time of med
 
 ### Authentication & Authorisation
 
-Whilst QUIC and conversely TLS supports the ability for mutual authentication through client and server presenting certificates and performing validation, this is infeasible in many use cases where provisioning of client TLS certificates is unsupported or infeasible. Thus, support for a primitive method of authentication between MoQ entities SHOULD be included to authenticate entities between one another, noting that implementations and deployments should determine which authorisation model if any is applicable.
+Whilst QUIC and conversely TLS supports the ability for mutual authentication through client and server presenting certificates and performing validation, this is infeasible in many use cases where provisioning of client TLS certificates is unsupported or impractible. Thus, support for a primitive method of authentication between MoQ entities SHOULD be included to authenticate entities between one another, noting that implementations and deployments should determine which authorisation model if any is applicable.
 
 ### Media Encryption {#MOQ-media-encryption}
 
