@@ -7,8 +7,8 @@ stream: IETF
 date:
 
 ipr: trust200902
-area: applications
-workgroup: MOQ Mailing List
+# area: applications
+# workgroup: MOQ Mailing List
 keyword: Internet-Draft QUIC
 stand_alone: yes
 pi: [toc, tocindent, sortrefs, symrefs, strict, compact, subcompact, comments, inline]
