@@ -1,8 +1,0 @@
-<note title="Discussion Venues" removeInRFC="true">
-<t>Discussion of this document takes place on the
-      "Media Over QUIC" non-working group mailing list (MOQ),
-    which is archived at <eref target="https://mailarchive.ietf.org/arch/browse/moq/"/>.
-    Subscription information is at <eref target="https://www.ietf.org/mailman/listinfo/Moq/"/>.</t>
-<t>Source for this draft and an issue tracker can be found at
-    <eref target="https://github.com/fiestajetsam/draft-gruessing-moq-requirements"/>.</t>
-</note>
