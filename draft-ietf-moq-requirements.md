@@ -255,7 +255,7 @@ edge or because the viewer wishes to play back from a point in the past.
 For the video conferencing/telephony use case, there can be additional scenarios
 where the audience greatly outnumbers the concurrent active participants, but
 any member of the audience could participate.
-This use case can have an audience as large as Live Media Streaming as described in {{lmstream}}, but also relies on the interactivity and bi-directionality of conferencing as in Video Conferencing as described in {{vidconf}}. For this reason, this type of use case can be considered a "hybridThere can be additional functionality as well that overlap between the two, such as "live rewind", or recording abilities.
+This use case can have an audience as large as Live Media Streaming as described in {{lmstream}}, but also relies on the interactivity and bi-directionality of conferencing as in Video Conferencing as described in {{vidconf}}. For this reason, this type of use case can be considered a "hybrid". There can be additional functionality as well that overlap between the two, such as "live rewind", or recording abilities.
 
 Another consideration is the limits of "human bandwidth" - as the number of
 sources are included into a given session increase, the amount of media that can
