@@ -76,7 +76,7 @@ This document describes use cases and requirements that guide the specification 
 *RFC Editor: please remove this section before publication*
 
 Source code and issues for this draft can be found at
-<https://github.com/fiestajetsam/draft-gruessing-moq-requirements>.
+<https://github.com/moq-wg/moq-requirements>.
 
 Discussion of this draft should take place on the IETF Media Over QUIC (MoQ)
 mailing list, at <https://www.ietf.org/mailman/listinfo/moq>.
@@ -391,6 +391,18 @@ The authors would like to thank several authors of individual drafts that fed in
 - Kirill Pugin, Alan Frindell, Jordi Cenzano, and Jake Weissman ({{I-D.draft-kpugin-rush}},
 - Luke Curley ({{I-D.draft-lcurley-warp}}), and
 - Cullen Jennings and Suhas Nandakumar ({{I-D.draft-jennings-moq-quicr-arch}}), together with Christian Huitema ({{I-D.draft-jennings-moq-quicr-proto}}).
+
+We would also like to thank Suhas Nandakumar for his presentation, "Progressing MOQ" {{Prog-MOQ}}, at the October 2022 MOQ virtual interim meeting. We used his outline as a starting point for the Requirements section ({{req-sec}}).
+
+We would also like to thank Cullen Jennings for suggesting that we distinguish
+between interactive and live streaming use cases based on the users' perception,
+rather than quantitative measurements. In addition we would also like to thank
+Lucas Pardue, Alan Frindell, and Bernard Aboba for their reviews of the
+document.
+
+James Gruessing would also like to thank Francesco Illy and Nicholas Book for
+their part in providing the needed motivation.
+
 
 We would also like to thank Suhas Nandakumar for his presentation, "Progressing MOQ" {{Prog-MOQ}}, at the October 2022 MOQ virtual interim meeting. We used his outline as a starting point for the Requirements section ({{req-sec}}).
 
