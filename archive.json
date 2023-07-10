@@ -1,0 +1,601 @@
+{
+  "magic": "E!vIA5L86J2I",
+  "timestamp": "2021-11-18T00:59:32.596390+00:00",
+  "repo": "fiestajetsam/draft-gruessing-moq-requirements",
+  "labels": [
+    {
+      "name": "bug",
+      "description": "Something isn't working",
+      "color": "d73a4a"
+    },
+    {
+      "name": "documentation",
+      "description": "Improvements or additions to documentation",
+      "color": "0075ca"
+    },
+    {
+      "name": "duplicate",
+      "description": "This issue or pull request already exists",
+      "color": "cfd3d7"
+    },
+    {
+      "name": "enhancement",
+      "description": "New feature or request",
+      "color": "a2eeef"
+    },
+    {
+      "name": "help wanted",
+      "description": "Extra attention is needed",
+      "color": "008672"
+    },
+    {
+      "name": "good first issue",
+      "description": "Good for newcomers",
+      "color": "7057ff"
+    },
+    {
+      "name": "invalid",
+      "description": "This doesn't seem right",
+      "color": "e4e669"
+    },
+    {
+      "name": "question",
+      "description": "Further information is requested",
+      "color": "d876e3"
+    },
+    {
+      "name": "wontfix",
+      "description": "This will not be worked on",
+      "color": "ffffff"
+    }
+  ],
+  "issues": [
+    {
+      "number": 1,
+      "id": "I_kwDOGMy9Pc48-wk8",
+      "title": "Distinguish between various classes of latency ",
+      "url": "https://github.com/fiestajetsam/draft-gruessing-moq-requirements/issues/1",
+      "state": "OPEN",
+      "author": "SpencerDawkins",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "This might just be \"low-latency\" versus \"not low-latency\", but might also reflect the categories used in https://www.ietf.org/archive/id/draft-ietf-mops-streaming-opcons-07.html#section-3 - that's currently finishing up WGLC, so at least some people think those categories make sense. ",
+      "createdAt": "2021-10-11T19:24:11Z",
+      "updatedAt": "2021-10-11T20:21:43Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 2,
+      "id": "I_kwDOGMy9Pc48-yh2",
+      "title": "Add section for non-requirements",
+      "url": "https://github.com/fiestajetsam/draft-gruessing-moq-requirements/issues/2",
+      "state": "OPEN",
+      "author": "SpencerDawkins",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "A similar section seemed helpful during discussion of https://www.ietf.org/archive/id/draft-ietf-masque-ip-proxy-reqs-03.html\r\n\r\nMy first nominee (and I'll put that in the corresponding PR) is that we're assuming that we're working with existing media transport protocols like RTP and SRP, rather than inventing a new media transport protocol in the IETF, but we can talk when I have text. ",
+      "createdAt": "2021-10-11T20:33:39Z",
+      "updatedAt": "2021-10-11T20:33:39Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 3,
+      "id": "I_kwDOGMy9Pc48-y4w",
+      "title": "Distinguish between lossless and lossy media transport",
+      "url": "https://github.com/fiestajetsam/draft-gruessing-moq-requirements/issues/3",
+      "state": "OPEN",
+      "author": "SpencerDawkins",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "We already have use cases in each category",
+      "createdAt": "2021-10-11T20:35:59Z",
+      "updatedAt": "2021-10-11T20:35:59Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 4,
+      "id": "I_kwDOGMy9Pc48-zOW",
+      "title": "Distinguish between stream and datagram use cases",
+      "url": "https://github.com/fiestajetsam/draft-gruessing-moq-requirements/issues/4",
+      "state": "OPEN",
+      "author": "SpencerDawkins",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "This will be easier to get right initially, than to realize that we need to distinguish these use cases later on. ",
+      "createdAt": "2021-10-11T20:37:59Z",
+      "updatedAt": "2021-10-11T20:37:59Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 5,
+      "id": "I_kwDOGMy9Pc48-0SR",
+      "title": "Do we need a common-to-media-transport QUIC datagram multiplexing identifier?",
+      "url": "https://github.com/fiestajetsam/draft-gruessing-moq-requirements/issues/5",
+      "state": "OPEN",
+      "author": "SpencerDawkins",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "At least some of the QUIC datagram proposals assumed they could multiplex different media streams in datagrams on the same QUIC connection.\r\n\r\nhttps://www.ietf.org/archive/id/draft-ietf-quic-datagram-06.html#name-multiplexing-datagrams says, probably correctly, that the QUIC working group couldn't figure out what the identifier would mean in the general case (anything running over QUIC datagrams), and punted to the applications to prefix the datagrams with something meaningful to the applications. \r\n\r\nIf it's possible to add a media-specific, or even an RTP-specific, identifier, that may be worth doing, to allow the same connection to be used by multiple media streams.",
+      "createdAt": "2021-10-11T20:44:32Z",
+      "updatedAt": "2021-10-11T21:38:29Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "fiestajetsam",
+          "authorAssociation": "OWNER",
+          "body": "I think we should have some level of multiplexing available, as use cases would clearly need both audio and video to be sent. The alternatives I see are:\r\n* Use different QUIC connections for audio and video. This seems cumbersome to me in any of our use cases.\r\n* Rely on muxing - e.g. use MPEG2-TS to encapsulate the streams. This adds more overhead onto the connection and also makes it harder for a receiver to negotiate for a subset of the feeds.",
+          "createdAt": "2021-10-11T21:38:29Z",
+          "updatedAt": "2021-10-11T21:38:29Z"
+        }
+      ]
+    },
+    {
+      "number": 6,
+      "id": "I_kwDOGMy9Pc48-2Dl",
+      "title": "Do we need an RTP-equivalent mapping to QUIC, similar to https://datatracker.ietf.org/doc/draft-ietf-quic-http/?",
+      "url": "https://github.com/fiestajetsam/draft-gruessing-moq-requirements/issues/6",
+      "state": "OPEN",
+      "author": "SpencerDawkins",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "ONE of the questions in this direction is \"do some media transport applications require continuous operation during QUIC connection migration?\"",
+      "createdAt": "2021-10-11T20:56:55Z",
+      "updatedAt": "2021-10-11T20:56:55Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 11,
+      "id": "I_kwDOGMy9Pc49kIOr",
+      "title": "Clear focus on the purpose of this document",
+      "url": "https://github.com/fiestajetsam/draft-gruessing-moq-requirements/issues/11",
+      "state": "OPEN",
+      "author": "SpencerDawkins",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "We have been talking about \"Media Over QUIC\" as a broad term that would include any media transport protocol running over QUIC, which (apparently) would include \r\n\r\n- RTP over QUIC\r\n- SRP over QUIC\r\n- RUSH, which runs over QUIC\r\n\r\nIf we are doing \"Media over QUIC\", all of these (and potentially others) would be in scope. If the scope of this document is \"Media over RTP over QUIC\", that would be fine, but we should say that.\r\n\r\nThoughts?",
+      "createdAt": "2021-10-21T19:46:29Z",
+      "updatedAt": "2021-10-21T19:46:29Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 12,
+      "id": "I_kwDOGMy9Pc49kKNf",
+      "title": "\"Media Transport Protocol\" terminology",
+      "url": "https://github.com/fiestajetsam/draft-gruessing-moq-requirements/issues/12",
+      "state": "OPEN",
+      "author": "SpencerDawkins",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "I THINK what we are doing, is roughly \r\n\r\n- Start with current \"Media - Media Transport Protocol\", where \"Media Transport Protocol\" might be RTP\r\n- Encapsulate in QUIC, to give \"Media - Media Transport Protocol - QUIC\"\r\n\r\nIf that's right, we should be using \"Media Transport Protocol\" to describe the first layer under \"Media\", and what we're doing might better be described as something like \"Media Transport Protocol Encapsulation\" (\"in QUIC\"). \r\n\r\nWhatever we choose, we should be consistent - the Abstract says \r\n\r\n> This document describes the uses cases, requirements, and considerations that should be part of the design of a real-time media protocol over QUIC [RFC9000].\r\n\r\nwhich would make me believe that we're designing a replacement for existing media transport protocols, but then under \"Non-requirements, we have \r\n\r\n> The creation of new media transport protocols should be avoided, and instead we should make use of RTP [RFC3550] and the existing ecosystem of payload formats and methods of signalling where possible. \r\n\r\nI think that the second quote is correct, so we just need to be clearer in the first quote. ",
+      "createdAt": "2021-10-21T19:57:42Z",
+      "updatedAt": "2021-10-22T23:14:17Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "fiestajetsam",
+          "authorAssociation": "OWNER",
+          "body": "I agree with this, and it should be fixed. Would you like me to clean it up or do you want to roll it in with other changes?",
+          "createdAt": "2021-10-21T22:18:23Z",
+          "updatedAt": "2021-10-21T22:18:23Z"
+        },
+        {
+          "author": "SpencerDawkins",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Hi, @fiestajetsam, would it be OK if you did this cleanup? I think adding the picture of the two protocol stacks, in some form, will be super helpful for readers. ",
+          "createdAt": "2021-10-22T23:14:17Z",
+          "updatedAt": "2021-10-22T23:14:17Z"
+        }
+      ]
+    },
+    {
+      "number": 13,
+      "id": "I_kwDOGMy9Pc49kMkP",
+      "title": "\"Authentication\" was unclear for me",
+      "url": "https://github.com/fiestajetsam/draft-gruessing-moq-requirements/issues/13",
+      "state": "OPEN",
+      "author": "SpencerDawkins",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "I needed a bit more context for this: \r\n\r\n> The protocol SHOULD have capabilities asides from TLS mutual authentication to allow hosts to authenticate one another, this should be kept simple but robust in nature to prevent attacks like credential brute-forcing.\r\n\r\nI'm probably confused by \"The protocol\". \r\n\r\nhttps://www.rfc-editor.org/rfc/rfc9000.html#name-cryptographic-and-transport says it provides this authentication using TLS 1.3 handshake. Are you thinking of \r\n\r\n- something in addition to the QUIC cryptographic handshake? \r\n- (Assuming the definition of \"Media Transport Protocol\" in #12), something provided by the Media Transport Protocol level? \r\n- Or something else? ",
+      "createdAt": "2021-10-21T20:09:24Z",
+      "updatedAt": "2021-10-22T20:54:59Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "fiestajetsam",
+          "authorAssociation": "OWNER",
+          "body": "Something in addition to the QUIC cryptographic handshake (in which I am talking about TLS  mutual authentication here, where client presents a valid certificate to server, and verifies the server certificate). Consider:\r\n\r\n* Existing protocols in this space usually offer some \"shared secret\" of some variety as part of either/or an authentication  handshake, and encryption of media:\r\n  * [RTMP \"session keys\"](https://www.adobe.com/content/dam/acom/en/devnet/rtmp/pdf/rtmp_specification_1.0.pdf) which are just secret values set in the `tcUrl` field during connection handshake\r\n  * [RIST Main Profile's use of TLS SRP](https://vsf.tv/download/technical_recommendations/VSF_TR-06-2_2021-04-26.pdf) (see \u00a7 6.4) - but note they also support a cert-based approach which more closely matches TLS mutual auth\r\n  * [SRT Standard keys](https://github.com/Haivision/srt/blob/master/docs/features/access-control.md#standard-keys) where the Stream ID and user define the authorisation\r\n* Before RIST Main profile there hasn't been a need for a lot of certificate-based authentication and so existing folk in field would use these types of shared secret patterns, and that having to keep PKI for devices may be problematic. Consider things like encoding hardware deployed in remote locations.\r\n\r\nOther options could be considered, like using a more SIP-like approach, but we would have to be careful not to bring the rest of the SIP kitchen sink with its round peg that might not fit in the square QUIC slot.\r\n\r\nI get this requirement presently is a bit flaky in part because the requirements are a bit unclear. Perhaps I put a little more description on the requirement, or remove it from the draft now, and leave it for a \"ask later\". Thoughts?",
+          "createdAt": "2021-10-21T20:58:04Z",
+          "updatedAt": "2021-10-21T20:58:04Z"
+        },
+        {
+          "author": "SpencerDawkins",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@fiestajetsam, I think (1) adding the explanation that this is beyond the authentication mechanism provided by QUIC, and (2) leaving it in the draft, with a note that more detail is needed, and will be added as discussion proceeds, is all that's needed for now.",
+          "createdAt": "2021-10-22T20:54:59Z",
+          "updatedAt": "2021-10-22T20:54:59Z"
+        }
+      ]
+    }
+  ],
+  "pulls": [
+    {
+      "number": 7,
+      "id": "PR_kwDOGMy9Pc4tCfWX",
+      "title": "fix initial build",
+      "url": "https://github.com/fiestajetsam/draft-gruessing-moq-requirements/pull/7",
+      "state": "MERGED",
+      "author": "SpencerDawkins",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2021-10-11T21:13:11Z",
+      "updatedAt": "2021-10-11T21:32:11Z",
+      "baseRepository": "fiestajetsam/draft-gruessing-moq-requirements",
+      "baseRefName": "main",
+      "baseRefOid": "b1342ed7aca84fcbd061eff524940c714c99efb3",
+      "headRepository": "fiestajetsam/draft-gruessing-moq-requirements",
+      "headRefName": "fix-build",
+      "headRefOid": "5b784a0c63dc1fdc99ca96635ab54f9c4b6abd45",
+      "closedAt": "2021-10-11T21:32:06Z",
+      "mergedAt": "2021-10-11T21:32:06Z",
+      "mergedBy": "fiestajetsam",
+      "mergeCommit": {
+        "oid": "eb3cf5ef290d1eef9fac3cb8d4c0ea30588dc217"
+      },
+      "comments": [
+        {
+          "author": "fiestajetsam",
+          "authorAssociation": "OWNER",
+          "body": "Thanks for fixing this!",
+          "createdAt": "2021-10-11T21:31:53Z",
+          "updatedAt": "2021-10-11T21:31:53Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 8,
+      "id": "PR_kwDOGMy9Pc4tHHDk",
+      "title": "Add mailing list info when appropriate",
+      "url": "https://github.com/fiestajetsam/draft-gruessing-moq-requirements/pull/8",
+      "state": "MERGED",
+      "author": "SpencerDawkins",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "I'll let you decide when you want to include this (almost certainly \"not now\", and better after we have more content). I'm just adding this so we don't forget it when we go public. ",
+      "createdAt": "2021-10-12T22:48:54Z",
+      "updatedAt": "2021-10-13T07:42:27Z",
+      "baseRepository": "fiestajetsam/draft-gruessing-moq-requirements",
+      "baseRefName": "main",
+      "baseRefOid": "eb3cf5ef290d1eef9fac3cb8d4c0ea30588dc217",
+      "headRepository": "fiestajetsam/draft-gruessing-moq-requirements",
+      "headRefName": "add-ml-info",
+      "headRefOid": "0077895bbaf691368631e14ba416d1251e46c967",
+      "closedAt": "2021-10-13T07:42:20Z",
+      "mergedAt": "2021-10-13T07:42:20Z",
+      "mergedBy": "fiestajetsam",
+      "mergeCommit": {
+        "oid": "79a48223c87b59b05fbc5c6e79f1e8fc4f1d8be7"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 9,
+      "id": "PR_kwDOGMy9Pc4tKr1L",
+      "title": "Initial work on non-requirements (#2)",
+      "url": "https://github.com/fiestajetsam/draft-gruessing-moq-requirements/pull/9",
+      "state": "MERGED",
+      "author": "fiestajetsam",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "@SpencerDawkins I could also include some other non-requirements into the section if you have some to mind.",
+      "createdAt": "2021-10-13T21:11:27Z",
+      "updatedAt": "2021-10-17T11:35:13Z",
+      "baseRepository": "fiestajetsam/draft-gruessing-moq-requirements",
+      "baseRefName": "main",
+      "baseRefOid": "79a48223c87b59b05fbc5c6e79f1e8fc4f1d8be7",
+      "headRepository": "fiestajetsam/draft-gruessing-moq-requirements",
+      "headRefName": "nonreqs",
+      "headRefOid": "48fccb4618d54da65a3ce3876d47ee9b679a5e4e",
+      "closedAt": "2021-10-17T11:35:09Z",
+      "mergedAt": "2021-10-17T11:35:09Z",
+      "mergedBy": "fiestajetsam",
+      "mergeCommit": {
+        "oid": "427dc1f985f5320a98f6051bf90282166cb81a41"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 10,
+      "id": "PR_kwDOGMy9Pc4tdc7o",
+      "title": "Further work on requirements and non-requirements...",
+      "url": "https://github.com/fiestajetsam/draft-gruessing-moq-requirements/pull/10",
+      "state": "MERGED",
+      "author": "fiestajetsam",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "This adds a few requirements ripped from my blog post, and cleans out use cases and such.",
+      "createdAt": "2021-10-20T20:40:13Z",
+      "updatedAt": "2021-10-21T15:32:24Z",
+      "baseRepository": "fiestajetsam/draft-gruessing-moq-requirements",
+      "baseRefName": "main",
+      "baseRefOid": "427dc1f985f5320a98f6051bf90282166cb81a41",
+      "headRepository": "fiestajetsam/draft-gruessing-moq-requirements",
+      "headRefName": "restructure",
+      "headRefOid": "f84526a4d0840747eaed2d794e27037581cbb248",
+      "closedAt": "2021-10-21T15:28:52Z",
+      "mergedAt": "2021-10-21T15:28:52Z",
+      "mergedBy": "SpencerDawkins",
+      "mergeCommit": {
+        "oid": "2cf080d38b10819e6f4d77000408a01a683c07c6"
+      },
+      "comments": [
+        {
+          "author": "SpencerDawkins",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I have some thoughts about the content of this PR, but let's merge it, and see if my thoughts turn into text :-)",
+          "createdAt": "2021-10-21T15:28:40Z",
+          "updatedAt": "2021-10-21T15:28:40Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 14,
+      "id": "PR_kwDOGMy9Pc4tkjbx",
+      "title": "Various updates, mostly just getting organized. ",
+      "url": "https://github.com/fiestajetsam/draft-gruessing-moq-requirements/pull/14",
+      "state": "MERGED",
+      "author": "SpencerDawkins",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2021-10-22T23:11:26Z",
+      "updatedAt": "2021-10-23T08:28:18Z",
+      "baseRepository": "fiestajetsam/draft-gruessing-moq-requirements",
+      "baseRefName": "main",
+      "baseRefOid": "2cf080d38b10819e6f4d77000408a01a683c07c6",
+      "headRepository": "fiestajetsam/draft-gruessing-moq-requirements",
+      "headRefName": "spencer-high-level",
+      "headRefOid": "cdf9d1d307d9c154117a5c89787649dd3338f363",
+      "closedAt": "2021-10-23T08:28:15Z",
+      "mergedAt": "2021-10-23T08:28:15Z",
+      "mergedBy": "fiestajetsam",
+      "mergeCommit": {
+        "oid": "c305f01ffdfed423d7efd29504fba3cdc3f2f1ef"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 15,
+      "id": "PR_kwDOGMy9Pc4tk8Je",
+      "title": "Further work and changes",
+      "url": "https://github.com/fiestajetsam/draft-gruessing-moq-requirements/pull/15",
+      "state": "MERGED",
+      "author": "fiestajetsam",
+      "authorAssociation": "OWNER",
+      "assignees": [
+        "SpencerDawkins"
+      ],
+      "labels": [],
+      "body": "",
+      "createdAt": "2021-10-23T10:26:59Z",
+      "updatedAt": "2021-10-24T22:45:30Z",
+      "baseRepository": "fiestajetsam/draft-gruessing-moq-requirements",
+      "baseRefName": "main",
+      "baseRefOid": "c305f01ffdfed423d7efd29504fba3cdc3f2f1ef",
+      "headRepository": "fiestajetsam/draft-gruessing-moq-requirements",
+      "headRefName": "authentication",
+      "headRefOid": "95856d34c5114686f0b5e6100d45afc979429a6f",
+      "closedAt": "2021-10-24T22:45:25Z",
+      "mergedAt": "2021-10-24T22:45:25Z",
+      "mergedBy": "SpencerDawkins",
+      "mergeCommit": {
+        "oid": "d81d937c84192b44c64ec77004a88f04ce60c8ff"
+      },
+      "comments": [
+        {
+          "author": "SpencerDawkins",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Hi, @fiestajetsam, I think this looks mostly fine (it looks like the abstract is a tiny bit garbled, but we can fix stuff like that in an editorial pass). Based on the changed title, I'm assuming that we aren't worrying about SRT and RUSH in this draft - that's probably a good call, because I don't think their requirements are going to look much like RTP over QUIC requirements. There will be some places that I will need to tighten up what I wrote, because they were still in scope when I was typing. I'll merge this, and see where I end up in an hour or two of typing. ",
+          "createdAt": "2021-10-24T22:45:18Z",
+          "updatedAt": "2021-10-24T22:45:18Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 16,
+      "id": "PR_kwDOGMy9Pc4tmK9b",
+      "title": "Update draft-gruessing-moq-requirements.md",
+      "url": "https://github.com/fiestajetsam/draft-gruessing-moq-requirements/pull/16",
+      "state": "MERGED",
+      "author": "SpencerDawkins",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "This is mostly last-minute cleanup - please do the right thing, of course!",
+      "createdAt": "2021-10-25T00:29:42Z",
+      "updatedAt": "2021-10-25T13:08:54Z",
+      "baseRepository": "fiestajetsam/draft-gruessing-moq-requirements",
+      "baseRefName": "main",
+      "baseRefOid": "d81d937c84192b44c64ec77004a88f04ce60c8ff",
+      "headRepository": "fiestajetsam/draft-gruessing-moq-requirements",
+      "headRefName": "spencer-last-minute",
+      "headRefOid": "a88cdedd665a6d4fc027d5bae5cbf17de0f4eee2",
+      "closedAt": "2021-10-25T13:08:51Z",
+      "mergedAt": "2021-10-25T13:08:51Z",
+      "mergedBy": "fiestajetsam",
+      "mergeCommit": {
+        "oid": "1edcf7303f6a9c43bf820de0d70ca3fd0fb025a9"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 17,
+      "id": "PR_kwDOGMy9Pc4tvedN",
+      "title": "Minor corrections and suggestions",
+      "url": "https://github.com/fiestajetsam/draft-gruessing-moq-requirements/pull/17",
+      "state": "MERGED",
+      "author": "maxsharabayko",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "- One more use case \"Distribution withing a platform\" is suggested. It does not seem to be covered by other use cases, but might be worth describing it as well.\r\n- Some minor suggestions like UDP multicast instead of QUIC as the last mile transport, etc.\r\n",
+      "createdAt": "2021-10-27T13:29:22Z",
+      "updatedAt": "2021-10-28T22:29:29Z",
+      "baseRepository": "fiestajetsam/draft-gruessing-moq-requirements",
+      "baseRefName": "main",
+      "baseRefOid": "1edcf7303f6a9c43bf820de0d70ca3fd0fb025a9",
+      "headRepository": "maxsharabayko/draft-gruessing-moq-requirements",
+      "headRefName": "develop/corrections-and-suggestions",
+      "headRefOid": "5533836d5dcd6be3f0c7d4bf1ec18d6b32ebdd16",
+      "closedAt": "2021-10-28T22:29:16Z",
+      "mergedAt": "2021-10-28T22:29:15Z",
+      "mergedBy": "fiestajetsam",
+      "mergeCommit": {
+        "oid": "06b2946ccec156f87c0dbba842f034febd33b397"
+      },
+      "comments": [
+        {
+          "author": "fiestajetsam",
+          "authorAssociation": "OWNER",
+          "body": "Thanks!",
+          "createdAt": "2021-10-28T22:29:29Z",
+          "updatedAt": "2021-10-28T22:29:29Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOGMy9Pc4vOzrX",
+          "commit": {
+            "abbreviatedOid": "5533836"
+          },
+          "author": "fiestajetsam",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-10-28T20:45:07Z",
+          "updatedAt": "2021-10-28T20:45:07Z",
+          "comments": [
+            {
+              "originalPosition": 89,
+              "body": "@SpencerDawkins separately to this PR, would you want to expand on this to include reference to your drafts?",
+              "createdAt": "2021-10-28T20:45:07Z",
+              "updatedAt": "2021-10-28T20:45:07Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOGMy9Pc4vO2En",
+          "commit": {
+            "abbreviatedOid": "5533836"
+          },
+          "author": "SpencerDawkins",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-10-28T20:57:11Z",
+          "updatedAt": "2021-10-28T20:57:12Z",
+          "comments": [
+            {
+              "originalPosition": 89,
+              "body": "@fiestajetsam - that's a very reasonable suggestion. I'll propose text in a different PR. ",
+              "createdAt": "2021-10-28T20:57:11Z",
+              "updatedAt": "2021-10-28T20:57:12Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 18,
+      "id": "PR_kwDOGMy9Pc4t0he0",
+      "title": "Add reference to   I-D.draft-dawkins-sdp-rtp-quic-questions:",
+      "url": "https://github.com/fiestajetsam/draft-gruessing-moq-requirements/pull/18",
+      "state": "MERGED",
+      "author": "SpencerDawkins",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "@fiestajetsam, does this seem about right?",
+      "createdAt": "2021-10-28T21:38:54Z",
+      "updatedAt": "2021-10-28T22:29:58Z",
+      "baseRepository": "fiestajetsam/draft-gruessing-moq-requirements",
+      "baseRefName": "main",
+      "baseRefOid": "1edcf7303f6a9c43bf820de0d70ca3fd0fb025a9",
+      "headRepository": "fiestajetsam/draft-gruessing-moq-requirements",
+      "headRefName": "xref",
+      "headRefOid": "c3b1fa25270e90731672c5ffb43677860544f8d2",
+      "closedAt": "2021-10-28T22:29:54Z",
+      "mergedAt": "2021-10-28T22:29:54Z",
+      "mergedBy": "fiestajetsam",
+      "mergeCommit": {
+        "oid": "3deef5539ecb36a4b22a28b91b15a44d726c96eb"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 19,
+      "id": "PR_kwDOGMy9Pc4uOmTl",
+      "title": "Add Maxim in acknowledgements",
+      "url": "https://github.com/fiestajetsam/draft-gruessing-moq-requirements/pull/19",
+      "state": "MERGED",
+      "author": "SpencerDawkins",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "I think it's worth starting to track contributors for this draft, for a variety of reasons. \r\n\r\nAnd thank you, @maxsharabayko, for your help!",
+      "createdAt": "2021-11-08T13:53:15Z",
+      "updatedAt": "2021-11-16T14:17:31Z",
+      "baseRepository": "fiestajetsam/draft-gruessing-moq-requirements",
+      "baseRefName": "main",
+      "baseRefOid": "3deef5539ecb36a4b22a28b91b15a44d726c96eb",
+      "headRepository": "fiestajetsam/draft-gruessing-moq-requirements",
+      "headRefName": "acks",
+      "headRefOid": "5f3629de941e1596ccc4aaf8ad0bdbae03805b33",
+      "closedAt": "2021-11-16T14:17:28Z",
+      "mergedAt": "2021-11-16T14:17:28Z",
+      "mergedBy": "fiestajetsam",
+      "mergeCommit": {
+        "oid": "b6cfd8bbdac41cf78307af2319bcf11fad7624e0"
+      },
+      "comments": [
+        {
+          "author": "maxsharabayko",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "@SpencerDawkins Glad to contribute to such a great initiative! \ud83d\ude0a ",
+          "createdAt": "2021-11-08T18:18:54Z",
+          "updatedAt": "2021-11-08T18:18:54Z"
+        }
+      ],
+      "reviews": []
+    }
+  ]
+}
