@@ -19,11 +19,13 @@ author:
     name: James Gruessing
     organization: Nederlandse Publieke Omroep
     email: james.ietf@gmail.com
+    country: Netherlands
   -
     ins: S. Dawkins
     name: Spencer Dawkins
     organization: Tencent America LLC
     email: spencerdawkins.ietf@gmail.com
+    country: United States
 
 informative:
 
@@ -69,7 +71,7 @@ informative:
 
 --- abstract
 
-This document describes use cases and requirements that guide the specification of a simple, low-latency media delivery solution for ingest and distribution, using either the QUIC protocol or WebTransport.
+This document describes use cases and requirements that guide the specification of a simple, low-latency media delivery solution for ingest and distribution, using either the QUIC protocol or WebTransport as transport protocols.
 
 --- note_Note_to_Readers
 
