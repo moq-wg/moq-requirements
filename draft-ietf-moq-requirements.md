@@ -684,13 +684,27 @@ Whilst QUIC and conversely TLS supports the ability for mutual authentication th
 
 ### Media Encryption {#MOQ-media-encryption}
 
-End-to-end security describes the use of encryption of the media stream(s) to provide confidentiality in the presence of unauthorized intermediates or observers and prevent or restrict ability to decrypt the media without authorization. Generally, there are three aspects of end-to-end media security:
+Much of the early discussion about MOQ security was not entirely coherent. Some contributors pushed for "end-to-end security", and some contributors pushed for the ability of intermediate nodes to have sufficient visibility into media payloads to accomplish the responsibilities those intermediate nodes were given. Some contributors may have pushed for both, at various times. It is worthwhile to clarify what "security" means in a MOQ context.
+
+Generally, there are three aspects of media security:
 
 * Digital Rights Management, which refers to the authorization of receivers to decode a media stream.
-* Sender-to-Receiver Media Security, which refers to the ability of media senders and receivers to transfer media while protected from authorized intermediates and observers, and
+* Sender-to-Receiver Media Security, which refers to the ability of media senders and receivers to transfer media while protected from unauthorized intermediates and observers, and
 * Node-to-node Media Security, which refers to security when authorized intermediaries are needed to transform media into a form acceptable to authorized receivers. For example, this might refer to a video transcoder between the media sender and receiver.
 
-**Note: "Node-to-node" refers to a path segment connecting two MOQ nodes, that makes up part of the end-to-end path between the MOQ sender and ultimate MOQ receiver.
+"End-to-end security" describes the use of encryption of one or more media stream(s) over an end-to-end path, to provide confidentiality in the presence of any intermediates or observers and prevent or restrict ability to decrypt that media.
+
+"Node-to-node security" refers to the use of encryption of one or more media stream(s) over a path segment connecting two MOQ nodes, that makes up part of the end-to-end path between the MOQ sender and ultimate MOQ receiver, to provide confidentiality in the presence of unauthorized intermediates or observers and prevent or restrict ability to decrypt that media.
+
+Many MOQ deployment models rely on intermediate nodes, and these intermediate nodes may have a variety of responsibilities, including, but not limited to,
+
+* rate adaptation based on media metadata
+* routing media based on the characteristics of the media
+* caching media
+* allowing "watch in-progress broadcasts from the beginning", "instant replay" and "fast forward"
+* transcoding media
+
+Some of these responsibilities require authorization to see more media headers and even media payload than others. The protocol SHOULD allow MOQ intermediate nodes to perform a variety of responsibilities, without having access to media headers and/or media payloads that they do not require to carry out their responsibilities.
 
 Support for encrypted media SHOULD be available in the protocol to support the above use cases, with key exchange and decryption authorisation handled externally. The protocol SHOULD provide metadata for entities which process media to perform key exchange and decrypt.
 
