@@ -1052,7 +1052,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Gruessing &amp; Dawkins</td>
-<td class="center">Expires 22 March 2024</td>
+<td class="center">Expires 24 March 2024</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1065,12 +1065,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ietf-moq-requirements-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2023-09-19" class="published">19 September 2023</time>
+<time datetime="2023-09-21" class="published">21 September 2023</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2024-03-22">22 March 2024</time></dd>
+<dd class="expires"><time datetime="2024-03-24">24 March 2024</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1118,7 +1118,7 @@ mailing list, at <a href="https://www.ietf.org/mailman/listinfo/moq">https://www
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 22 March 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 24 March 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -2199,17 +2199,33 @@ groups and just wait for the next group when needed.<a href="#section-4.8.5-2" c
           <h4 id="name-media-encryption">
 <a href="#section-4.9.2" class="section-number selfRef">4.9.2. </a><a href="#name-media-encryption" class="section-name selfRef">Media Encryption</a>
           </h4>
-<p id="section-4.9.2-1">End-to-end security describes the use of encryption of the media stream(s) to provide confidentiality in the presence of unauthorized intermediates or observers and prevent or restrict ability to decrypt the media without authorization. Generally, there are three aspects of end-to-end media security:<a href="#section-4.9.2-1" class="pilcrow">¶</a></p>
+<p id="section-4.9.2-1">Much of the early discussion about MOQ security was not entirely coherent. Some contributors pushed for "end-to-end security", and some contributors pushed for the ability of intermediate nodes to have sufficient visibility into media payloads to accomplish the responsibilities those intermediate nodes were given. Some contributors may have pushed for both, at various times. It is worthwhile to clarify what "security" means in a MOQ context.<a href="#section-4.9.2-1" class="pilcrow">¶</a></p>
+<p id="section-4.9.2-2">Generally, there are three aspects of media security:<a href="#section-4.9.2-2" class="pilcrow">¶</a></p>
 <ul class="compact">
-<li class="compact" id="section-4.9.2-2.1">Digital Rights Management, which refers to the authorization of receivers to decode a media stream.<a href="#section-4.9.2-2.1" class="pilcrow">¶</a>
+<li class="compact" id="section-4.9.2-3.1">Digital Rights Management, which refers to the authorization of receivers to decode a media stream.<a href="#section-4.9.2-3.1" class="pilcrow">¶</a>
 </li>
-            <li class="compact" id="section-4.9.2-2.2">Sender-to-Receiver Media Security, which refers to the ability of media senders and receivers to transfer media while protected from authorized intermediates and observers, and<a href="#section-4.9.2-2.2" class="pilcrow">¶</a>
+            <li class="compact" id="section-4.9.2-3.2">Sender-to-Receiver Media Security, which refers to the ability of media senders and receivers to transfer media while protected from unauthorized intermediates and observers, and<a href="#section-4.9.2-3.2" class="pilcrow">¶</a>
 </li>
-            <li class="compact" id="section-4.9.2-2.3">Node-to-node Media Security, which refers to security when authorized intermediaries are needed to transform media into a form acceptable to authorized receivers. For example, this might refer to a video transcoder between the media sender and receiver.<a href="#section-4.9.2-2.3" class="pilcrow">¶</a>
+            <li class="compact" id="section-4.9.2-3.3">Node-to-node Media Security, which refers to security when authorized intermediaries are needed to transform media into a form acceptable to authorized receivers. For example, this might refer to a video transcoder between the media sender and receiver.<a href="#section-4.9.2-3.3" class="pilcrow">¶</a>
 </li>
           </ul>
-<p id="section-4.9.2-3">**Note: "Node-to-node" refers to a path segment connecting two MOQ nodes, that makes up part of the end-to-end path between the MOQ sender and ultimate MOQ receiver.<a href="#section-4.9.2-3" class="pilcrow">¶</a></p>
-<p id="section-4.9.2-4">Support for encrypted media <span class="bcp14">SHOULD</span> be available in the protocol to support the above use cases, with key exchange and decryption authorisation handled externally. The protocol <span class="bcp14">SHOULD</span> provide metadata for entities which process media to perform key exchange and decrypt.<a href="#section-4.9.2-4" class="pilcrow">¶</a></p>
+<p id="section-4.9.2-4">"End-to-end security" describes the use of encryption of one or more media stream(s) over an end-to-end path, to provide confidentiality in the presence of any intermediates or observers and prevent or restrict ability to decrypt that media.<a href="#section-4.9.2-4" class="pilcrow">¶</a></p>
+<p id="section-4.9.2-5">"Node-to-node security" refers to the use of encryption of one or more media stream(s) over a path segment connecting two MOQ nodes, that makes up part of the end-to-end path between the MOQ sender and ultimate MOQ receiver, to provide confidentiality in the presence of unauthorized intermediates or observers and prevent or restrict ability to decrypt that media.<a href="#section-4.9.2-5" class="pilcrow">¶</a></p>
+<p id="section-4.9.2-6">Many MOQ deployment models rely on intermediate nodes, and these intermediate nodes may have a variety of responsibilities, including, but not limited to,<a href="#section-4.9.2-6" class="pilcrow">¶</a></p>
+<ul class="compact">
+<li class="compact" id="section-4.9.2-7.1">rate adaptation based on media metadata<a href="#section-4.9.2-7.1" class="pilcrow">¶</a>
+</li>
+            <li class="compact" id="section-4.9.2-7.2">routing media based on the characteristics of the media<a href="#section-4.9.2-7.2" class="pilcrow">¶</a>
+</li>
+            <li class="compact" id="section-4.9.2-7.3">caching media<a href="#section-4.9.2-7.3" class="pilcrow">¶</a>
+</li>
+            <li class="compact" id="section-4.9.2-7.4">allowing "watch in-progress broadcasts from the beginning", "instant replay" and "fast forward"<a href="#section-4.9.2-7.4" class="pilcrow">¶</a>
+</li>
+            <li class="compact" id="section-4.9.2-7.5">transcoding media<a href="#section-4.9.2-7.5" class="pilcrow">¶</a>
+</li>
+          </ul>
+<p id="section-4.9.2-8">Some of these responsibilities require authorization to see more media headers and even media payload than others. The protocol <span class="bcp14">SHOULD</span> allow MOQ intermediate nodes to perform a variety of responsibilities, without having access to media headers and/or media payloads that they do not require to carry out their responsibilities.<a href="#section-4.9.2-8" class="pilcrow">¶</a></p>
+<p id="section-4.9.2-9">Support for encrypted media <span class="bcp14">SHOULD</span> be available in the protocol to support the above use cases, with key exchange and decryption authorisation handled externally. The protocol <span class="bcp14">SHOULD</span> provide metadata for entities which process media to perform key exchange and decrypt.<a href="#section-4.9.2-9" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
