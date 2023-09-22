@@ -49,6 +49,11 @@ informative:
     title: "Information Technology - Coding Of Audio-Visual Objects - Part 12: ISO Base Media File Format"
     date: 2022
 
+  SCTE-35:
+    target: https://www.scte.org/standards/library/catalog/scte-35-digital-program-insertion-cueing-message/
+    title: "Digital Program Insertion Cueing Message (SCTE-35)"
+    date: 2022
+
   IESG-sdwg:
     target: https://www.ietf.org/about/groups/iesg/statements/support-documents/
     title: "Support Documents in IETF Working Groups"
@@ -675,6 +680,11 @@ groups and just wait for the next group when needed.
 
 Of course, having longer blocks create other issues. Realtime conferences also need to accomodate the occasional occasional late comer, or the disconnected user who want to resynchronize after a network event. This drives a need for synchronization "between access points". For example, rather than waiting for 30 seconds before connecting, the user might quickly download the "key" frames of the past 30 seconds and replay them in order to "synchronize" the video decoder.
 
+### Media Insertion and Redirection
+
+In all use cases it may be necessary for consumers to switch sources based on either triggering provided within a stream of media, or externally in particular to support the insertion of advertising or promotions, but may be useful for other requirements where an upstream encoder or producer is unable to do. Relays may also require consumers to relocate their subscriptions of media in order to facilitate this.
+
+In order to make seemless switching from one source to another and avoid stalling of playback, consumers must be able to receive media from sources concurrently. Support for common in-band signalling formats such as {{SCTE-35}} should also be supported.
 
 ## Security {#MOQ-security}
 
