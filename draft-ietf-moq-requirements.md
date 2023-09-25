@@ -682,9 +682,9 @@ Of course, having longer blocks create other issues. Realtime conferences also n
 
 ### Media Insertion and Redirection
 
-In all use cases it may be necessary for consumers to switch sources based on either triggering provided within a stream of media, or externally in particular to support the insertion of advertising or promotions, but may be useful for other requirements where an upstream encoder or producer is unable to do. Relays may also require consumers to relocate their subscriptions of media in order to facilitate this.
+In all of the applicable use cases it may be necessary for consumers to be aware of changes to the source of media being inserted, or be instructed to consume media from a different source. These may be done for the insertion of advertising or for operational movement of consumers, amongst other reasons. Within the media insertion scenario an existing stream being consumed may change as a result of a different source being spliced which necessitates the decoder being reset as parameters such as video frame rate, image resolution etc may have changed. For redirection, consumers may be signalled to consume media from a different source which may also require re-initialization of decoder.
 
-In order to make seemless switching from one source to another and avoid stalling of playback, consumers must be able to receive media from sources concurrently. Support for common in-band signalling formats such as {{SCTE-35}} should also be supported.
+In both of these scenarios, triggering may occur either through an event provided in the media such as a {{SCTE-35}} marker, or through an external trigger. Both should be supported.
 
 ## Security {#MOQ-security}
 
