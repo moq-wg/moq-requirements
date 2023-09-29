@@ -5,8 +5,8 @@
 MOQ Mailing List                                            J. Gruessing
 Internet-Draft                               Nederlandse Publieke Omroep
 Intended status: Informational                                S. Dawkins
-Expires: 24 March 2024                               Tencent America LLC
-                                                       21 September 2023
+Expires: 1 April 2024                                Tencent America LLC
+                                                       29 September 2023
 
 
     Media Over QUIC - Use Cases and Requirements for Media Transport
@@ -47,7 +47,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 24 March 2024.
+   This Internet-Draft will expire on 1 April 2024.
 
 Copyright Notice
 
@@ -84,9 +84,10 @@ Table of Contents
    4.  Requirements for Protocol Work
      4.1.  Notes to the Reader
      4.2.  Specific Protocol Considerations
-       4.2.1.  Delivery Assurance vs. Delay
-       4.2.2.  Support Webtransport/Raw QUIC as media transport
-       4.2.3.  Media Negotiation & Agility
+       4.2.1.  QUIC Capabilities and Properties
+       4.2.2.  Delivery Assurance vs. Delay
+       4.2.3.  Support Webtransport/Raw QUIC as media transport
+       4.2.4.  Media Negotiation & Agility
      4.3.  Media Data Model
      4.4.  Publishing Media
      4.5.  Naming and Addressing Media Resources
@@ -588,7 +589,18 @@ Table of Contents
    receiving of media streams, as separate actions or concurrently in a
    given connection.
 
-4.2.1.  Delivery Assurance vs. Delay
+4.2.1.  QUIC Capabilities and Properties
+
+   With QUIC being the underlying protocol brings capabilities and
+   functionalities for many of the requirements such as connection
+   migration and re-use, greater controls over packet reliability,
+   congestion control, re-ordering and flow directionality, multiplexing
+   and head of line blocking.  Utilising aspects of the QUIC protocol
+   which would then necessitate reimplementation of these capabilities
+   already present in other parts of the QUIC protocol should only be
+   done so if requirements deem them incompatible.
+
+4.2.2.  Delivery Assurance vs. Delay
 
    Different use cases have varying requirements with respect to the
    tradeoffs associated in having guarantee of delivery vs delay - in
@@ -602,7 +614,7 @@ Table of Contents
    done so in a way that provides pipelining so each media stream may be
    processed in parallel.
 
-4.2.2.  Support Webtransport/Raw QUIC as media transport
+4.2.3.  Support Webtransport/Raw QUIC as media transport
 
    There should be a degree of decoupling from the underlying transport
    protocols and MoQ itself despite the "Q" in the name, in particular
@@ -621,7 +633,7 @@ Table of Contents
    WebTransport "falls back" to using HTTP/2 or other future non-QUIC
    based protocol.
 
-4.2.3.  Media Negotiation & Agility
+4.2.4.  Media Negotiation & Agility
 
    All entities which directly process media will have support for a
    variety of media codecs, both codecs which exist now and codecs that
@@ -814,7 +826,7 @@ Table of Contents
 4.7.  Media Consumption
 
    Receivers SHOULD be able to as part of negotiation of a session
-   Section 4.2.3 specify which media to receive, not just with respect
+   Section 4.2.4 specify which media to receive, not just with respect
    to the media format and codec, but also the varient thereof such as
    resolution or bitrate.
 
