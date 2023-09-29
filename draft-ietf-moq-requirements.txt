@@ -105,6 +105,7 @@ Table of Contents
        4.8.3.  Relay behavior
        4.8.4.  High Loss Networks
        4.8.5.  Interval between access points
+       4.8.6.  Media Insertion and Redirection
      4.9.  Security
        4.9.1.  Authentication & Authorisation
        4.9.2.  Media Encryption
@@ -947,6 +948,24 @@ Table of Contents
    of the past 30 seconds and replay them in order to "synchronize" the
    video decoder.
 
+4.8.6.  Media Insertion and Redirection
+
+   In all of the applicable use cases defined in Section 3 it may be
+   necessary for consumers to be aware of changes to the source of media
+   being inserted, or be instructed to consume media from a different
+   source.  These may be done for the insertion of advertising or for
+   operational movement of consumers, amongst other reasons.  Within the
+   media insertion scenario an existing stream being consumed may change
+   as a result of a different source being spliced which necessitates
+   the decoder being reset as parameters such as video frame rate, image
+   resolution etc may have changed.  For redirection, consumers may be
+   signalled to consume media from a different source which may also
+   require re-initialization of decoder.
+
+   In both of these scenarios, triggering may occur either through an
+   event provided in the media such as a [SCTE-35] marker, or through an
+   external trigger.  Both should be supported.
+
 4.9.  Security
 
 4.9.1.  Authentication & Authorisation
@@ -1139,6 +1158,10 @@ Table of Contents
               Multiplexed and Secure Transport", RFC 9000,
               DOI 10.17487/RFC9000, May 2021,
               <https://www.rfc-editor.org/rfc/rfc9000>.
+
+   [SCTE-35]  "Digital Program Insertion Cueing Message (SCTE-35)",
+              2022, <https://www.scte.org/standards/library/catalog/
+              scte-35-digital-program-insertion-cueing-message/>.
 
    [WebTrans-charter]
               "WebTransport (webtrans)", March 2021,
