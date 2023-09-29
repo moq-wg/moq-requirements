@@ -49,6 +49,11 @@ informative:
     title: "Information Technology - Coding Of Audio-Visual Objects - Part 12: ISO Base Media File Format"
     date: 2022
 
+  SCTE-35:
+    target: https://www.scte.org/standards/library/catalog/scte-35-digital-program-insertion-cueing-message/
+    title: "Digital Program Insertion Cueing Message (SCTE-35)"
+    date: 2022
+
   IESG-sdwg:
     target: https://www.ietf.org/about/groups/iesg/statements/support-documents/
     title: "Support Documents in IETF Working Groups"
@@ -679,6 +684,11 @@ groups and just wait for the next group when needed.
 
 Of course, having longer blocks create other issues. Realtime conferences also need to accomodate the occasional occasional late comer, or the disconnected user who want to resynchronize after a network event. This drives a need for synchronization "between access points". For example, rather than waiting for 30 seconds before connecting, the user might quickly download the "key" frames of the past 30 seconds and replay them in order to "synchronize" the video decoder.
 
+### Media Insertion and Redirection
+
+In all of the applicable use cases defined in {{overallusecases}} it may be necessary for consumers to be aware of changes to the source of media being inserted, or be instructed to consume media from a different source. These may be done for the insertion of advertising or for operational movement of consumers, amongst other reasons. Within the media insertion scenario an existing stream being consumed may change as a result of a different source being spliced which necessitates the decoder being reset as parameters such as video frame rate, image resolution etc may have changed. For redirection, consumers may be signalled to consume media from a different source which may also require re-initialization of decoder.
+
+In both of these scenarios, triggering may occur either through an event provided in the media such as a {{SCTE-35}} marker, or through an external trigger. Both should be supported.
 
 ## Security {#MOQ-security}
 
