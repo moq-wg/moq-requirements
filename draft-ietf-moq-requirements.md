@@ -432,6 +432,10 @@ Our goal in this section is to understand the requirements that result from the 
 
 In order to support the various topologies and patterns of media flows with the protocol, the protocol MUST support both sending and receiving of media streams, as separate actions or concurrently in a given connection.
 
+### QUIC Capabilities and Properties
+
+With QUIC being the underlying protocol brings capabilities and functionalities for many of the requirements such as connection migration and re-use, greater controls over packet reliability, congestion control, re-ordering and flow directionality, multiplexing and head of line blocking. Utilising aspects of the QUIC protocol which would then necessitate reimplementation of these capabilities already present in other parts of the QUIC protocol should only be done so if requirements deem them incompatible.
+
 ### Delivery Assurance vs. Delay
 
 Different use cases have varying requirements with respect to the tradeoffs associated in having guarantee of delivery vs delay - in some (such as telephony) it may be acceptable to drop some or all of the media as a result of changes in network connectivity, throughput, or congestion whereas in other scenarios all media must arrive at the receiving end even if delayed. There SHOULD be support for some means for a connection to signal which media may be abandoned, and behaviours of both senders receivers defined when delay or loss occurs. Where multiple variants of media are sent, this SHOULD be done so in a way that provides pipelining so each media stream may be processed in parallel.
