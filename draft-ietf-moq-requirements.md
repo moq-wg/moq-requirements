@@ -682,7 +682,7 @@ Of course, having longer blocks create other issues. Realtime conferences also n
 
 ### Media Insertion and Redirection
 
-In all of the applicable use cases it may be necessary for consumers to be aware of changes to the source of media being inserted, or be instructed to consume media from a different source. These may be done for the insertion of advertising or for operational movement of consumers, amongst other reasons. Within the media insertion scenario an existing stream being consumed may change as a result of a different source being spliced which necessitates the decoder being reset as parameters such as video frame rate, image resolution etc may have changed. For redirection, consumers may be signalled to consume media from a different source which may also require re-initialization of decoder.
+In all of the applicable use cases defined in {{overallusecases}} it may be necessary for consumers to be aware of changes to the source of media being inserted, or be instructed to consume media from a different source. These may be done for the insertion of advertising or for operational movement of consumers, amongst other reasons. Within the media insertion scenario an existing stream being consumed may change as a result of a different source being spliced which necessitates the decoder being reset as parameters such as video frame rate, image resolution etc may have changed. For redirection, consumers may be signalled to consume media from a different source which may also require re-initialization of decoder.
 
 In both of these scenarios, triggering may occur either through an event provided in the media such as a {{SCTE-35}} marker, or through an external trigger. Both should be supported.
 
