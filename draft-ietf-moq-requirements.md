@@ -434,7 +434,7 @@ In order to support the various topologies and patterns of media flows with the 
 
 ### QUIC Capabilities and Properties
 
-With QUIC being the underlying protocol brings capabilities and functionalities for many of the requirements such as connection migration and re-use, greater controls over packet reliability, congestion control, re-ordering and flow directionality, multiplexing and head of line blocking. Utilising aspects of the QUIC protocol which would then necessitate reimplementation of such capabilities already present in other parts of the protocol should only be done so if requirements deem them incompatible.
+With QUIC being the underlying protocol brings capabilities and functionalities for many of the requirements such as connection migration and re-use, greater controls over packet reliability, congestion control, re-ordering and flow directionality, multiplexing and head of line blocking. Utilising aspects of the QUIC protocol which would then necessitate reimplementation these capabilities already present in other parts of the QUIC protocol should only be done so if requirements deem them incompatible.
 
 ### Delivery Assurance vs. Delay
 
