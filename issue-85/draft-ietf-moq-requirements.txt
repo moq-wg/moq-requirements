@@ -596,7 +596,7 @@ Table of Contents
    migration and re-use, greater controls over packet reliability,
    congestion control, re-ordering and flow directionality, multiplexing
    and head of line blocking.  Utilising aspects of the QUIC protocol
-   which would then necessitate reimplementation these capabilities
+   which would then necessitate reimplementation of these capabilities
    already present in other parts of the QUIC protocol should only be
    done so if requirements deem them incompatible.
 
