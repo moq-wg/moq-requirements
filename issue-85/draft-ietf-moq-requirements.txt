@@ -5,8 +5,8 @@
 MOQ Mailing List                                            J. Gruessing
 Internet-Draft                               Nederlandse Publieke Omroep
 Intended status: Informational                                S. Dawkins
-Expires: 25 March 2024                               Tencent America LLC
-                                                       22 September 2023
+Expires: 1 April 2024                                Tencent America LLC
+                                                       29 September 2023
 
 
     Media Over QUIC - Use Cases and Requirements for Media Transport
@@ -47,7 +47,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 25 March 2024.
+   This Internet-Draft will expire on 1 April 2024.
 
 Copyright Notice
 
@@ -596,9 +596,9 @@ Table of Contents
    migration and re-use, greater controls over packet reliability,
    congestion control, re-ordering and flow directionality, multiplexing
    and head of line blocking.  Utilising aspects of the QUIC protocol
-   which would then necessitate reimplementation of such capabilities
-   already present in other parts of the protocol should only be done so
-   if requirements deem them incompatible.
+   which would then necessitate reimplementation these capabilities
+   already present in other parts of the QUIC protocol should only be
+   done so if requirements deem them incompatible.
 
 4.2.2.  Delivery Assurance vs. Delay
 
