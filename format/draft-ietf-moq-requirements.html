@@ -1214,7 +1214,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
                     <p id="section-toc.1-1.4.2.5.2.1.1"><a href="#section-4.5.1" class="auto internal xref">4.5.1</a>.  <a href="#name-scoped-to-an-origin-domain-" class="internal xref">Scoped to an Origin/Domain, Application specific</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.5.2.2">
-                    <p id="section-toc.1-1.4.2.5.2.2.1"><a href="#section-4.5.2" class="auto internal xref">4.5.2</a>.  <a href="#name-allows-subscribing-or-reque" class="internal xref">Allows Subscribing or Requesting for the Data Matching the Name by the Consumers</a></p>
+                    <p id="section-toc.1-1.4.2.5.2.2.1"><a href="#section-4.5.2" class="auto internal xref">4.5.2</a>.  <a href="#name-allows-consumers-subscribin" class="internal xref">Allows Consumers Subscribing or Requesting for Data Matching by Name</a></p>
 </li>
                 </ul>
 </li>
@@ -1387,7 +1387,7 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 <p id="section-3-1">Our goal in this section is to understand the range of use cases that are in scope for "Media Over QUIC" <span>[<a href="#MOQ-charter" class="cite xref">MOQ-charter</a>]</span>.<a href="#section-3-1" class="pilcrow">¶</a></p>
 <p id="section-3-2">For each use case in this section, we also describe<a href="#section-3-2" class="pilcrow">¶</a></p>
 <ul class="compact">
-<li class="compact" id="section-3-3.1">the number of senders or receiver in a given session transmitting distinct streams,<a href="#section-3-3.1" class="pilcrow">¶</a>
+<li class="compact" id="section-3-3.1">the number of senders or receivers in a given session transmitting distinct streams,<a href="#section-3-3.1" class="pilcrow">¶</a>
 </li>
         <li class="compact" id="section-3-3.2">whether a session has bi-directional flows of media from senders and receivers, which may also include timely non-media such as haptics or timed events.<a href="#section-3-3.2" class="pilcrow">¶</a>
 </li>
@@ -1398,7 +1398,7 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
         <h3 id="name-interactive-media">
 <a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-interactive-media" class="section-name selfRef">Interactive Media</a>
         </h3>
-<p id="section-3.1-1">The use cases described in this section have one particular attribute in common - the target the lowest possible latency as can be achieved at the trade off of data loss and complexity. For example,<a href="#section-3.1-1" class="pilcrow">¶</a></p>
+<p id="section-3.1-1">The use cases described in this section have one particular attribute in common - they target the lowest possible latency as can be achieved at the trade off of data loss and complexity. For example,<a href="#section-3.1-1" class="pilcrow">¶</a></p>
 <ul class="compact">
 <li class="compact" id="section-3.1-2.1">It may make sense to use FEC <span>[<a href="#RFC6363" class="cite xref">RFC6363</a>]</span> and codec-level packet loss concealment <span>[<a href="#RFC6716" class="cite xref">RFC6716</a>]</span>, rather than selectively retransmitting only lost packets. These mechanisms use more bytes, but do not require multiple round trips in order to recover from packet loss.<a href="#section-3.1-2.1" class="pilcrow">¶</a>
 </li>
@@ -1410,7 +1410,7 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 <ul class="compact">
 <li class="compact" id="section-3.1-5.1">Multiple emitters, publishing on multiple tracks (audio, video tracks and at different qualities)<a href="#section-3.1-5.1" class="pilcrow">¶</a>
 </li>
-          <li class="compact" id="section-3.1-5.2">A media switch, sourcing tracks that represent a subset of tracks from across all the emitters. Such subset may represent tracks representing top 5 speakers at higher qualities and lot of other tracks for rest of the emitters at lower qualities.<a href="#section-3.1-5.2" class="pilcrow">¶</a>
+          <li class="compact" id="section-3.1-5.2">A media switch, sourcing tracks that represent a subset of tracks from across all the emitters. For example, such a subset may represent tracks representing top 5 speakers at higher qualities and lot of other tracks for rest of the emitters at lower qualities.<a href="#section-3.1-5.2" class="pilcrow">¶</a>
 </li>
           <li class="compact" id="section-3.1-5.3">Multiple receivers, with varied receiving capacity (bandwidth limited), subscribing to subset of the tracks<a href="#section-3.1-5.3" class="pilcrow">¶</a>
 </li>
@@ -1807,7 +1807,7 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 </dd>
         <dd class="break"></dd>
 </dl>
-<p id="section-4.3-3">Considerations should be made to addressing of individual audio/video frames as opposed to groups, in addition to how the model incorporates signalling of prioritization, media dependency, and cache-ability to all entities.<a href="#section-4.3-3" class="pilcrow">¶</a></p>
+<p id="section-4.3-3">Considerations should be made to addressing of individual audio/video frames as opposed to groups, in addition to how the model incorporates signalling of prioritization, media dependency, and cacheability to all entities.<a href="#section-4.3-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="pub-media">
@@ -1840,10 +1840,10 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
         </h4>
 </section>
 </div>
-<div id="allows-subscribing-or-requesting-for-the-data-matching-the-name-by-the-consumers">
+<div id="allows-consumers-subscribing-or-requesting-for-data-matching-by-name">
 <section id="section-4.5.2">
-          <h4 id="name-allows-subscribing-or-reque">
-<a href="#section-4.5.2" class="section-number selfRef">4.5.2. </a><a href="#name-allows-subscribing-or-reque" class="section-name selfRef">Allows Subscribing or Requesting for the Data Matching the Name by the Consumers</a>
+          <h4 id="name-allows-consumers-subscribin">
+<a href="#section-4.5.2" class="section-number selfRef">4.5.2. </a><a href="#name-allows-consumers-subscribin" class="section-name selfRef">Allows Consumers Subscribing or Requesting for Data Matching by Name</a>
         </h4>
 </section>
 </div>

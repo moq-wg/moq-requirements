@@ -92,8 +92,8 @@ Table of Contents
      4.4.  Publishing Media
      4.5.  Naming and Addressing Media Resources
        4.5.1.  Scoped to an Origin/Domain, Application specific
-       4.5.2.  Allows Subscribing or Requesting for the Data Matching
-               the Name by the Consumers
+       4.5.2.  Allows Consumers Subscribing or Requesting for Data
+               Matching by Name
      4.6.  Packaging Media
        4.6.1.  Handling Scalable Video Codecs
        4.6.2.  Application Choice for Ordering
@@ -238,7 +238,7 @@ Table of Contents
 
    For each use case in this section, we also describe
 
-   *  the number of senders or receiver in a given session transmitting
+   *  the number of senders or receivers in a given session transmitting
       distinct streams,
    *  whether a session has bi-directional flows of media from senders
       and receivers, which may also include timely non-media such as
@@ -250,8 +250,8 @@ Table of Contents
 3.1.  Interactive Media
 
    The use cases described in this section have one particular attribute
-   in common - the target the lowest possible latency as can be achieved
-   at the trade off of data loss and complexity.  For example,
+   in common - they target the lowest possible latency as can be
+   achieved at the trade off of data loss and complexity.  For example,
 
    *  It may make sense to use FEC [RFC6363] and codec-level packet loss
       concealment [RFC6716], rather than selectively retransmitting only
@@ -274,9 +274,10 @@ Table of Contents
    *  Multiple emitters, publishing on multiple tracks (audio, video
       tracks and at different qualities)
    *  A media switch, sourcing tracks that represent a subset of tracks
-      from across all the emitters.  Such subset may represent tracks
-      representing top 5 speakers at higher qualities and lot of other
-      tracks for rest of the emitters at lower qualities.
+      from across all the emitters.  For example, such a subset may
+      represent tracks representing top 5 speakers at higher qualities
+      and lot of other tracks for rest of the emitters at lower
+      qualities.
    *  Multiple receivers, with varied receiving capacity (bandwidth
       limited), subscribing to subset of the tracks
 
@@ -670,7 +671,7 @@ Table of Contents
    Considerations should be made to addressing of individual audio/video
    frames as opposed to groups, in addition to how the model
    incorporates signalling of prioritization, media dependency, and
-   cache-ability to all entities.
+   cacheability to all entities.
 
 4.4.  Publishing Media
 
@@ -705,8 +706,8 @@ Table of Contents
 
 4.5.1.  Scoped to an Origin/Domain, Application specific
 
-4.5.2.  Allows Subscribing or Requesting for the Data Matching the Name
-        by the Consumers
+4.5.2.  Allows Consumers Subscribing or Requesting for Data Matching by
+        Name
 
 4.6.  Packaging Media
 
