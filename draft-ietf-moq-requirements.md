@@ -148,8 +148,8 @@ Our goal in this section is to understand the range of use cases that are in sco
 
 For each use case in this section, we also describe
 
-* the number of senders or receiver in a given session transmitting distinct streams,
-* whether a session has bi-directional flows of media from senders and receivers, which may also include timely non-media such as haptics or timed events.
+- the number of senders or receiver in a given session transmitting distinct streams,
+- whether a session has bi-directional flows of media from senders and receivers, which may also include timely non-media such as haptics or timed events.
 
 It is likely that we should add other characteristics, as we come to understand them.
 
@@ -157,8 +157,8 @@ It is likely that we should add other characteristics, as we come to understand 
 
 The use cases described in this section have one particular attribute in common - the target the lowest possible latency as can be achieved at the trade off of data loss and complexity. For example,
 
-* It may make sense to use FEC {{RFC6363}} and codec-level packet loss concealment {{RFC6716}}, rather than selectively retransmitting only lost packets. These mechanisms use more bytes, but do not require multiple round trips in order to recover from packet loss.
-* It's generally infeasible to use congestion control schemes like BBR {{I-D.draft-cardwell-iccrg-bbr-congestion-control}} in many deployments, since BBR has probing mechanisms that rely on temporarily inducing delay, but these mechanisms can then amortize the consequences of induced delay over multiple RTTs.
+- It may make sense to use FEC {{RFC6363}} and codec-level packet loss concealment {{RFC6716}}, rather than selectively retransmitting only lost packets. These mechanisms use more bytes, but do not require multiple round trips in order to recover from packet loss.
+- It's generally infeasible to use congestion control schemes like BBR {{I-D.draft-cardwell-iccrg-bbr-congestion-control}} in many deployments, since BBR has probing mechanisms that rely on temporarily inducing delay, but these mechanisms can then amortize the consequences of induced delay over multiple RTTs.
 
 This may help to explain why interactive use cases have typically relied on protocols such as RTP {{RFC3550}}, which provide low-level control of packetization and transmission, with addtional support for retransmission as an optional extension.
 
@@ -166,9 +166,7 @@ To provide an overview of interactive use cases, we can consider a conferencing 
 
 - Multiple emitters, publishing on multiple tracks (audio, video tracks and at different qualities)
 
-- A media switch, sourcing tracks that represent a subset of tracks from across all
-  the emitters. Such subset may represent tracks representing top 5 speakers at
-  higher qualities and lot of other tracks for rest of the emitters at lower qualities.
+- A media switch, sourcing tracks that represent a subset of tracks from across all the emitters. Such subset may represent tracks representing top 5 speakers at higher qualities and lot of other tracks for rest of the emitters at lower qualities.
 
 - Multiple receivers, with varied receiving capacity (bandwidth limited), subscribing to subset of the tracks
 
@@ -403,9 +401,9 @@ Many of the use cases have bi-directional flows of media, with clients both send
 
 In the initiation of a session both client and server must perform negotiation in order to agree upon a variety of details before media can move in any direction:
 
-* Is the client authenticated and subsequently authorized to initiate a connection?
-* What media is available, and for each what are the parameters such as codec, bitrate, and resolution etc?
-* Can media move bi-directionally, or is it unidirectional only?
+- Is the client authenticated and subsequently authorized to initiate a connection?
+- What media is available, and for each what are the parameters such as codec, bitrate, and resolution etc?
+- Can media move bi-directionally, or is it unidirectional only?
 
 ## Naming and Addressing Media Resources {#naming}
 
@@ -419,8 +417,8 @@ As multiple streams of media may be available for concurrent sending such as mul
 
 Packaging of media describes how raw media will be encapsulated. There are at a high level two approaches to this:
 
-* Within the protocol itself, where the protocol defines the ancillary data required to decode each media type the protocol supports.
-* A common encapsulation format such as there are advantages to using an existing generic media packaging format (such as CMAF {{CMAF}} or other ISOBMFF {{ISOBMFF}} subsets) which define a generic method for all media and handles ancillary decode information.
+- Within the protocol itself, where the protocol defines the ancillary data required to decode each media type the protocol supports.
+- A common encapsulation format such as there are advantages to using an existing generic media packaging format (such as CMAF {{CMAF}} or other ISOBMFF {{ISOBMFF}} subsets) which define a generic method for all media and handles ancillary decode information.
 
 The working group must agree on which approach should be taken to the packaging of media, taking into consideration the various technical trade offs that each approach provides.
 
@@ -436,10 +434,10 @@ Some video codecs have a complex structure. Consider an
 application using both temporal layering and spatial layering. It would
 send for example:
 
-* an object representing the 30 fps frame at 720p
-* an object representing the spatial enhancement of that frame to 1080p
-* an object representing the 60 fps frame at 720p
-* an object representing the spatial enhancement of that 60 fps frame to 1080p
+- an object representing the 30 fps frame at 720p
+- an object representing the spatial enhancement of that frame to 1080p
+- an object representing the 60 fps frame at 720p
+- an object representing the spatial enhancement of that 60 fps frame to 1080p
 
 The encoding of the 30 fps frame depends on the previous 30 fps frames, but not on any 60 fps frame. The encoding of the 60 fps depends on the previous 30 fps frames, and possibly also on the previous 60 fps frames (there are options). The encoding of the spatial enhancement depends on the corresponding 720p frames, and also on the previous 1080p enhancements. Add a couple of layers, and the expression of dependencies can be very complex. The AV1 documentation for example provides schematics of a video stream with 3 frame rate options at 15, 30 and 60 fps, and two definition options, with a complex graph of dependencies. Other video encodings have similar provisions. They may differ in details, but there are constants: if some object is dropped, then all objects that have a dependency on it are useless.
 
@@ -458,12 +456,12 @@ The relays will not understand all the variation of what the media is but the ap
 We propose to express dependencies using a combination of object number and object priority.
 
 Let's consider our example of an encoding providing both spatial enhancement and frame rate enhancement options, and suppose that the application has expressed a preference for frame rate. We can express that policy as follow:
-* the frames are ordered first by time and when the time is the same by resolution. This determines the "object number" property.
-* the frame priority will be set to 1 for the 720p 30 fps frame, 2 for the 720p 60 fps frames, and 3 for all the enhancement frames.
+- the frames are ordered first by time and when the time is the same by resolution. This determines the "object number" property.
+- the frame priority will be set to 1 for the 720p 30 fps frame, 2 for the 720p 60 fps frames, and 3 for all the enhancement frames.
 
 If the application did instead express a preference for definition, object numbers will be assigned in the same way, but the priorities will be different:
 
-* the frame priority will be set to 1 for the 720p 30 fps I frames and 2 for the 720p 30 fps P and B frames, 3 and 4 for the 1080p enhancements of the 60 fps frames, and 5 and 6 for the 60 fps frames and their enhancements.
+- the frame priority will be set to 1 for the 720p 30 fps I frames and 2 for the 720p 30 fps P and B frames, 3 and 4 for the 1080p enhancements of the 60 fps frames, and 5 and 6 for the 60 fps frames and their enhancements.
 
 Object numbers and priorities will be set by the publisher of the track, and will not be modified by the relays.
 
@@ -477,9 +475,9 @@ Receivers SHOULD be able to as part of negotiation of a session {{MOQ-negotiatio
 
 It is possible to use groups as units of congestion control. When the sending strategy is understoud, the objects in the group can be assigned sequence numbers and drop priorities that capture the encoding dependencies, such that:
 
-* an object can only have dependencies with other objects in the same group,
-* an object can only have dependencies with other objects with lower sequence numbers,
-* an object can only have dependencies with other objects with lower or equal drop priorities.
+- an object can only have dependencies with other objects in the same group,
+- an object can only have dependencies with other objects with lower sequence numbers,
+- an object can only have dependencies with other objects with lower or equal drop priorities.
 
 This simple rules enable real-time congestion control decisions at relays and other nodes. The main drawback is that if a packet with a given drop priority is actually dropped, all objects with higher sequence numbers and higher or equal drop priorities in the same group must be dropped. If the group duration is long, this means that the quality of experience may be lowered for a long time after a brief congestion. If the group duration is short, this can produce a jarring effect in which the quality of experience drops perdiodically at the tail of the group.
 
@@ -491,15 +489,15 @@ To enable use cases where receivers may wish to address a particular time of med
 
 In case of congestion, the relay will use the priorities to selectively drop the "least important" objects:
 
-* if congestion is noticed, the relay will drop first the lesser priority layer. In our example, that would mean the objects marked at priority 6. The relay will drop all objects marked at that priority, from the first dropped object to the end of the group.
+- if congestion is noticed, the relay will drop first the lesser priority layer. In our example, that would mean the objects marked at priority 6. The relay will drop all objects marked at that priority, from the first dropped object to the end of the group.
 
-* if congestion persists despite dropping a first layer, the relay will start dropping the next layer, in our example the objects marked at priority 5.
+- if congestion persists despite dropping a first layer, the relay will start dropping the next layer, in our example the objects marked at priority 5.
 
-* if congestion still persist after dropping all but the highest priority layer, the relay will have to close the group, and start relaying the next group.
+- if congestion still persist after dropping all but the highest priority layer, the relay will have to close the group, and start relaying the next group.
 
 When dropping objects within the same priority:
 
-* higher object numbers in the same group, which are later in the group, are "less important" and more likely to be dropped than objects in the same group with a lower object number. Objects in a previous group are "less important" than objects in the current group and MAY be dropped ahead of objects in the current group.
+- higher object numbers in the same group, which are later in the group, are "less important" and more likely to be dropped than objects in the same group with a lower object number. Objects in a previous group are "less important" than objects in the current group and MAY be dropped ahead of objects in the current group.
 
 The specification above assumes that the relay can detect the onset of congestion, and has a way to drop objects. There are several ways to achieve that result, such as sending all objects of a group in a single QUIC stream and making explicit action at the time of relaying, or mapping separate priority layers into different QUIC streams and marking these streams with different priorities. The exact solution will have to be defined in a draft that specifies transport priorities.
 
@@ -535,9 +533,9 @@ Much of the early discussion about MOQ security was not entirely coherent. Some 
 
 Generally, there are three aspects of media security:
 
-* Digital Rights Management, which refers to the authorization of receivers to decode a media stream.
-* Sender-to-Receiver Media Security, which refers to the ability of media senders and receivers to transfer media while protected from unauthorized intermediates and observers, and
-* Node-to-node Media Security, which refers to security when authorized intermediaries are needed to transform media into a form acceptable to authorized receivers. For example, this might refer to a video transcoder between the media sender and receiver.
+- Digital Rights Management, which refers to the authorization of receivers to decode a media stream.
+- Sender-to-Receiver Media Security, which refers to the ability of media senders and receivers to transfer media while protected from unauthorized intermediates and observers, and
+- Node-to-node Media Security, which refers to security when authorized intermediaries are needed to transform media into a form acceptable to authorized receivers. For example, this might refer to a video transcoder between the media sender and receiver.
 
 "End-to-end security" describes the use of encryption of one or more media stream(s) over an end-to-end path, to provide confidentiality in the presence of any intermediates or observers and prevent or restrict ability to decrypt that media.
 
@@ -545,11 +543,11 @@ Generally, there are three aspects of media security:
 
 Many MOQ deployment models rely on intermediate nodes, and these intermediate nodes may have a variety of responsibilities, including, but not limited to,
 
-* rate adaptation based on media metadata
-* routing media based on the characteristics of the media
-* caching media
-* allowing "watch in-progress broadcasts from the beginning", "instant replay" and "fast forward"
-* transcoding media
+- rate adaptation based on media metadata
+- routing media based on the characteristics of the media
+- caching media
+- allowing "watch in-progress broadcasts from the beginning", "instant replay" and "fast forward"
+- transcoding media
 
 Some of these responsibilities require authorization to see more media headers and even media payload than others. The protocol SHOULD allow MOQ intermediate nodes to perform a variety of responsibilities, without having access to media headers and/or media payloads that they do not require to carry out their responsibilities.
 
