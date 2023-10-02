@@ -2,11 +2,11 @@
 
 
 
-MOQ Mailing List                                            J. Gruessing
+Media Over QUIC                                             J. Gruessing
 Internet-Draft                               Nederlandse Publieke Omroep
 Intended status: Informational                                S. Dawkins
-Expires: 1 April 2024                                Tencent America LLC
-                                                       29 September 2023
+Expires: 4 April 2024                                Tencent America LLC
+                                                          2 October 2023
 
 
     Media Over QUIC - Use Cases and Requirements for Media Transport
@@ -47,7 +47,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 1 April 2024.
+   This Internet-Draft will expire on 4 April 2024.
 
 Copyright Notice
 
@@ -66,11 +66,11 @@ Copyright Notice
 Table of Contents
 
    1.  Introduction
-     1.1.  Note for MOQ Working Group participants
+     1.1.  Note for MOQ Working Group Participants
    2.  Terminology
      2.1.  Distinguishing between Interactive and Live Streaming Use
            Cases
-     2.2.  Alignment with terminology in related drafts
+     2.2.  Alignment with Terminology in Related Drafts
    3.  Use Cases Informing This Proposal
      3.1.  Interactive Media
        3.1.1.  Gaming
@@ -86,28 +86,28 @@ Table of Contents
      4.2.  Specific Protocol Considerations
        4.2.1.  QUIC Capabilities and Properties
        4.2.2.  Delivery Assurance vs. Delay
-       4.2.3.  Support Webtransport/Raw QUIC as media transport
+       4.2.3.  Support WebTransport/Raw QUIC as Media Transport
        4.2.4.  Media Negotiation & Agility
      4.3.  Media Data Model
      4.4.  Publishing Media
      4.5.  Naming and Addressing Media Resources
-       4.5.1.  Scoped to an Origin/Domain, Application specific.
-       4.5.2.  Allows subscribing or requesting for the data matching
-               the name by the consumers
+       4.5.1.  Scoped to an Origin/Domain, Application specific
+       4.5.2.  Allows Consumers Subscribing or Requesting for Data
+               Matching by Name
      4.6.  Packaging Media
        4.6.1.  Handling Scalable Video Codecs
-       4.6.2.  Application choice for ordering
-       4.6.3.  Linear ordering using priorities
+       4.6.2.  Application Choice for Ordering
+       4.6.3.  Linear Ordering using Priorities
      4.7.  Media Consumption
      4.8.  Relays, Caches, and other MOQ Network Elements
-       4.8.1.  Intervals and congestion
+       4.8.1.  Intervals and Congestion
        4.8.2.  Pull & Push
-       4.8.3.  Relay behavior
+       4.8.3.  Relay Behavior
        4.8.4.  High Loss Networks
-       4.8.5.  Interval between access points
+       4.8.5.  Interval between Access Points
        4.8.6.  Media Insertion and Redirection
      4.9.  Security
-       4.9.1.  Authentication & Authorisation
+       4.9.1.  Authentication & Authorization
        4.9.2.  Media Encryption
    5.  IANA Considerations
    6.  Security Considerations
@@ -124,7 +124,7 @@ Table of Contents
    ingest and distribution [MOQ-charter], using either the QUIC protocol
    [RFC9000] or WebTransport [WebTrans-charter] as transport protocols.
 
-1.1.  Note for MOQ Working Group participants
+1.1.  Note for MOQ Working Group Participants
 
    When adopted, this document is intended to capture use cases that are
    in scope for work on the MOQ protocol [MOQ-charter], and requirements
@@ -205,7 +205,7 @@ Table of Contents
    It is common for live streaming use cases to send media in one
    direction, and "something else" in the other direction - for
    instance, a video receiver might be returning requests that the
-   sender change the media encoding or media rate in use, or reorgient a
+   sender change the media encoding or media rate in use, or reorient a
    camera.  This type of feedback doesn't qualify as "bidirectional
    media".
 
@@ -214,10 +214,10 @@ Table of Contents
    being carried in the other direction, this would not qualify as
    "Interactive".
 
-   *Note: these descriptions are a starting point.  Feedback and
-   pushback are both welcomed.*
+   *Note: these descriptions are a starting point.  Feedback and push-
+   back are both welcomed.*
 
-2.2.  Alignment with terminology in related drafts
+2.2.  Alignment with Terminology in Related Drafts
 
    The MOQ working group has used a wide variety of terms, with some,
    but not enough, effort to reconcile terms in use in various drafts.
@@ -238,7 +238,7 @@ Table of Contents
 
    For each use case in this section, we also describe
 
-   *  the number of senders or receiver in a given session transmitting
+   *  the number of senders or receivers in a given session transmitting
       distinct streams,
    *  whether a session has bi-directional flows of media from senders
       and receivers, which may also include timely non-media such as
@@ -250,8 +250,8 @@ Table of Contents
 3.1.  Interactive Media
 
    The use cases described in this section have one particular attribute
-   in common - the target the lowest possible latency as can be achieved
-   at the trade off of data loss and complexity.  For example,
+   in common - they target the lowest possible latency as can be
+   achieved at the trade off of data loss and complexity.  For example,
 
    *  It may make sense to use FEC [RFC6363] and codec-level packet loss
       concealment [RFC6716], rather than selectively retransmitting only
@@ -265,8 +265,8 @@ Table of Contents
 
    This may help to explain why interactive use cases have typically
    relied on protocols such as RTP [RFC3550], which provide low-level
-   control of packetization and transmission, with addtional support for
-   retransmission as an optional extension.
+   control of packetization and transmission, with additional support
+   for retransmission as an optional extension.
 
    To provide an overview of interactive use cases, we can consider a
    conferencing session comprised of:
@@ -274,9 +274,10 @@ Table of Contents
    *  Multiple emitters, publishing on multiple tracks (audio, video
       tracks and at different qualities)
    *  A media switch, sourcing tracks that represent a subset of tracks
-      from across all the emitters.  Such subset may represent tracks
-      representing top 5 speakers at higher qualities and lot of other
-      tracks for rest of the emitters at lower qualities.
+      from across all the emitters.  For example, such a subset may
+      represent tracks representing top 5 speakers at higher qualities
+      and lot of other tracks for rest of the emitters at lower
+      qualities.
    *  Multiple receivers, with varied receiving capacity (bandwidth
       limited), subscribing to subset of the tracks
 
@@ -311,8 +312,8 @@ Table of Contents
    *  Media Switches propagate a subset of tracks as-is from the
       emitters to the subscribers.  This implies Track IDs to be
       unchanged between the emitters and the receivers.
-   *  Subscribers explictly request one or more media tracks in
-      appropriate qualities and dynamically move between the qualtiies
+   *  Subscribers explicitly request one or more media tracks in
+      appropriate qualities and dynamically move between the qualities
       during the course of the session.
 
    Another topology for the conferencing use-case is to use multiple
@@ -421,7 +422,7 @@ Table of Contents
 3.2.  Live Media
 
    The use cases in this section like those in Section 3.1 do set some
-   expectations to minimise high and/or highly variable latency, however
+   expectations to minimize high and/or highly variable latency, however
    their key difference is that are seldom bi-directional as their basis
    is on mass-consumption of media or the contribution of it into a
    platform to syndicate, or distribute.  Latency is less noticeable
@@ -539,7 +540,7 @@ Table of Contents
    Such broadcasts may comprise of multiple audio or video outputs with
    different codecs or bitrates, and may also include other types of
    media essence such as subtitles or timing signalling information
-   (e.g. markers to indicate change of behaviour in client such as
+   (e.g. markers to indicate change of behavior in client such as
    advertisement breaks).  The use of "live rewind" where a window of
    media between the live edge and trailing edge can be made available
    for clients to playback, either because the local player falls behind
@@ -596,8 +597,8 @@ Table of Contents
    functionalities for many of the requirements such as connection
    migration and re-use, greater controls over packet reliability,
    congestion control, re-ordering and flow directionality, multiplexing
-   and head of line blocking.  Utilising aspects of the QUIC protocol
-   which would then necessitate reimplementation of these capabilities
+   and head of line blocking.  Utilizing aspects of the QUIC protocol
+   which would then necessitate re-implementation of these capabilities
    already present in other parts of the QUIC protocol should only be
    done so if requirements deem them incompatible.
 
@@ -610,12 +611,12 @@ Table of Contents
    or congestion whereas in other scenarios all media must arrive at the
    receiving end even if delayed.  There SHOULD be support for some
    means for a connection to signal which media may be abandoned, and
-   behaviours of both senders receivers defined when delay or loss
+   behaviors of both senders receivers defined when delay or loss
    occurs.  Where multiple variants of media are sent, this SHOULD be
    done so in a way that provides pipelining so each media stream may be
    processed in parallel.
 
-4.2.3.  Support Webtransport/Raw QUIC as media transport
+4.2.3.  Support WebTransport/Raw QUIC as Media Transport
 
    There should be a degree of decoupling from the underlying transport
    protocols and MoQ itself despite the "Q" in the name, in particular
@@ -669,7 +670,7 @@ Table of Contents
 
    Considerations should be made to addressing of individual audio/video
    frames as opposed to groups, in addition to how the model
-   incorporates signalling of prioritisation, media dependency, and
+   incorporates signalling of prioritization, media dependency, and
    cacheability to all entities.
 
 4.4.  Publishing Media
@@ -686,7 +687,7 @@ Table of Contents
    negotiation in order to agree upon a variety of details before media
    can move in any direction:
 
-   *  Is the client authenticated and subsequently authorised to
+   *  Is the client authenticated and subsequently authorized to
       initiate a connection?
    *  What media is available, and for each what are the parameters such
       as codec, bitrate, and resolution etc?
@@ -703,10 +704,10 @@ Table of Contents
    should be supported, but further extended metadata of the contents of
    the media or its ontology should not be supported.
 
-4.5.1.  Scoped to an Origin/Domain, Application specific.
+4.5.1.  Scoped to an Origin/Domain, Application specific
 
-4.5.2.  Allows subscribing or requesting for the data matching the name
-        by the consumers
+4.5.2.  Allows Consumers Subscribing or Requesting for Data Matching by
+        Name
 
 4.6.  Packaging Media
 
@@ -773,7 +774,7 @@ Table of Contents
    linear approach is preferable, using attributes of objects like
    delivery order or priorities.
 
-4.6.2.  Application choice for ordering
+4.6.2.  Application Choice for Ordering
 
    The conversion from dependency graph to linear ordering is not
    unique.  The simple graph in our example could be ordered either
@@ -797,7 +798,7 @@ Table of Contents
    information they will need to correctly order which data is sent
    first.
 
-4.6.3.  Linear ordering using priorities
+4.6.3.  Linear Ordering using Priorities
 
    We propose to express dependencies using a combination of object
    number and object priority.
@@ -805,12 +806,11 @@ Table of Contents
    Let's consider our example of an encoding providing both spatial
    enhancement and frame rate enhancement options, and suppose that the
    application has expressed a preference for frame rate.  We can
-   express that policy as follow:
-
-   *  the frames are ordered first by time and when the time is the same
-      by resolution.  This determines the "object number" property.
-   *  the frame priority will be set to 1 for the 720p 30 fps frame, 2
-      for the 720p 60 fps frames, and 3 for all the enhancement frames.
+   express that policy as follow: - the frames are ordered first by time
+   and when the time is the same by resolution.  This determines the
+   "object number" property. - the frame priority will be set to 1 for
+   the 720p 30 fps frame, 2 for the 720p 60 fps frames, and 3 for all
+   the enhancement frames.
 
    If the application did instead express a preference for definition,
    object numbers will be assigned in the same way, but the priorities
@@ -828,15 +828,15 @@ Table of Contents
 
    Receivers SHOULD be able to as part of negotiation of a session
    Section 4.2.4 specify which media to receive, not just with respect
-   to the media format and codec, but also the varient thereof such as
+   to the media format and codec, but also the variant thereof such as
    resolution or bitrate.
 
 4.8.  Relays, Caches, and other MOQ Network Elements
 
-4.8.1.  Intervals and congestion
+4.8.1.  Intervals and Congestion
 
    It is possible to use groups as units of congestion control.  When
-   the sending strategy is understoud, the objects in the group can be
+   the sending strategy is understood, the objects in the group can be
    assigned sequence numbers and drop priorities that capture the
    encoding dependencies, such that:
 
@@ -854,7 +854,7 @@ Table of Contents
    group must be dropped.  If the group duration is long, this means
    that the quality of experience may be lowered for a long time after a
    brief congestion.  If the group duration is short, this can produce a
-   jarring effect in which the quality of experience drops perdiodically
+   jarring effect in which the quality of experience drops periodically
    at the tail of the group.
 
 4.8.2.  Pull & Push
@@ -864,10 +864,10 @@ Table of Contents
    available, both "pull" and "push" of media SHOULD be supported, with
    consideration that producers and intermediates SHOULD also signal
    what media is available (commonly referred to as a "DVR window").
-   Behaviours around cache durations for each MoQ entity should be
+   Behaviors around cache durations for each MoQ entity should be
    defined.
 
-4.8.3.  Relay behavior
+4.8.3.  Relay Behavior
 
    In case of congestion, the relay will use the priorities to
    selectively drop the "least important" objects:
@@ -905,8 +905,8 @@ Table of Contents
 
    Web conferencing systems are used on networks with well over 20%
    packet loss and when this happens, it is often on connections with a
-   relatively large round trip times.  In these situtation, forward
-   error correction or redundant transmitions are used to provide a
+   relatively large round trip times.  In these situation, forward error
+   correction or redundant transmissions are used to provide a
    reasonable user experience.  Often video is turned off in.  There are
    multiple machine learning based audio codecs in development that
    targeting a 2 to 3 Kbps rate.
@@ -915,7 +915,7 @@ Table of Contents
    at a rate of several hundreds packets per second with a high network
    loss rate.
 
-4.8.5.  Interval between access points
+4.8.5.  Interval between Access Points
 
    In the streaming scenarios, there is an important emphasis on
    resynchronization, characterized by a short distance between "access
@@ -940,7 +940,7 @@ Table of Contents
    group when needed.
 
    Of course, having longer blocks create other issues.  Realtime
-   conferences also need to accomodate the occasional occasional late
+   conferences also need to accommodate the occasional occasional late
    comer, or the disconnected user who want to resynchronize after a
    network event.  This drives a need for synchronization "between
    access points".  For example, rather than waiting for 30 seconds
@@ -968,7 +968,7 @@ Table of Contents
 
 4.9.  Security
 
-4.9.1.  Authentication & Authorisation
+4.9.1.  Authentication & Authorization
 
    Whilst QUIC and conversely TLS supports the ability for mutual
    authentication through client and server presenting certificates and
@@ -977,7 +977,7 @@ Table of Contents
    impractical.  Thus, support for a primitive method of authentication
    between MoQ entities SHOULD be included to authenticate entities
    between one another, noting that implementations and deployments
-   should determine which authorisation model if any is applicable.
+   should determine which authorization model if any is applicable.
 
 4.9.2.  Media Encryption
 
@@ -1033,7 +1033,7 @@ Table of Contents
 
    Support for encrypted media SHOULD be available in the protocol to
    support the above use cases, with key exchange and decryption
-   authorisation handled externally.  The protocol SHOULD provide
+   authorization handled externally.  The protocol SHOULD provide
    metadata for entities which process media to perform key exchange and
    decrypt.
 
