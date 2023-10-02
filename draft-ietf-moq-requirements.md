@@ -267,7 +267,7 @@ In the Video Conferencing/Telephony use case, media is both sent and received. T
 
 ## Live Media {#lm-media}
 
-The use cases in this section like those in {{interact}} do set some expectations to minimise high and/or highly variable latency, however their key difference is that are seldom bi-directional as their basis is on mass-consumption of media or the contribution of it into a platform to syndicate, or distribute. Latency is less noticeable over loss, and may be more accepting of having slightly more latency to increase guarantee of delivery.
+The use cases in this section like those in {{interact}} do set some expectations to minimize high and/or highly variable latency, however their key difference is that are seldom bi-directional as their basis is on mass-consumption of media or the contribution of it into a platform to syndicate, or distribute. Latency is less noticeable over loss, and may be more accepting of having slightly more latency to increase guarantee of delivery.
 
 ### Live Media Ingest {#lmingest}
 
@@ -403,7 +403,7 @@ Many of the use cases have bi-directional flows of media, with clients both send
 
 In the initiation of a session both client and server must perform negotiation in order to agree upon a variety of details before media can move in any direction:
 
-* Is the client authenticated and subsequently authorised to initiate a connection?
+* Is the client authenticated and subsequently authorized to initiate a connection?
 * What media is available, and for each what are the parameters such as codec, bitrate, and resolution etc?
 * Can media move bi-directionally, or is it unidirectional only?
 
