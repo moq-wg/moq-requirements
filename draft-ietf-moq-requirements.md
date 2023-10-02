@@ -92,7 +92,7 @@ Discussion of this draft should take place on the IETF Media Over QUIC (MoQ) mai
 
 This document describes use cases and requirements that guide the specification of a simple, low-latency media delivery solution for ingest and distribution {{MOQ-charter}}, using either the QUIC protocol {{RFC9000}} or WebTransport {{WebTrans-charter}} as transport protocols.
 
-## Note for MOQ Working Group participants
+## Note for MOQ Working Group Participants
 
 When adopted, this document is intended to capture use cases that are in scope for work on the MOQ protocol {{MOQ-charter}}, and requirements that arise from these use cases.
 
@@ -136,7 +136,7 @@ If two sender/receivers are each sending media to the other, but what's being ca
 
 **Note: these descriptions are a starting point. Feedback and push-back are both welcomed.**
 
-## Alignment with terminology in related drafts {#draft-alignment}
+## Alignment with Terminology in Related Drafts {#draft-alignment}
 
 The MOQ working group has used a wide variety of terms, with some, but not enough, effort to reconcile terms in use in various drafts. As these drafts are being adopted by the MOQ working group, it seems right to make every effort to align terminology for ease of reading and implementation.
 
@@ -364,7 +364,7 @@ With QUIC being the underlying protocol brings capabilities and functionalities 
 
 Different use cases have varying requirements with respect to the tradeoffs associated in having guarantee of delivery vs delay - in some (such as telephony) it may be acceptable to drop some or all of the media as a result of changes in network connectivity, throughput, or congestion whereas in other scenarios all media must arrive at the receiving end even if delayed. There SHOULD be support for some means for a connection to signal which media may be abandoned, and behaviors of both senders receivers defined when delay or loss occurs. Where multiple variants of media are sent, this SHOULD be done so in a way that provides pipelining so each media stream may be processed in parallel.
 
-### Support Webtransport/Raw QUIC as media transport
+### Support WebTransport/Raw QUIC as Media Transport
 
 There should be a degree of decoupling from the underlying transport protocols and MoQ itself despite the "Q" in the name, in particular to provide future agility and prevent any potential ossification being tied to specific version(s) of dependant protocols.
 
@@ -409,9 +409,9 @@ In the initiation of a session both client and server must perform negotiation i
 
 As multiple streams of media may be available for concurrent sending such as multiple camera views or audio tracks, a means of both identifying the technical properties of each resource (codec, bitrate, etc) as well as a useful identification for playback should be part of the protocol. A base level of optional metadata e.g. the known language of an audio track or name of participant's camera should be supported, but further extended metadata of the contents of the media or its ontology should not be supported.
 
-### Scoped to an Origin/Domain, Application specific.
+### Scoped to an Origin/Domain, Application specific
 
-### Allows subscribing or requesting for the data matching the name by the consumers
+### Allows Subscribing or Requesting for the Data Matching the Name by the Consumers
 
 ## Packaging Media {#Packaging}
 
@@ -443,7 +443,7 @@ The encoding of the 30 fps frame depends on the previous 30 fps frames, but not 
 
 Of course, we could encode these dependencies as properties of the object being sent, stating for example that "object 17 can only be decoded if objects 16, 11 and 7 are available." However, this approach leads to a lot of complexity in relays. We believe that a linear approach is preferable, using attributes of objects like delivery order or priorities.
 
-### Application choice for ordering
+### Application Choice for Ordering
 
 The conversion from dependency graph to linear ordering is not unique. The simple graph in our example could be ordered either "frame rate first" versus "definition first". If the application chooses frame rate first, the policy is expressed as "in case of congestion, drop the spatial enhancement objects first, and if that is not enough drop the 60 fps frames". If the application chooses "definition first", the policy becomes "drop the 60 fps frames and their corresponding 1080p enhancement first, and if that is not enough also drop the 1080p enhancement of the 30 fps frames".
 
@@ -451,7 +451,7 @@ More complex graphs will allow for more complex policies, maybe for example "15 
 
 The relays will not understand all the variation of what the media is but the applications will need a way to indicate to the relays the information they will need to correctly order which data is sent first.
 
-### Linear ordering using priorities
+### Linear Ordering using Priorities
 
 We propose to express dependencies using a combination of object number and object priority.
 
@@ -471,7 +471,7 @@ Receivers SHOULD be able to as part of negotiation of a session {{MOQ-negotiatio
 
 ## Relays, Caches, and other MOQ Network Elements {#MOQ-network-entities}
 
-### Intervals and congestion
+### Intervals and Congestion
 
 It is possible to use groups as units of congestion control. When the sending strategy is understood, the objects in the group can be assigned sequence numbers and drop priorities that capture the encoding dependencies, such that:
 
@@ -485,7 +485,7 @@ This simple rules enable real-time congestion control decisions at relays and ot
 
 To enable use cases where receivers may wish to address a particular time of media in addition to having the most recently produced media available, both "pull" and "push" of media SHOULD be supported, with consideration that producers and intermediates SHOULD also signal what media is available (commonly referred to as a "DVR window"). Behaviors around cache durations for each MoQ entity should be defined.
 
-### Relay behavior
+### Relay Behavior
 
 In case of congestion, the relay will use the priorities to selectively drop the "least important" objects:
 
@@ -507,7 +507,7 @@ Web conferencing systems are used on networks with well over 20% packet loss and
 
 This can result in scenarios where very small audio objects are sent at a rate of several hundreds packets per second with a high network loss rate.
 
-### Interval between access points
+### Interval between Access Points
 
 In the streaming scenarios, there is an important emphasis on resynchronization, characterized by a short distance between "access points". This can be used for features like fast-forward or rewinding, which are common in non-real-time streaming. For real-time streaming experiences such as watching a sport event, frequent access points allow "channel surfers" to quickly join the broadcast and enjoy the experience. The interval between these access points will often be just a few seconds.
 
