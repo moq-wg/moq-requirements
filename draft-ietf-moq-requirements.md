@@ -148,14 +148,14 @@ Our goal in this section is to understand the range of use cases that are in sco
 
 For each use case in this section, we also describe
 
-- the number of senders or receiver in a given session transmitting distinct streams,
+- the number of senders or receivers in a given session transmitting distinct streams,
 - whether a session has bi-directional flows of media from senders and receivers, which may also include timely non-media such as haptics or timed events.
 
 It is likely that we should add other characteristics, as we come to understand them.
 
 ## Interactive Media {#interact}
 
-The use cases described in this section have one particular attribute in common - the target the lowest possible latency as can be achieved at the trade off of data loss and complexity. For example,
+The use cases described in this section have one particular attribute in common - they target the lowest possible latency as can be achieved at the trade off of data loss and complexity. For example,
 
 - It may make sense to use FEC {{RFC6363}} and codec-level packet loss concealment {{RFC6716}}, rather than selectively retransmitting only lost packets. These mechanisms use more bytes, but do not require multiple round trips in order to recover from packet loss.
 - It's generally infeasible to use congestion control schemes like BBR {{I-D.draft-cardwell-iccrg-bbr-congestion-control}} in many deployments, since BBR has probing mechanisms that rely on temporarily inducing delay, but these mechanisms can then amortize the consequences of induced delay over multiple RTTs.
@@ -166,7 +166,7 @@ To provide an overview of interactive use cases, we can consider a conferencing 
 
 - Multiple emitters, publishing on multiple tracks (audio, video tracks and at different qualities)
 
-- A media switch, sourcing tracks that represent a subset of tracks from across all the emitters. Such subset may represent tracks representing top 5 speakers at higher qualities and lot of other tracks for rest of the emitters at lower qualities.
+- A media switch, sourcing tracks that represent a subset of tracks from across all the emitters. For example, such a subset may represent tracks representing top 5 speakers at higher qualities and lot of other tracks for rest of the emitters at lower qualities.
 
 - Multiple receivers, with varied receiving capacity (bandwidth limited), subscribing to subset of the tracks
 
@@ -393,7 +393,7 @@ Classifications
 Variations
 : For each stream, the resolution(s), bitrate(s). Each variant should be uniquely identifiable and addressable.
 
-Considerations should be made to addressing of individual audio/video frames as opposed to groups, in addition to how the model incorporates signalling of prioritization, media dependency, and cache-ability to all entities.
+Considerations should be made to addressing of individual audio/video frames as opposed to groups, in addition to how the model incorporates signalling of prioritization, media dependency, and cacheability to all entities.
 
 ## Publishing Media {#pub-media}
 
@@ -411,7 +411,7 @@ As multiple streams of media may be available for concurrent sending such as mul
 
 ### Scoped to an Origin/Domain, Application specific
 
-### Allows Subscribing or Requesting for the Data Matching the Name by the Consumers
+### Allows Consumers Subscribing or Requesting for Data Matching by Name
 
 ## Packaging Media {#Packaging}
 
