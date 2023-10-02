@@ -8,7 +8,7 @@ date:
 
 ipr: trust200902
 area: applications
-workgroup: MOQ Mailing List
+workgroup: Media Over QUIC
 keyword: Internet-Draft QUIC
 stand_alone: yes
 pi: [toc, tocindent, sortrefs, symrefs, strict, compact, subcompact, comments, inline]
