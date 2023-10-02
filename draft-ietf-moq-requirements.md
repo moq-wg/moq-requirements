@@ -130,11 +130,11 @@ For instance, a speaker in a conferencing application might make a statement, an
 
 Live Streaming use cases allow consumers of media to "watch together", without having a sense that one consumer is experiencing the media before another consumer. This does not require the delivery of live media to be strictly synchronized between media consumers, but only that from the viewpoint of individual consumers, media delivery **appears to be** synchronized.
 
-It is common for live streaming use cases to send media in one direction, and "something else" in the other direction - for instance, a video receiver might be returning requests that the sender change the media encoding or media rate in use, or reorgient a camera. This type of feedback doesn't qualify as "bidirectional media".
+It is common for live streaming use cases to send media in one direction, and "something else" in the other direction - for instance, a video receiver might be returning requests that the sender change the media encoding or media rate in use, or reorient a camera. This type of feedback doesn't qualify as "bidirectional media".
 
 If two sender/receivers are each sending media to the other, but what's being carried in one direction has no relationship with what's being carried in the other direction, this would not qualify as "Interactive".
 
-**Note: these descriptions are a starting point. Feedback and pushback are both welcomed.**
+**Note: these descriptions are a starting point. Feedback and push-back are both welcomed.**
 
 ## Alignment with terminology in related drafts {#draft-alignment}
 
@@ -160,7 +160,7 @@ The use cases described in this section have one particular attribute in common 
 - It may make sense to use FEC {{RFC6363}} and codec-level packet loss concealment {{RFC6716}}, rather than selectively retransmitting only lost packets. These mechanisms use more bytes, but do not require multiple round trips in order to recover from packet loss.
 - It's generally infeasible to use congestion control schemes like BBR {{I-D.draft-cardwell-iccrg-bbr-congestion-control}} in many deployments, since BBR has probing mechanisms that rely on temporarily inducing delay, but these mechanisms can then amortize the consequences of induced delay over multiple RTTs.
 
-This may help to explain why interactive use cases have typically relied on protocols such as RTP {{RFC3550}}, which provide low-level control of packetization and transmission, with addtional support for retransmission as an optional extension.
+This may help to explain why interactive use cases have typically relied on protocols such as RTP {{RFC3550}}, which provide low-level control of packetization and transmission, with additional support for retransmission as an optional extension.
 
 To provide an overview of interactive use cases, we can consider a conferencing session comprised of:
 
@@ -203,7 +203,7 @@ This setup relies on the following functionalities:
 
 - Media Switches propagate a subset of tracks as-is from the emitters to the subscribers. This implies Track IDs to be unchanged between the emitters and the receivers.
 
-- Subscribers explictly request one or more media tracks in appropriate qualities and dynamically move between the qualtiies during the course of the session.
+- Subscribers explicitly request one or more media tracks in appropriate qualities and dynamically move between the qualities during the course of the session.
 
 Another topology for the conferencing use-case is to use multiple distribution networks for delivering the media, with media switching functionality running across distribution networks and these media functions as part of the core distribution network as shown below.
 
@@ -336,7 +336,7 @@ In this setup, one can visualize the ingest and distribution as two separate sys
 
 In Live Media Streaming, media might be received from a live broadcast or stream either as a broadcast with fixed duration or as ongoing 24/7 output. The number of receivers may vary depending on the type of content; breaking news events may see sharp, sudden spikes, whereas sporting and entertainment events may see a more gradual ramp up with a higher sustained peak with some changes based on match breaks or interludes.
 
-Such broadcasts may comprise of multiple audio or video outputs with different codecs or bitrates, and may also include other types of media essence such as subtitles or timing signalling information (e.g. markers to indicate change of behaviour in client such as advertisement breaks). The use of "live rewind" where a window of media between the live edge and trailing edge can be made available for clients to playback, either because the local player falls behind the leading edge or because the viewer wishes to play back from a point in the past.
+Such broadcasts may comprise of multiple audio or video outputs with different codecs or bitrates, and may also include other types of media essence such as subtitles or timing signalling information (e.g. markers to indicate change of behavior in client such as advertisement breaks). The use of "live rewind" where a window of media between the live edge and trailing edge can be made available for clients to playback, either because the local player falls behind the leading edge or because the viewer wishes to play back from a point in the past.
 
 ## Hybrid Interactive and Live Media
 
@@ -358,11 +358,11 @@ In order to support the various topologies and patterns of media flows with the 
 
 ### QUIC Capabilities and Properties
 
-With QUIC being the underlying protocol brings capabilities and functionalities for many of the requirements such as connection migration and re-use, greater controls over packet reliability, congestion control, re-ordering and flow directionality, multiplexing and head of line blocking. Utilising aspects of the QUIC protocol which would then necessitate reimplementation of these capabilities already present in other parts of the QUIC protocol should only be done so if requirements deem them incompatible.
+With QUIC being the underlying protocol brings capabilities and functionalities for many of the requirements such as connection migration and re-use, greater controls over packet reliability, congestion control, re-ordering and flow directionality, multiplexing and head of line blocking. Utilizing aspects of the QUIC protocol which would then necessitate re-implementation of these capabilities already present in other parts of the QUIC protocol should only be done so if requirements deem them incompatible.
 
 ### Delivery Assurance vs. Delay
 
-Different use cases have varying requirements with respect to the tradeoffs associated in having guarantee of delivery vs delay - in some (such as telephony) it may be acceptable to drop some or all of the media as a result of changes in network connectivity, throughput, or congestion whereas in other scenarios all media must arrive at the receiving end even if delayed. There SHOULD be support for some means for a connection to signal which media may be abandoned, and behaviours of both senders receivers defined when delay or loss occurs. Where multiple variants of media are sent, this SHOULD be done so in a way that provides pipelining so each media stream may be processed in parallel.
+Different use cases have varying requirements with respect to the tradeoffs associated in having guarantee of delivery vs delay - in some (such as telephony) it may be acceptable to drop some or all of the media as a result of changes in network connectivity, throughput, or congestion whereas in other scenarios all media must arrive at the receiving end even if delayed. There SHOULD be support for some means for a connection to signal which media may be abandoned, and behaviors of both senders receivers defined when delay or loss occurs. Where multiple variants of media are sent, this SHOULD be done so in a way that provides pipelining so each media stream may be processed in parallel.
 
 ### Support Webtransport/Raw QUIC as media transport
 
@@ -393,7 +393,7 @@ Classifications
 Variations
 : For each stream, the resolution(s), bitrate(s). Each variant should be uniquely identifiable and addressable.
 
-Considerations should be made to addressing of individual audio/video frames as opposed to groups, in addition to how the model incorporates signalling of prioritisation, media dependency, and cacheability to all entities.
+Considerations should be made to addressing of individual audio/video frames as opposed to groups, in addition to how the model incorporates signalling of prioritization, media dependency, and cache-ability to all entities.
 
 ## Publishing Media {#pub-media}
 
@@ -467,23 +467,23 @@ Object numbers and priorities will be set by the publisher of the track, and wil
 
 ## Media Consumption {#med-consumption}
 
-Receivers SHOULD be able to as part of negotiation of a session {{MOQ-negotiation}} specify which media to receive, not just with respect to the media format and codec, but also the varient thereof such as resolution or bitrate.
+Receivers SHOULD be able to as part of negotiation of a session {{MOQ-negotiation}} specify which media to receive, not just with respect to the media format and codec, but also the variant thereof such as resolution or bitrate.
 
 ## Relays, Caches, and other MOQ Network Elements {#MOQ-network-entities}
 
 ### Intervals and congestion
 
-It is possible to use groups as units of congestion control. When the sending strategy is understoud, the objects in the group can be assigned sequence numbers and drop priorities that capture the encoding dependencies, such that:
+It is possible to use groups as units of congestion control. When the sending strategy is understood, the objects in the group can be assigned sequence numbers and drop priorities that capture the encoding dependencies, such that:
 
 - an object can only have dependencies with other objects in the same group,
 - an object can only have dependencies with other objects with lower sequence numbers,
 - an object can only have dependencies with other objects with lower or equal drop priorities.
 
-This simple rules enable real-time congestion control decisions at relays and other nodes. The main drawback is that if a packet with a given drop priority is actually dropped, all objects with higher sequence numbers and higher or equal drop priorities in the same group must be dropped. If the group duration is long, this means that the quality of experience may be lowered for a long time after a brief congestion. If the group duration is short, this can produce a jarring effect in which the quality of experience drops perdiodically at the tail of the group.
+This simple rules enable real-time congestion control decisions at relays and other nodes. The main drawback is that if a packet with a given drop priority is actually dropped, all objects with higher sequence numbers and higher or equal drop priorities in the same group must be dropped. If the group duration is long, this means that the quality of experience may be lowered for a long time after a brief congestion. If the group duration is short, this can produce a jarring effect in which the quality of experience drops periodically at the tail of the group.
 
 ### Pull & Push
 
-To enable use cases where receivers may wish to address a particular time of media in addition to having the most recently produced media available, both "pull" and "push" of media SHOULD be supported, with consideration that producers and intermediates SHOULD also signal what media is available (commonly referred to as a "DVR window"). Behaviours around cache durations for each MoQ entity should be defined.
+To enable use cases where receivers may wish to address a particular time of media in addition to having the most recently produced media available, both "pull" and "push" of media SHOULD be supported, with consideration that producers and intermediates SHOULD also signal what media is available (commonly referred to as a "DVR window"). Behaviors around cache durations for each MoQ entity should be defined.
 
 ### Relay behavior
 
@@ -503,7 +503,7 @@ The specification above assumes that the relay can detect the onset of congestio
 
 ### High Loss Networks
 
-Web conferencing systems are used on networks with well over 20% packet loss and when this happens, it is often on connections with a relatively large round trip times. In these situtation, forward error correction or redundant transmitions are used to provide a reasonable user experience. Often video is turned off in. There are multiple machine learning based audio codecs in development that targeting a 2 to 3 Kbps rate.
+Web conferencing systems are used on networks with well over 20% packet loss and when this happens, it is often on connections with a relatively large round trip times. In these situation, forward error correction or redundant transmissions are used to provide a reasonable user experience. Often video is turned off in. There are multiple machine learning based audio codecs in development that targeting a 2 to 3 Kbps rate.
 
 This can result in scenarios where very small audio objects are sent at a rate of several hundreds packets per second with a high network loss rate.
 
@@ -513,7 +513,7 @@ In the streaming scenarios, there is an important emphasis on resynchronization,
 
 In video encoding, each access point is mapped to a fully encoded frame that can be used as reference for the "group of blocks". The encoding of these reference frames is typically much larger than the differential encoding of the following frames. This creates a peak of traffic at the beginning of the group. This peak is much easier to absorb in streaming applications that tolerate higher latencies than interactive video conferences. In practice, many real time conferences tend to use much longer groups, resulting in higher compression ratios and smoother bandwidth consumption along with a way to request the start of a new group when needed. Other real time conferences tend to use very short groups and just wait for the next group when needed.
 
-Of course, having longer blocks create other issues. Realtime conferences also need to accomodate the occasional occasional late comer, or the disconnected user who want to resynchronize after a network event. This drives a need for synchronization "between access points". For example, rather than waiting for 30 seconds before connecting, the user might quickly download the "key" frames of the past 30 seconds and replay them in order to "synchronize" the video decoder.
+Of course, having longer blocks create other issues. Realtime conferences also need to accommodate the occasional occasional late comer, or the disconnected user who want to resynchronize after a network event. This drives a need for synchronization "between access points". For example, rather than waiting for 30 seconds before connecting, the user might quickly download the "key" frames of the past 30 seconds and replay them in order to "synchronize" the video decoder.
 
 ### Media Insertion and Redirection
 
@@ -523,9 +523,9 @@ In both of these scenarios, triggering may occur either through an event provide
 
 ## Security {#MOQ-security}
 
-### Authentication & Authorisation
+### Authentication & Authorization
 
-Whilst QUIC and conversely TLS supports the ability for mutual authentication through client and server presenting certificates and performing validation, this is infeasible in many use cases where provisioning of client TLS certificates is unsupported or impractical. Thus, support for a primitive method of authentication between MoQ entities SHOULD be included to authenticate entities between one another, noting that implementations and deployments should determine which authorisation model if any is applicable.
+Whilst QUIC and conversely TLS supports the ability for mutual authentication through client and server presenting certificates and performing validation, this is infeasible in many use cases where provisioning of client TLS certificates is unsupported or impractical. Thus, support for a primitive method of authentication between MoQ entities SHOULD be included to authenticate entities between one another, noting that implementations and deployments should determine which authorization model if any is applicable.
 
 ### Media Encryption {#MOQ-media-encryption}
 
@@ -551,7 +551,7 @@ Many MOQ deployment models rely on intermediate nodes, and these intermediate no
 
 Some of these responsibilities require authorization to see more media headers and even media payload than others. The protocol SHOULD allow MOQ intermediate nodes to perform a variety of responsibilities, without having access to media headers and/or media payloads that they do not require to carry out their responsibilities.
 
-Support for encrypted media SHOULD be available in the protocol to support the above use cases, with key exchange and decryption authorisation handled externally. The protocol SHOULD provide metadata for entities which process media to perform key exchange and decrypt.
+Support for encrypted media SHOULD be available in the protocol to support the above use cases, with key exchange and decryption authorization handled externally. The protocol SHOULD provide metadata for entities which process media to perform key exchange and decrypt.
 
 # IANA Considerations
 
