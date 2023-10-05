@@ -13,6 +13,14 @@ keyword: Internet-Draft QUIC
 stand_alone: yes
 pi: [toc, tocindent, sortrefs, symrefs, strict, compact, subcompact, comments, inline]
 
+venue:
+  group: "Media Over QUIC"
+  type: "Working Group"
+  mail: "moq@ietf.org"
+  github: moq-wg/moq-requirements
+  arch: "https://mailarchive.ietf.org/arch/browse/moq/"
+  latest: "https://moq-wg.github.io/moq-requirements/draft-ietf-moq-requirements.html"
+
 author:
   -
     ins: J. Gruessing
@@ -77,14 +85,6 @@ informative:
 --- abstract
 
 This document describes use cases and requirements that guide the specification of a simple, low-latency media delivery solution for ingest and distribution, using either the QUIC protocol or WebTransport as transport protocols.
-
---- note_Note_to_Readers
-
-*RFC Editor: please remove this section before publication*
-
-Source code and issues for this draft can be found at <https://github.com/moq-wg/moq-requirements>.
-
-Discussion of this draft should take place on the IETF Media Over QUIC (MoQ) mailing list, at <https://www.ietf.org/mailman/listinfo/moq>.
 
 --- middle
 
