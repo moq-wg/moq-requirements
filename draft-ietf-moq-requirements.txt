@@ -5,8 +5,8 @@
 Media Over QUIC                                             J. Gruessing
 Internet-Draft                               Nederlandse Publieke Omroep
 Intended status: Informational                                S. Dawkins
-Expires: 4 April 2024                                Tencent America LLC
-                                                          2 October 2023
+Expires: 7 April 2024                                Tencent America LLC
+                                                          5 October 2023
 
 
     Media Over QUIC - Use Cases and Requirements for Media Transport
@@ -20,17 +20,22 @@ Abstract
    ingest and distribution, using either the QUIC protocol or
    WebTransport as transport protocols.
 
-Note to Readers
+About This Document
 
-   _RFC Editor: please remove this section before publication_
+   This note is to be removed before publishing as an RFC.
 
-   Source code and issues for this draft can be found at
-   https://github.com/moq-wg/moq-requirements (https://github.com/moq-
-   wg/moq-requirements).
+   The latest revision of this draft can be found at https://moq-
+   wg.github.io/moq-requirements/draft-ietf-moq-requirements.html.
+   Status information for this document may be found at
+   https://datatracker.ietf.org/doc/draft-ietf-moq-requirements/.
 
-   Discussion of this draft should take place on the IETF Media Over
-   QUIC (MoQ) mailing list, at https://www.ietf.org/mailman/listinfo/moq
-   (https://www.ietf.org/mailman/listinfo/moq).
+   Discussion of this document takes place on the Media Over QUIC
+   Working Group mailing list (mailto:moq@ietf.org), which is archived
+   at https://mailarchive.ietf.org/arch/browse/moq/.  Subscribe at
+   https://www.ietf.org/mailman/listinfo/moq/.
+
+   Source for this draft and an issue tracker can be found at
+   https://github.com/moq-wg/moq-requirements.
 
 Status of This Memo
 
@@ -47,7 +52,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 4 April 2024.
+   This Internet-Draft will expire on 7 April 2024.
 
 Copyright Notice
 
